@@ -1,0 +1,180 @@
+[2025-08-17 00:27:54] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:27:54] Request method | Data: "GET"
+[2025-08-17 00:27:54] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:27:54] IP address | Data: "127.0.0.1"
+[2025-08-17 00:27:54] Attempting database connection
+[2025-08-17 00:27:54] FATAL ERROR | Data: {"message":"SQLSTATE[HY000] [1049] Unknown database 'ecast_voting'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":44,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(44): PDO->__construct('mysql:host=loca...', 'root', Object(SensitiveParameterValue), Array)\n#1 {main}"}
+[2025-08-17 00:34:24] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:34:24] Request method | Data: "GET"
+[2025-08-17 00:34:24] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:34:24] IP address | Data: "127.0.0.1"
+[2025-08-17 00:34:24] Attempting database connection
+[2025-08-17 00:34:24] Database connection successful
+[2025-08-17 00:34:24] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:34:24] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:34:24] Token validation successful
+[2025-08-17 00:34:24] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:34:24] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:34:24] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:34:27] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:34:27] Request method | Data: "GET"
+[2025-08-17 00:34:27] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:34:27] IP address | Data: "127.0.0.1"
+[2025-08-17 00:34:27] Attempting database connection
+[2025-08-17 00:34:27] Database connection successful
+[2025-08-17 00:34:27] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:34:27] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:34:27] Token validation successful
+[2025-08-17 00:34:27] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:34:27] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:34:27] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:34:28] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:34:28] Request method | Data: "GET"
+[2025-08-17 00:34:28] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:34:28] IP address | Data: "127.0.0.1"
+[2025-08-17 00:34:28] Attempting database connection
+[2025-08-17 00:34:28] Database connection successful
+[2025-08-17 00:34:28] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:34:28] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:34:28] Token validation successful
+[2025-08-17 00:34:28] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:34:28] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:34:28] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:34:30] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:34:30] Request method | Data: "GET"
+[2025-08-17 00:34:30] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:34:30] IP address | Data: "127.0.0.1"
+[2025-08-17 00:34:30] Attempting database connection
+[2025-08-17 00:34:30] Database connection successful
+[2025-08-17 00:34:30] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:34:30] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:34:30] Token validation successful
+[2025-08-17 00:34:30] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:34:30] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:34:30] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:34:47] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:34:47] Request method | Data: "GET"
+[2025-08-17 00:34:47] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:34:47] IP address | Data: "127.0.0.1"
+[2025-08-17 00:34:47] Attempting database connection
+[2025-08-17 00:34:47] Database connection successful
+[2025-08-17 00:34:47] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:34:47] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:34:47] Token validation successful
+[2025-08-17 00:34:47] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:34:47] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:34:47] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:35:29] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:35:29] Request method | Data: "GET"
+[2025-08-17 00:35:29] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:35:29] IP address | Data: "127.0.0.1"
+[2025-08-17 00:35:29] Attempting database connection
+[2025-08-17 00:35:29] Database connection successful
+[2025-08-17 00:35:29] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":1,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 00:35:29] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 00:35:29] Token validation successful
+[2025-08-17 00:35:29] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:35:29] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 00:35:29] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_price' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:39:58] Vote submission started | Data: {"n":"3","t":"7ee9df51f60dda55593ffa13904b5911","nominee_id":"3","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:39:58] Request method | Data: "GET"
+[2025-08-17 00:39:58] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:39:58] IP address | Data: "127.0.0.1"
+[2025-08-17 00:39:58] Attempting database connection
+[2025-08-17 00:39:58] Database connection successful
+[2025-08-17 00:39:58] Parameters received | Data: {"nominee_id":3,"phone":"0245152060","votes":1,"token":"7ee9df51f60dda55593ffa13904b5911"}
+[2025-08-17 00:39:58] Token validation | Data: {"received_token":"7ee9df51f60dda55593ffa13904b5911","expected_token":"7ee9df51f60dda55593ffa13904b5911","nominee_id":3,"date":"2025-08-17"}
+[2025-08-17 00:39:58] Token validation successful
+[2025-08-17 00:39:58] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:39:58] Fetching nominee details | Data: {"nominee_id":3}
+[2025-08-17 00:39:58] FATAL ERROR | Data: {"message":"SQLSTATE[42S22]: Column not found: 1054 Unknown column 'e.vote_cost' in 'field list'","file":"C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php","line":107,"trace":"#0 C:\\xampp\\htdocs\\e-cast-voting-system\\voter\\actions\\vote-get.php(107): PDOStatement->execute(Array)\n#1 {main}"}
+[2025-08-17 00:47:28] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"1","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:47:28] Request method | Data: "GET"
+[2025-08-17 00:47:28] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:47:28] IP address | Data: "127.0.0.1"
+[2025-08-17 00:47:28] Attempting database connection
+[2025-08-17 00:47:28] Database connection successful
+[2025-08-17 00:47:28] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":1,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 00:47:28] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 00:47:28] Token validation successful
+[2025-08-17 00:47:28] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:47:28] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 00:47:28] Events table columns | Data: [{"Field":"id","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"organizer_id","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},{"Field":"title","Type":"varchar(200)","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"start_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"end_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"voting_fee","Type":"decimal(10,2)","Null":"YES","Key":"","Default":"0.00","Extra":""},{"Field":"status","Type":"enum('draft','active','ended','cancelled')","Null":"YES","Key":"","Default":"draft","Extra":""},{"Field":"theme_color","Type":"varchar(7)","Null":"YES","Key":"","Default":"#007bff","Extra":""},{"Field":"logo","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":""},{"Field":"updated_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":"on update current_timestamp()"},{"Field":"event_type","Type":"varchar(50)","Null":"YES","Key":"","Default":"other","Extra":""},{"Field":"location","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"max_participants","Type":"int(11)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"rules","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"is_public","Type":"tinyint(1)","Null":"YES","Key":"","Default":"1","Extra":""},{"Field":"allow_multiple_votes","Type":"tinyint(1)","Null":"YES","Key":"","Default":"0","Extra":""}]
+[2025-08-17 00:47:28] Nominee query result | Data: {"id":5,"category_id":1,"scheme_id":null,"name":"Arthur","description":"","image":"nominee_6899c2186275a.jpg","display_order":1,"status":"active","created_at":"2025-08-11 10:12:40","facebook_url":null,"instagram_url":null,"twitter_url":null,"updated_at":"2025-08-11 10:12:40","event_id":1,"organizer_id":7}
+[2025-08-17 00:47:28] Transaction details | Data: {"amount":1,"transaction_id":"TXN_1755384448_7432","default_vote_price":1,"votes":1}
+[2025-08-17 00:47:28] Creating transaction record
+[2025-08-17 00:47:28] Transaction creation result | Data: {"success":true,"affected_rows":1}
+[2025-08-17 00:47:28] Fetching Paystack settings
+[2025-08-17 00:47:28] Paystack key retrieved | Data: {"key_length":19}
+[2025-08-17 00:48:08] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"1","payment_method":"ussd","p":"0245152060","network_type":"MTN"}
+[2025-08-17 00:48:08] Request method | Data: "GET"
+[2025-08-17 00:48:08] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 00:48:08] IP address | Data: "127.0.0.1"
+[2025-08-17 00:48:08] Attempting database connection
+[2025-08-17 00:48:08] Database connection successful
+[2025-08-17 00:48:08] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":1,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 00:48:08] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 00:48:08] Token validation successful
+[2025-08-17 00:48:08] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 00:48:08] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 00:48:08] Events table columns | Data: [{"Field":"id","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"organizer_id","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},{"Field":"title","Type":"varchar(200)","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"start_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"end_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"voting_fee","Type":"decimal(10,2)","Null":"YES","Key":"","Default":"0.00","Extra":""},{"Field":"status","Type":"enum('draft','active','ended','cancelled')","Null":"YES","Key":"","Default":"draft","Extra":""},{"Field":"theme_color","Type":"varchar(7)","Null":"YES","Key":"","Default":"#007bff","Extra":""},{"Field":"logo","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":""},{"Field":"updated_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":"on update current_timestamp()"},{"Field":"event_type","Type":"varchar(50)","Null":"YES","Key":"","Default":"other","Extra":""},{"Field":"location","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"max_participants","Type":"int(11)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"rules","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"is_public","Type":"tinyint(1)","Null":"YES","Key":"","Default":"1","Extra":""},{"Field":"allow_multiple_votes","Type":"tinyint(1)","Null":"YES","Key":"","Default":"0","Extra":""}]
+[2025-08-17 00:48:08] Nominee query result | Data: {"id":5,"category_id":1,"scheme_id":null,"name":"Arthur","description":"","image":"nominee_6899c2186275a.jpg","display_order":1,"status":"active","created_at":"2025-08-11 10:12:40","facebook_url":null,"instagram_url":null,"twitter_url":null,"updated_at":"2025-08-11 10:12:40","event_id":1,"organizer_id":7}
+[2025-08-17 00:48:08] Transaction details | Data: {"amount":1,"transaction_id":"TXN_1755384488_8030","default_vote_price":1,"votes":1}
+[2025-08-17 00:48:08] Creating transaction record
+[2025-08-17 00:48:08] Transaction creation result | Data: {"success":true,"affected_rows":1}
+[2025-08-17 00:48:08] Fetching Paystack settings
+[2025-08-17 00:48:08] Paystack key retrieved | Data: {"key_length":19}
+[2025-08-17 01:08:20] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"2","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 01:08:20] Request method | Data: "GET"
+[2025-08-17 01:08:20] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 01:08:20] IP address | Data: "127.0.0.1"
+[2025-08-17 01:08:20] Attempting database connection
+[2025-08-17 01:08:20] Database connection successful
+[2025-08-17 01:08:20] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":2,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 01:08:20] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 01:08:20] Token validation successful
+[2025-08-17 01:08:20] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 01:08:20] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 01:08:20] Events table columns | Data: [{"Field":"id","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"organizer_id","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},{"Field":"title","Type":"varchar(200)","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"start_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"end_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"voting_fee","Type":"decimal(10,2)","Null":"YES","Key":"","Default":"0.00","Extra":""},{"Field":"status","Type":"enum('draft','active','ended','cancelled')","Null":"YES","Key":"","Default":"draft","Extra":""},{"Field":"theme_color","Type":"varchar(7)","Null":"YES","Key":"","Default":"#007bff","Extra":""},{"Field":"logo","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":""},{"Field":"updated_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":"on update current_timestamp()"},{"Field":"event_type","Type":"varchar(50)","Null":"YES","Key":"","Default":"other","Extra":""},{"Field":"location","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"max_participants","Type":"int(11)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"rules","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"is_public","Type":"tinyint(1)","Null":"YES","Key":"","Default":"1","Extra":""},{"Field":"allow_multiple_votes","Type":"tinyint(1)","Null":"YES","Key":"","Default":"0","Extra":""}]
+[2025-08-17 01:08:20] Nominee query result | Data: {"id":5,"category_id":1,"scheme_id":null,"name":"Arthur","description":"","image":"nominee_6899c2186275a.jpg","display_order":1,"status":"active","created_at":"2025-08-11 10:12:40","facebook_url":null,"instagram_url":null,"twitter_url":null,"updated_at":"2025-08-11 10:12:40","event_id":1,"organizer_id":7}
+[2025-08-17 01:08:20] Transaction details | Data: {"amount":2,"transaction_id":"TXN_1755385700_8815","default_vote_price":1,"votes":2}
+[2025-08-17 01:08:20] Creating transaction record
+[2025-08-17 01:08:20] Transaction creation result | Data: {"success":true,"affected_rows":1}
+[2025-08-17 01:08:20] Fetching Paystack settings
+[2025-08-17 01:08:20] Paystack key retrieved | Data: {"key_length":19}
+[2025-08-17 01:08:47] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"2","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 01:08:47] Request method | Data: "GET"
+[2025-08-17 01:08:47] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 01:08:47] IP address | Data: "127.0.0.1"
+[2025-08-17 01:08:47] Attempting database connection
+[2025-08-17 01:08:47] Database connection successful
+[2025-08-17 01:08:47] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":2,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 01:08:47] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 01:08:47] Token validation successful
+[2025-08-17 01:08:47] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 01:08:47] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 01:08:47] Events table columns | Data: [{"Field":"id","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"organizer_id","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},{"Field":"title","Type":"varchar(200)","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"start_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"end_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"voting_fee","Type":"decimal(10,2)","Null":"YES","Key":"","Default":"0.00","Extra":""},{"Field":"status","Type":"enum('draft','active','ended','cancelled')","Null":"YES","Key":"","Default":"draft","Extra":""},{"Field":"theme_color","Type":"varchar(7)","Null":"YES","Key":"","Default":"#007bff","Extra":""},{"Field":"logo","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":""},{"Field":"updated_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":"on update current_timestamp()"},{"Field":"event_type","Type":"varchar(50)","Null":"YES","Key":"","Default":"other","Extra":""},{"Field":"location","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"max_participants","Type":"int(11)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"rules","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"is_public","Type":"tinyint(1)","Null":"YES","Key":"","Default":"1","Extra":""},{"Field":"allow_multiple_votes","Type":"tinyint(1)","Null":"YES","Key":"","Default":"0","Extra":""}]
+[2025-08-17 01:08:47] Nominee query result | Data: {"id":5,"category_id":1,"scheme_id":null,"name":"Arthur","description":"","image":"nominee_6899c2186275a.jpg","display_order":1,"status":"active","created_at":"2025-08-11 10:12:40","facebook_url":null,"instagram_url":null,"twitter_url":null,"updated_at":"2025-08-11 10:12:40","event_id":1,"organizer_id":7}
+[2025-08-17 01:08:47] Transaction details | Data: {"amount":2,"transaction_id":"TXN_1755385727_9482","default_vote_price":1,"votes":2}
+[2025-08-17 01:08:47] Creating transaction record
+[2025-08-17 01:08:47] Transaction creation result | Data: {"success":true,"affected_rows":1}
+[2025-08-17 01:08:47] Fetching Paystack settings
+[2025-08-17 01:08:47] Paystack key retrieved | Data: {"key_length":19}
+[2025-08-17 01:13:11] Vote submission started | Data: {"n":"5","t":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":"5","v":"2","payment_method":"mobile_money","p":"0245152060","network_type":"MTN"}
+[2025-08-17 01:13:11] Request method | Data: "GET"
+[2025-08-17 01:13:11] User agent | Data: "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0"
+[2025-08-17 01:13:11] IP address | Data: "127.0.0.1"
+[2025-08-17 01:13:11] Attempting database connection
+[2025-08-17 01:13:11] Database connection successful
+[2025-08-17 01:13:11] Parameters received | Data: {"nominee_id":5,"phone":"0245152060","votes":2,"token":"fb0675cbfb105e391595c4ecbd5cf300"}
+[2025-08-17 01:13:11] Token validation | Data: {"received_token":"fb0675cbfb105e391595c4ecbd5cf300","expected_token":"fb0675cbfb105e391595c4ecbd5cf300","nominee_id":5,"date":"2025-08-17"}
+[2025-08-17 01:13:11] Token validation successful
+[2025-08-17 01:13:11] Phone formatting | Data: {"original":"0245152060","formatted":"+233245152060"}
+[2025-08-17 01:13:11] Fetching nominee details | Data: {"nominee_id":5}
+[2025-08-17 01:13:11] Events table columns | Data: [{"Field":"id","Type":"int(11)","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"organizer_id","Type":"int(11)","Null":"NO","Key":"MUL","Default":null,"Extra":""},{"Field":"title","Type":"varchar(200)","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"start_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"end_date","Type":"datetime","Null":"NO","Key":"","Default":null,"Extra":""},{"Field":"voting_fee","Type":"decimal(10,2)","Null":"YES","Key":"","Default":"0.00","Extra":""},{"Field":"status","Type":"enum('draft','active','ended','cancelled')","Null":"YES","Key":"","Default":"draft","Extra":""},{"Field":"theme_color","Type":"varchar(7)","Null":"YES","Key":"","Default":"#007bff","Extra":""},{"Field":"logo","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":""},{"Field":"updated_at","Type":"timestamp","Null":"NO","Key":"","Default":"current_timestamp()","Extra":"on update current_timestamp()"},{"Field":"event_type","Type":"varchar(50)","Null":"YES","Key":"","Default":"other","Extra":""},{"Field":"location","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"max_participants","Type":"int(11)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"rules","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"is_public","Type":"tinyint(1)","Null":"YES","Key":"","Default":"1","Extra":""},{"Field":"allow_multiple_votes","Type":"tinyint(1)","Null":"YES","Key":"","Default":"0","Extra":""}]
+[2025-08-17 01:13:11] Nominee query result | Data: {"id":5,"category_id":1,"scheme_id":null,"name":"Arthur","description":"","image":"nominee_6899c2186275a.jpg","display_order":1,"status":"active","created_at":"2025-08-11 10:12:40","facebook_url":null,"instagram_url":null,"twitter_url":null,"updated_at":"2025-08-11 10:12:40","event_id":1,"organizer_id":7}
+[2025-08-17 01:13:11] Transaction details | Data: {"amount":2,"transaction_id":"TXN_1755385991_5181","default_vote_price":1,"votes":2}
+[2025-08-17 01:13:11] Creating transaction record
+[2025-08-17 01:13:11] Transaction creation result | Data: {"success":true,"affected_rows":1}
+[2025-08-17 01:13:11] Fetching Paystack settings
+[2025-08-17 01:13:11] Paystack key retrieved | Data: {"key_length":19}

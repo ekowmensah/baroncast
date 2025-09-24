@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Vote Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, button { padding: 10px; margin: 5px 0; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; }
+        .error { color: red; margin-top: 10px; }
+        .success { color: green; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Test Vote Form Submission</h1>
+    <p><strong>Status:</strong> ✅ PHP Working | ✅ Database Connected | ✅ Services Available</p>
+    
+    <form id="testForm">
+        <div class="form-group">
+            <label>Event ID:</label>
+            <input type="number" name="event_id" value="1" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Nominee ID:</label>
+            <input type="number" name="nominee_id" value="1" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Vote Count:</label>
+            <input type="number" name="vote_count" value="1" min="1" max="100" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Voter Name:</label>
+            <input type="text" name="voter_name" value="Test Voter" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Phone Number:</label>
+            <input type="tel" name="phone_number" value="0241234567" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Email (Optional):</label>
+            <input type="email" name="email" value="test@example.com">
+        </div>
+        
+        <button type="submit">Test Vote Submission</button>
+    </form>
+    
+    <div id="result"></div>
+    
+    <script>
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = '<p>Testing API call...</p>';
+            
+            fetch('voter/actions/hubtel-vote-submit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                return response.text();
+            })
+            .then(text => {
+                console.log('Raw response:', text);
+                
+                try {
+                    const data = JSON.parse(text);
+                    console.log('Parsed JSON:', data);
+                    
+                    if (data.success) {
+                        resultDiv.innerHTML = `<div class="success">
+                            <h3>Success!</h3>
+                            <p>Status: ${data.status}</p>
+                            <p>Message: ${data.message}</p>
+                            <p>Transaction Ref: ${data.transaction_ref}</p>
+                        </div>`;
+                    } else {
+                        resultDiv.innerHTML = `<div class="error">
+                            <h3>Error</h3>
+                            <p>${data.message}</p>
+                        </div>`;
+                    }
+                } catch (parseError) {
+                    console.error('JSON parse error:', parseError);
+                    resultDiv.innerHTML = `<div class="error">
+                        <h3>Parse Error</h3>
+                        <p>Response was not valid JSON</p>
+                        <pre>${text}</pre>
+                    </div>`;
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                resultDiv.innerHTML = `<div class="error">
+                    <h3>Network Error</h3>
+                    <p>${error.message}</p>
+                </div>`;
+            });
+        });
+    </script>
+</body>
+</html>

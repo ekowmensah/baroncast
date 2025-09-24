@@ -1,0 +1,161 @@
+[09-Sep-2025 23:37:26 UTC] Vote creation error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[09-Sep-2025 23:38:12 UTC] [2025-09-09 23:38:12] [INFO] Starting automatic vote creation and status check
+[09-Sep-2025 23:38:12 UTC] [2025-09-09 23:38:12] [INFO] Checking pending transactions for status updates...
+[09-Sep-2025 23:38:12 UTC] [2025-09-09 23:38:12] [INFO] Checking status for transaction: TXN_1755384448_7432
+[09-Sep-2025 23:38:12 UTC] [2025-09-09 23:38:12] [WARNING] Could not check status for TXN_1755384448_7432: Status check failed
+[09-Sep-2025 23:38:13 UTC] [2025-09-09 23:38:13] [INFO] Checking status for transaction: TXN_1755384488_8030
+[09-Sep-2025 23:38:13 UTC] [2025-09-09 23:38:13] [WARNING] Could not check status for TXN_1755384488_8030: Status check failed
+[09-Sep-2025 23:38:13 UTC] [2025-09-09 23:38:13] [INFO] Checking status for transaction: TXN_1755385700_8815
+[09-Sep-2025 23:38:14 UTC] [2025-09-09 23:38:14] [WARNING] Could not check status for TXN_1755385700_8815: Status check failed
+[09-Sep-2025 23:38:14 UTC] [2025-09-09 23:38:14] [INFO] Checking status for transaction: TXN_1755385727_9482
+[09-Sep-2025 23:38:14 UTC] [2025-09-09 23:38:14] [WARNING] Could not check status for TXN_1755385727_9482: Status check failed
+[09-Sep-2025 23:38:15 UTC] [2025-09-09 23:38:15] [INFO] Checking status for transaction: TXN_1755385991_5181
+[09-Sep-2025 23:38:15 UTC] [2025-09-09 23:38:15] [WARNING] Could not check status for TXN_1755385991_5181: Status check failed
+[09-Sep-2025 23:38:16 UTC] [2025-09-09 23:38:16] [INFO] Checking status for transaction: ECAST_1755627097_5
+[09-Sep-2025 23:38:16 UTC] [2025-09-09 23:38:16] [WARNING] Could not check status for ECAST_1755627097_5: Status check failed
+[09-Sep-2025 23:38:16 UTC] [2025-09-09 23:38:16] [INFO] Checking status for transaction: ECAST_1755629370_68a4c73ad4969_3
+[09-Sep-2025 23:38:17 UTC] [2025-09-09 23:38:17] [WARNING] Could not check status for ECAST_1755629370_68a4c73ad4969_3: Status check failed
+[09-Sep-2025 23:38:17 UTC] [2025-09-09 23:38:17] [INFO] Checking status for transaction: ECAST_1755629380_68a4c744ccf46_3
+[09-Sep-2025 23:38:17 UTC] [2025-09-09 23:38:17] [WARNING] Could not check status for ECAST_1755629380_68a4c744ccf46_3: Status check failed
+[09-Sep-2025 23:38:18 UTC] [2025-09-09 23:38:18] [INFO] Checking status for transaction: ECAST_1755629523_68a4c7d3e19d0_3
+[09-Sep-2025 23:38:18 UTC] [2025-09-09 23:38:18] [WARNING] Could not check status for ECAST_1755629523_68a4c7d3e19d0_3: Status check failed
+[09-Sep-2025 23:38:19 UTC] [2025-09-09 23:38:19] [INFO] Checking status for transaction: ECAST_1755629533_68a4c7dd0968e_3
+[09-Sep-2025 23:38:19 UTC] [2025-09-09 23:38:19] [WARNING] Could not check status for ECAST_1755629533_68a4c7dd0968e_3: Status check failed
+[09-Sep-2025 23:38:19 UTC] [2025-09-09 23:38:19] [INFO] Checking status for transaction: ECAST_1755632304_68a4d2b0ea8be_3
+[09-Sep-2025 23:38:20 UTC] [2025-09-09 23:38:20] [WARNING] Could not check status for ECAST_1755632304_68a4d2b0ea8be_3: Status check failed
+[09-Sep-2025 23:38:20 UTC] [2025-09-09 23:38:20] [INFO] Checking status for transaction: ECAST_1755636324_68a4e2641604f_3
+[09-Sep-2025 23:38:20 UTC] [2025-09-09 23:38:20] [WARNING] Could not check status for ECAST_1755636324_68a4e2641604f_3: Status check failed
+[09-Sep-2025 23:38:21 UTC] [2025-09-09 23:38:21] [INFO] Checking status for transaction: ECAST_1755636339_68a4e27345f1d_3
+[09-Sep-2025 23:38:21 UTC] [2025-09-09 23:38:21] [WARNING] Could not check status for ECAST_1755636339_68a4e27345f1d_3: Status check failed
+[09-Sep-2025 23:38:22 UTC] [2025-09-09 23:38:22] [INFO] Checking status for transaction: ECAST_1755636347_68a4e27b7daa3_3
+[09-Sep-2025 23:38:22 UTC] [2025-09-09 23:38:22] [WARNING] Could not check status for ECAST_1755636347_68a4e27b7daa3_3: Status check failed
+[09-Sep-2025 23:38:22 UTC] [2025-09-09 23:38:22] [INFO] Checking status for transaction: ECAST_1755637858_68a4e86248ffd_3
+[09-Sep-2025 23:38:23 UTC] [2025-09-09 23:38:23] [WARNING] Could not check status for ECAST_1755637858_68a4e86248ffd_3: Status check failed
+[09-Sep-2025 23:38:23 UTC] [2025-09-09 23:38:23] [INFO] Checking status for transaction: ECAST_1757452841_6589
+[09-Sep-2025 23:38:23 UTC] [2025-09-09 23:38:23] [WARNING] Could not check status for ECAST_1757452841_6589: Status check failed
+[09-Sep-2025 23:38:24 UTC] [2025-09-09 23:38:24] [INFO] Checking status for transaction: ECAST_1757452841_1306
+[09-Sep-2025 23:38:24 UTC] [2025-09-09 23:38:24] [WARNING] Could not check status for ECAST_1757452841_1306: Status check failed
+[09-Sep-2025 23:38:25 UTC] [2025-09-09 23:38:25] [INFO] Checking status for transaction: ECAST_1757452845_9428
+[09-Sep-2025 23:38:25 UTC] [2025-09-09 23:38:25] [WARNING] Could not check status for ECAST_1757452845_9428: Status check failed
+[09-Sep-2025 23:38:25 UTC] [2025-09-09 23:38:25] [INFO] Checking status for transaction: ECAST_1757452845_2220
+[09-Sep-2025 23:38:26 UTC] [2025-09-09 23:38:26] [WARNING] Could not check status for ECAST_1757452845_2220: Status check failed
+[09-Sep-2025 23:38:26 UTC] [2025-09-09 23:38:26] [INFO] Checking status for transaction: ECAST_1757452856_9915
+[09-Sep-2025 23:38:26 UTC] [2025-09-09 23:38:26] [WARNING] Could not check status for ECAST_1757452856_9915: Status check failed
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Checked 20 pending transactions, updated 0
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Checking for completed transactions missing votes...
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Creating 1 missing vote(s) for transaction: ECAST_1757460206_8779
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [ERROR] Error creating votes for transaction ECAST_1757460206_8779: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Creating 1 missing vote(s) for transaction: ECAST_1757460295_3349
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [ERROR] Error creating votes for transaction ECAST_1757460295_3349: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Created 0 missing vote records
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] === SUMMARY ===
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] • Pending transactions checked: 20
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] • Transactions status updated: 0
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] • Missing votes created: 0
+[09-Sep-2025 23:38:27 UTC] [2025-09-09 23:38:27] [INFO] Automatic vote creation check completed successfully
+[09-Sep-2025 23:47:41 UTC] [2025-09-09 23:47:41] [INFO] Starting automatic vote creation and status check
+[09-Sep-2025 23:47:41 UTC] [2025-09-09 23:47:41] [INFO] Checking pending transactions for status updates...
+[09-Sep-2025 23:47:41 UTC] [2025-09-09 23:47:41] [INFO] Checking status for transaction: TXN_1755384448_7432
+[09-Sep-2025 23:47:41 UTC] [2025-09-09 23:47:41] [WARNING] Could not check status for TXN_1755384448_7432: Status check failed
+[09-Sep-2025 23:47:42 UTC] [2025-09-09 23:47:42] [INFO] Checking status for transaction: TXN_1755384488_8030
+[09-Sep-2025 23:47:42 UTC] [2025-09-09 23:47:42] [WARNING] Could not check status for TXN_1755384488_8030: Status check failed
+[09-Sep-2025 23:47:42 UTC] [2025-09-09 23:47:42] [INFO] Checking status for transaction: TXN_1755385700_8815
+[09-Sep-2025 23:47:43 UTC] [2025-09-09 23:47:43] [WARNING] Could not check status for TXN_1755385700_8815: Status check failed
+[09-Sep-2025 23:47:43 UTC] [2025-09-09 23:47:43] [INFO] Checking status for transaction: TXN_1755385727_9482
+[09-Sep-2025 23:47:43 UTC] [2025-09-09 23:47:43] [WARNING] Could not check status for TXN_1755385727_9482: Status check failed
+[09-Sep-2025 23:47:44 UTC] [2025-09-09 23:47:44] [INFO] Checking status for transaction: TXN_1755385991_5181
+[09-Sep-2025 23:47:44 UTC] [2025-09-09 23:47:44] [WARNING] Could not check status for TXN_1755385991_5181: Status check failed
+[09-Sep-2025 23:47:45 UTC] [2025-09-09 23:47:45] [INFO] Checking status for transaction: ECAST_1755627097_5
+[09-Sep-2025 23:47:45 UTC] [2025-09-09 23:47:45] [WARNING] Could not check status for ECAST_1755627097_5: Status check failed
+[09-Sep-2025 23:47:45 UTC] [2025-09-09 23:47:45] [INFO] Checking status for transaction: ECAST_1755629370_68a4c73ad4969_3
+[09-Sep-2025 23:47:46 UTC] [2025-09-09 23:47:46] [WARNING] Could not check status for ECAST_1755629370_68a4c73ad4969_3: Status check failed
+[09-Sep-2025 23:47:46 UTC] [2025-09-09 23:47:46] [INFO] Checking status for transaction: ECAST_1755629380_68a4c744ccf46_3
+[09-Sep-2025 23:47:46 UTC] [2025-09-09 23:47:46] [WARNING] Could not check status for ECAST_1755629380_68a4c744ccf46_3: Status check failed
+[09-Sep-2025 23:47:47 UTC] [2025-09-09 23:47:47] [INFO] Checking status for transaction: ECAST_1755629523_68a4c7d3e19d0_3
+[09-Sep-2025 23:47:47 UTC] [2025-09-09 23:47:47] [WARNING] Could not check status for ECAST_1755629523_68a4c7d3e19d0_3: Status check failed
+[09-Sep-2025 23:47:48 UTC] [2025-09-09 23:47:48] [INFO] Checking status for transaction: ECAST_1755629533_68a4c7dd0968e_3
+[09-Sep-2025 23:47:48 UTC] [2025-09-09 23:47:48] [WARNING] Could not check status for ECAST_1755629533_68a4c7dd0968e_3: Status check failed
+[09-Sep-2025 23:47:48 UTC] [2025-09-09 23:47:48] [INFO] Checking status for transaction: ECAST_1755632304_68a4d2b0ea8be_3
+[09-Sep-2025 23:47:49 UTC] [2025-09-09 23:47:49] [WARNING] Could not check status for ECAST_1755632304_68a4d2b0ea8be_3: Status check failed
+[09-Sep-2025 23:47:49 UTC] [2025-09-09 23:47:49] [INFO] Checking status for transaction: ECAST_1755636324_68a4e2641604f_3
+[09-Sep-2025 23:47:49 UTC] [2025-09-09 23:47:49] [WARNING] Could not check status for ECAST_1755636324_68a4e2641604f_3: Status check failed
+[09-Sep-2025 23:47:50 UTC] [2025-09-09 23:47:50] [INFO] Checking status for transaction: ECAST_1755636339_68a4e27345f1d_3
+[09-Sep-2025 23:47:50 UTC] [2025-09-09 23:47:50] [WARNING] Could not check status for ECAST_1755636339_68a4e27345f1d_3: Status check failed
+[09-Sep-2025 23:47:51 UTC] [2025-09-09 23:47:51] [INFO] Checking status for transaction: ECAST_1755636347_68a4e27b7daa3_3
+[09-Sep-2025 23:47:51 UTC] [2025-09-09 23:47:51] [WARNING] Could not check status for ECAST_1755636347_68a4e27b7daa3_3: Status check failed
+[09-Sep-2025 23:47:51 UTC] [2025-09-09 23:47:51] [INFO] Checking status for transaction: ECAST_1755637858_68a4e86248ffd_3
+[09-Sep-2025 23:47:52 UTC] [2025-09-09 23:47:52] [WARNING] Could not check status for ECAST_1755637858_68a4e86248ffd_3: Status check failed
+[09-Sep-2025 23:47:52 UTC] [2025-09-09 23:47:52] [INFO] Checking status for transaction: ECAST_1757452841_6589
+[09-Sep-2025 23:47:52 UTC] [2025-09-09 23:47:52] [WARNING] Could not check status for ECAST_1757452841_6589: Status check failed
+[09-Sep-2025 23:47:53 UTC] [2025-09-09 23:47:53] [INFO] Checking status for transaction: ECAST_1757452841_1306
+[09-Sep-2025 23:47:53 UTC] [2025-09-09 23:47:53] [WARNING] Could not check status for ECAST_1757452841_1306: Status check failed
+[09-Sep-2025 23:47:54 UTC] [2025-09-09 23:47:54] [INFO] Checking status for transaction: ECAST_1757452845_9428
+[09-Sep-2025 23:47:54 UTC] [2025-09-09 23:47:54] [WARNING] Could not check status for ECAST_1757452845_9428: Status check failed
+[09-Sep-2025 23:47:54 UTC] [2025-09-09 23:47:54] [INFO] Checking status for transaction: ECAST_1757452845_2220
+[09-Sep-2025 23:47:55 UTC] [2025-09-09 23:47:55] [WARNING] Could not check status for ECAST_1757452845_2220: Status check failed
+[09-Sep-2025 23:47:55 UTC] [2025-09-09 23:47:55] [INFO] Checking status for transaction: ECAST_1757452856_9915
+[09-Sep-2025 23:47:55 UTC] [2025-09-09 23:47:55] [WARNING] Could not check status for ECAST_1757452856_9915: Status check failed
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Checked 20 pending transactions, updated 0
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Checking for completed transactions missing votes...
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Creating 1 missing vote(s) for transaction: ECAST_1757460206_8779
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [ERROR] Error creating votes for transaction ECAST_1757460206_8779: SQLSTATE[HY000]: General error: 1364 Field 'id' doesn't have a default value
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Creating 1 missing vote(s) for transaction: ECAST_1757460295_3349
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [ERROR] Error creating votes for transaction ECAST_1757460295_3349: SQLSTATE[HY000]: General error: 1364 Field 'id' doesn't have a default value
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Created 0 missing vote records
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] === SUMMARY ===
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] • Pending transactions checked: 20
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] • Transactions status updated: 0
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] • Missing votes created: 0
+[09-Sep-2025 23:47:56 UTC] [2025-09-09 23:47:56] [INFO] Automatic vote creation check completed successfully
+[10-Sep-2025 20:43:19 UTC] [2025-09-10 20:43:19] [INFO] Starting automatic vote creation and status check
+[10-Sep-2025 20:43:19 UTC] [2025-09-10 20:43:19] [INFO] Checking pending transactions for status updates...
+[10-Sep-2025 20:43:19 UTC] [2025-09-10 20:43:19] [INFO] Checking status for transaction: TXN_1755384448_7432
+[10-Sep-2025 20:43:20 UTC] [2025-09-10 20:43:20] [WARNING] Could not check status for TXN_1755384448_7432: Status check failed
+[10-Sep-2025 20:43:20 UTC] [2025-09-10 20:43:20] [INFO] Checking status for transaction: TXN_1755384488_8030
+[10-Sep-2025 20:43:21 UTC] [2025-09-10 20:43:21] [WARNING] Could not check status for TXN_1755384488_8030: Status check failed
+[10-Sep-2025 20:43:21 UTC] [2025-09-10 20:43:21] [INFO] Checking status for transaction: TXN_1755385700_8815
+[10-Sep-2025 20:43:21 UTC] [2025-09-10 20:43:21] [WARNING] Could not check status for TXN_1755385700_8815: Status check failed
+[10-Sep-2025 20:43:22 UTC] [2025-09-10 20:43:22] [INFO] Checking status for transaction: TXN_1755385727_9482
+[10-Sep-2025 20:43:22 UTC] [2025-09-10 20:43:22] [WARNING] Could not check status for TXN_1755385727_9482: Status check failed
+[10-Sep-2025 20:43:22 UTC] [2025-09-10 20:43:22] [INFO] Checking status for transaction: TXN_1755385991_5181
+[10-Sep-2025 20:43:23 UTC] [2025-09-10 20:43:23] [WARNING] Could not check status for TXN_1755385991_5181: Status check failed
+[10-Sep-2025 20:43:23 UTC] [2025-09-10 20:43:23] [INFO] Checking status for transaction: ECAST_1755627097_5
+[10-Sep-2025 20:43:23 UTC] [2025-09-10 20:43:23] [WARNING] Could not check status for ECAST_1755627097_5: Status check failed
+[10-Sep-2025 20:43:24 UTC] [2025-09-10 20:43:24] [INFO] Checking status for transaction: ECAST_1755629370_68a4c73ad4969_3
+[10-Sep-2025 20:43:24 UTC] [2025-09-10 20:43:24] [WARNING] Could not check status for ECAST_1755629370_68a4c73ad4969_3: Status check failed
+[10-Sep-2025 20:43:25 UTC] [2025-09-10 20:43:25] [INFO] Checking status for transaction: ECAST_1755629380_68a4c744ccf46_3
+[10-Sep-2025 20:43:25 UTC] [2025-09-10 20:43:25] [WARNING] Could not check status for ECAST_1755629380_68a4c744ccf46_3: Status check failed
+[10-Sep-2025 20:43:25 UTC] [2025-09-10 20:43:25] [INFO] Checking status for transaction: ECAST_1755629523_68a4c7d3e19d0_3
+[10-Sep-2025 20:43:26 UTC] [2025-09-10 20:43:26] [WARNING] Could not check status for ECAST_1755629523_68a4c7d3e19d0_3: Status check failed
+[10-Sep-2025 20:43:26 UTC] [2025-09-10 20:43:26] [INFO] Checking status for transaction: ECAST_1755629533_68a4c7dd0968e_3
+[10-Sep-2025 20:43:26 UTC] [2025-09-10 20:43:26] [WARNING] Could not check status for ECAST_1755629533_68a4c7dd0968e_3: Status check failed
+[10-Sep-2025 20:43:27 UTC] [2025-09-10 20:43:27] [INFO] Checking status for transaction: ECAST_1755632304_68a4d2b0ea8be_3
+[10-Sep-2025 20:43:27 UTC] [2025-09-10 20:43:27] [WARNING] Could not check status for ECAST_1755632304_68a4d2b0ea8be_3: Status check failed
+[10-Sep-2025 20:43:28 UTC] [2025-09-10 20:43:28] [INFO] Checking status for transaction: ECAST_1755636324_68a4e2641604f_3
+[10-Sep-2025 20:43:28 UTC] [2025-09-10 20:43:28] [WARNING] Could not check status for ECAST_1755636324_68a4e2641604f_3: Status check failed
+[10-Sep-2025 20:43:28 UTC] [2025-09-10 20:43:28] [INFO] Checking status for transaction: ECAST_1755636339_68a4e27345f1d_3
+[10-Sep-2025 20:43:34 UTC] [2025-09-10 20:43:34] [WARNING] Could not check status for ECAST_1755636339_68a4e27345f1d_3: Status check failed
+[10-Sep-2025 20:43:34 UTC] [2025-09-10 20:43:34] [INFO] Checking status for transaction: ECAST_1755636347_68a4e27b7daa3_3
+[10-Sep-2025 20:43:34 UTC] [2025-09-10 20:43:34] [WARNING] Could not check status for ECAST_1755636347_68a4e27b7daa3_3: Status check failed
+[10-Sep-2025 20:43:35 UTC] [2025-09-10 20:43:35] [INFO] Checking status for transaction: ECAST_1755637858_68a4e86248ffd_3
+[10-Sep-2025 20:43:35 UTC] [2025-09-10 20:43:35] [WARNING] Could not check status for ECAST_1755637858_68a4e86248ffd_3: Status check failed
+[10-Sep-2025 20:43:36 UTC] [2025-09-10 20:43:36] [INFO] Checking status for transaction: ECAST_1757452841_6589
+[10-Sep-2025 20:43:36 UTC] [2025-09-10 20:43:36] [WARNING] Could not check status for ECAST_1757452841_6589: Status check failed
+[10-Sep-2025 20:43:36 UTC] [2025-09-10 20:43:36] [INFO] Checking status for transaction: ECAST_1757452841_1306
+[10-Sep-2025 20:43:37 UTC] [2025-09-10 20:43:37] [WARNING] Could not check status for ECAST_1757452841_1306: Status check failed
+[10-Sep-2025 20:43:37 UTC] [2025-09-10 20:43:37] [INFO] Checking status for transaction: ECAST_1757452845_9428
+[10-Sep-2025 20:43:37 UTC] [2025-09-10 20:43:37] [WARNING] Could not check status for ECAST_1757452845_9428: Status check failed
+[10-Sep-2025 20:43:38 UTC] [2025-09-10 20:43:38] [INFO] Checking status for transaction: ECAST_1757452845_2220
+[10-Sep-2025 20:43:38 UTC] [2025-09-10 20:43:38] [WARNING] Could not check status for ECAST_1757452845_2220: Status check failed
+[10-Sep-2025 20:43:38 UTC] [2025-09-10 20:43:38] [INFO] Checking status for transaction: ECAST_1757452856_9915
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [WARNING] Could not check status for ECAST_1757452856_9915: Status check failed
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] Checked 20 pending transactions, updated 0
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] Checking for completed transactions missing votes...
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] Creating 1 missing vote(s) for transaction: ECAST_1757535649_5285
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] ✓ Created 1 vote(s) for transaction: ECAST_1757535649_5285
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] Created 1 missing vote records
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] === SUMMARY ===
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] • Pending transactions checked: 20
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] • Transactions status updated: 0
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] • Missing votes created: 1
+[10-Sep-2025 20:43:39 UTC] [2025-09-10 20:43:39] [INFO] Automatic vote creation check completed successfully

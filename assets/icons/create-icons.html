@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon-preview { margin: 10px; display: inline-block; }
+        canvas { border: 1px solid #ccc; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>PWA Icon Generator for E-Cast Voting</h1>
+    <p>This will generate all required PWA icons. Click the button below:</p>
+    <button onclick="generateIcons()">Generate All Icons</button>
+    <div id="icons-container"></div>
+    
+    <script>
+        function generateIcons() {
+            const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+            const container = document.getElementById('icons-container');
+            container.innerHTML = '';
+            
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                
+                // Create gradient background
+                const gradient = ctx.createLinearGradient(0, 0, size, size);
+                gradient.addColorStop(0, '#007bff');
+                gradient.addColorStop(1, '#0056b3');
+                
+                // Fill background
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, size, size);
+                
+                // Add border
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = size * 0.02;
+                ctx.strokeRect(0, 0, size, size);
+                
+                // Draw ballot box
+                const boxSize = size * 0.3;
+                const boxX = (size - boxSize) / 2;
+                const boxY = (size - boxSize) / 2;
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(boxX, boxY, boxSize, boxSize);
+                ctx.strokeStyle = '#007bff';
+                ctx.lineWidth = size * 0.01;
+                ctx.strokeRect(boxX, boxY, boxSize, boxSize);
+                
+                // Add ballot slot
+                const slotWidth = boxSize * 0.7;
+                const slotHeight = size * 0.02;
+                const slotX = boxX + (boxSize - slotWidth) / 2;
+                const slotY = boxY - slotHeight;
+                
+                ctx.fillStyle = '#007bff';
+                ctx.fillRect(slotX, slotY, slotWidth, slotHeight);
+                
+                // Add checkmark
+                const checkSize = boxSize * 0.4;
+                const checkX = boxX + (boxSize - checkSize) / 2;
+                const checkY = boxY + (boxSize - checkSize) / 2;
+                
+                ctx.strokeStyle = '#28a745';
+                ctx.lineWidth = size * 0.015;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                ctx.beginPath();
+                ctx.moveTo(checkX, checkY + checkSize * 0.5);
+                ctx.lineTo(checkX + checkSize * 0.3, checkY + checkSize * 0.7);
+                ctx.lineTo(checkX + checkSize, checkY + checkSize * 0.3);
+                ctx.stroke();
+                
+                // Add text for larger icons
+                if (size >= 144) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = `bold ${size * 0.08}px Arial`;
+                    ctx.textAlign = 'center';
+                    ctx.fillText('E-CAST', size / 2, size * 0.85);
+                }
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `icon-${size}x${size}.png`;
+                link.href = canvas.toDataURL();
+                link.textContent = `Download ${size}x${size}`;
+                
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                div.appendChild(canvas);
+                div.appendChild(document.createElement('br'));
+                div.appendChild(link);
+                
+                container.appendChild(div);
+            });
+            
+            // Generate favicon
+            const faviconCanvas = document.createElement('canvas');
+            faviconCanvas.width = 32;
+            faviconCanvas.height = 32;
+            const faviconCtx = faviconCanvas.getContext('2d');
+            
+            const faviconGradient = faviconCtx.createLinearGradient(0, 0, 32, 32);
+            faviconGradient.addColorStop(0, '#007bff');
+            faviconGradient.addColorStop(1, '#0056b3');
+            
+            faviconCtx.fillStyle = faviconGradient;
+            faviconCtx.fillRect(0, 0, 32, 32);
+            
+            faviconCtx.fillStyle = '#ffffff';
+            faviconCtx.fillRect(8, 12, 16, 8);
+            faviconCtx.strokeStyle = '#007bff';
+            faviconCtx.strokeRect(8, 12, 16, 8);
+            
+            const faviconLink = document.createElement('a');
+            faviconLink.download = 'favicon-32x32.png';
+            faviconLink.href = faviconCanvas.toDataURL();
+            faviconLink.textContent = 'Download Favicon';
+            
+            const faviconDiv = document.createElement('div');
+            faviconDiv.className = 'icon-preview';
+            faviconDiv.appendChild(faviconCanvas);
+            faviconDiv.appendChild(document.createElement('br'));
+            faviconDiv.appendChild(faviconLink);
+            
+            container.appendChild(faviconDiv);
+            
+            alert('Icons generated! Right-click each "Download" link and save the files to the assets/icons/ directory.');
+        }
+    </script>
+</body>
+</html>
