@@ -1,1 +1,0 @@
-{"timestamp":"2025-08-10 19:37:12","event":"login_database_error","ip":"127.0.0.1","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:141.0) Gecko\/20100101 Firefox\/141.0","details":{"error":"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'e_cast_voting.login_attempts' doesn't exist"}}
