@@ -24,9 +24,9 @@ class Database {
             // Production hosting configuration
             // REPLACE THESE VALUES WITH YOUR ACTUAL HOSTING DATABASE CREDENTIALS
             $this->host = 'localhost';                       // Usually 'localhost' for shared hosting
-            $this->db_name = 'baroncas_voting';  // Replace with your actual database name
-            $this->username = 'baroncas_voting';      // Replace with your actual database username
-            $this->password = 'y9PGBYbZLvXq';        // Replace with your actual database password
+            $this->db_name = 'menswebg_baroncast';  // Replace with your actual database name
+            $this->username = 'menswebg_baroncast';      // Replace with your actual database username
+            $this->password = '$Norbert3600$';        // Replace with your actual database password
             $this->port = '3306';
         }
     }
