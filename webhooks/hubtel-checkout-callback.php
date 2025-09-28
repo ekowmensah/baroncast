@@ -78,20 +78,20 @@ try {
         $checkoutId,
         $clientReference
     ]);
-    
     logCallback('Transaction status updated', [
         'reference' => $clientReference,
         'status' => $internalStatus,
         'hubtel_status' => $paymentStatus
     ]);
     
-    // If payment is successful, create votes
+    // Create votes for successful payments
     if ($internalStatus === 'completed') {
-        // Get event_id and category_id from the nominee
+        // Get nominee data for vote creation
         $stmt = $pdo->prepare("
-            SELECT n.category_id, c.event_id 
+            SELECT n.*, c.id as category_id, e.id as event_id 
             FROM nominees n 
-            JOIN categories c ON n.category_id = c.id 
+            LEFT JOIN categories c ON n.category_id = c.id 
+            LEFT JOIN events e ON c.event_id = e.id 
             WHERE n.id = ?
         ");
         $stmt->execute([$transaction['nominee_id']]);
@@ -103,6 +103,13 @@ try {
             $nomineeId = (int)$transaction['nominee_id'];
             $voterPhone = $transaction['voter_phone'];
             
+            logCallback('Creating votes', [
+                'vote_count' => $voteCount,
+                'nominee_id' => $nomineeId,
+                'transaction_amount' => $transaction['amount']
+            ]);
+            
+            // Create individual vote records
             for ($i = 0; $i < $voteCount; $i++) {
                 $stmt = $pdo->prepare("
                     INSERT INTO votes (
@@ -118,20 +125,24 @@ try {
                     $voterPhone, 
                     $transaction['id'],
                     $clientReference,
-                    $transaction['amount'] / $voteCount
+                    $transaction['amount'] / $voteCount  // Divide total amount by vote count
                 ]);
             }
             
             logCallback('Votes created successfully', [
                 'vote_count' => $voteCount,
                 'nominee_id' => $nomineeId,
-                'transaction_id' => $transaction['id']
+                'transaction_id' => $transaction['id'],
+                'individual_vote_amount' => $transaction['amount'] / $voteCount
             ]);
         } else {
             logCallback('Could not find nominee data for vote creation', [
                 'nominee_id' => $transaction['nominee_id']
             ]);
         }
+        
+        // Also handle shortcode transactions if this is a shortcode payment
+        handleShortcodePaymentCallback($clientReference, $internalStatus, $checkoutId, $pdo);
         
         // Log successful payment
         $stmt = $pdo->prepare("
@@ -162,5 +173,46 @@ try {
         'Status' => 'Failed',
         'Message' => 'Callback processing failed: ' . $e->getMessage()
     ]);
+}
+
+/**
+ * Handle shortcode payment callback
+ */
+function handleShortcodePaymentCallback($transactionRef, $status, $hubtelTransactionId, $pdo) {
+    try {
+        // Check if this is a shortcode transaction
+        $stmt = $pdo->prepare("SELECT * FROM shortcode_transactions WHERE transaction_ref = ?");
+        $stmt->execute([$transactionRef]);
+        $shortcodeTransaction = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($shortcodeTransaction) {
+            logCallback('Processing shortcode payment callback', [
+                'transaction_ref' => $transactionRef,
+                'status' => $status
+            ]);
+            
+            // Use the shortcode voting service to process the callback
+            require_once __DIR__ . '/../services/ShortcodeVotingService.php';
+            $shortcodeService = new ShortcodeVotingService();
+            
+            $result = $shortcodeService->processPaymentCallback($transactionRef, $status, $hubtelTransactionId);
+            
+            if ($result) {
+                logCallback('Shortcode payment callback processed successfully', [
+                    'transaction_ref' => $transactionRef
+                ]);
+            } else {
+                logCallback('Shortcode payment callback processing failed', [
+                    'transaction_ref' => $transactionRef
+                ]);
+            }
+        }
+        
+    } catch (Exception $e) {
+        logCallback('Shortcode callback error', [
+            'transaction_ref' => $transactionRef,
+            'error' => $e->getMessage()
+        ]);
+    }
 }
 ?>

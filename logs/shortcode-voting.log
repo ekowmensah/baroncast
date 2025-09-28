@@ -1,0 +1,30 @@
+[28-Sep-2025 14:55:29 Europe/Berlin] 2025-09-28 14:55:29 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"1","session_id":null,"sequence":1}
+[28-Sep-2025 14:55:29 Europe/Berlin] 2025-09-28 14:55:29 - Processing shortcode request - {"phone":"233241234567","input":"1","session_id":null,"sequence":1}
+[28-Sep-2025 14:55:29 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:55:29 Europe/Berlin] 2025-09-28 14:55:29 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:29 Europe/Berlin] 2025-09-28 14:55:29 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:32 Europe/Berlin] 2025-09-28 14:55:32 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"2","session_id":null,"sequence":2}
+[28-Sep-2025 14:55:32 Europe/Berlin] 2025-09-28 14:55:32 - Processing shortcode request - {"phone":"233241234567","input":"2","session_id":null,"sequence":2}
+[28-Sep-2025 14:55:32 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:55:32 Europe/Berlin] 2025-09-28 14:55:32 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:32 Europe/Berlin] 2025-09-28 14:55:32 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:37 Europe/Berlin] 2025-09-28 14:55:37 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"*","session_id":null,"sequence":3}
+[28-Sep-2025 14:55:37 Europe/Berlin] 2025-09-28 14:55:37 - Processing shortcode request - {"phone":"233241234567","input":"*","session_id":null,"sequence":3}
+[28-Sep-2025 14:55:37 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:55:37 Europe/Berlin] 2025-09-28 14:55:37 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:37 Europe/Berlin] 2025-09-28 14:55:37 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:40 Europe/Berlin] 2025-09-28 14:55:40 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"*","session_id":null,"sequence":4}
+[28-Sep-2025 14:55:40 Europe/Berlin] 2025-09-28 14:55:40 - Processing shortcode request - {"phone":"233241234567","input":"*","session_id":null,"sequence":4}
+[28-Sep-2025 14:55:40 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:55:40 Europe/Berlin] 2025-09-28 14:55:40 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:40 Europe/Berlin] 2025-09-28 14:55:40 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:51 Europe/Berlin] 2025-09-28 14:55:51 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"","session_id":"TEST_ybk9sl1rc","sequence":1}
+[28-Sep-2025 14:55:51 Europe/Berlin] 2025-09-28 14:55:51 - Processing shortcode request - {"phone":"233241234567","input":"","session_id":"TEST_ybk9sl1rc","sequence":1}
+[28-Sep-2025 14:55:51 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:55:51 Europe/Berlin] 2025-09-28 14:55:51 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:55:51 Europe/Berlin] 2025-09-28 14:55:51 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:56:09 Europe/Berlin] 2025-09-28 14:56:09 - Shortcode voting webhook received - {"phone_number":"233241234567","input":"999","session_id":null,"sequence":1}
+[28-Sep-2025 14:56:09 Europe/Berlin] 2025-09-28 14:56:09 - Processing shortcode request - {"phone":"233241234567","input":"999","session_id":null,"sequence":1}
+[28-Sep-2025 14:56:09 Europe/Berlin] Shortcode voting error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'voting_end_date' in 'where clause'
+[28-Sep-2025 14:56:09 Europe/Berlin] 2025-09-28 14:56:09 - Shortcode voting response - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}
+[28-Sep-2025 14:56:09 Europe/Berlin] 2025-09-28 14:56:09 - Final response sent - {"Type":"Release","Message":"Service temporarily unavailable. Please try again later.","Mask":0}

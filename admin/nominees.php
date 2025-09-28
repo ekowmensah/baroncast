@@ -247,6 +247,7 @@ try {
                                 <thead style="background: var(--bg-secondary);">
                                     <tr>
                                         <th style="padding: 1rem; border: none;">Nominee</th>
+                                        <th style="padding: 1rem; border: none;">Short Code</th>
                                         <th style="padding: 1rem; border: none;">Event & Category</th>
                                         <th style="padding: 1rem; border: none;">Organizer</th>
                                         <th style="padding: 1rem; border: none;">Votes</th>
@@ -270,6 +271,19 @@ try {
                                                         ID: #<?= str_pad($nominee['id'], 4, '0', STR_PAD_LEFT) ?>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
+                                            <div style="text-align: center;">
+                                                <?php if (!empty($nominee['short_code'])): ?>
+                                                    <span style="color: #007bff; font-weight: bold; font-family: monospace; font-size: 1rem;">
+                                                        <i class="fas fa-hashtag"></i><?= htmlspecialchars($nominee['short_code']) ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span style="color: #6c757d; font-style: italic; font-size: 0.875rem;">
+                                                        <i class="fas fa-minus"></i> Not Set
+                                                    </span>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                         <td style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
@@ -441,12 +455,26 @@ try {
                     
                     <div class="form-row">
                         <div class="form-group">
+                            <label for="nomineeShortCode" class="form-label" style="color: #007bff; font-weight: bold;">
+                                <i class="fas fa-hashtag"></i> Short Code (USSD Voting)
+                            </label>
+                            <input type="text" id="nomineeShortCode" name="short_code" class="form-control" 
+                                   placeholder="e.g., MHA012 (auto-generated if empty)"
+                                   style="border: 2px solid #007bff;">
+                            <small class="form-text" style="color: #007bff; font-weight: bold;">
+                                <i class="fas fa-info-circle"></i> Unique code for USSD voting. Leave empty to auto-generate.
+                            </small>
+                        </div>
+                        <div class="form-group">
                             <label for="nomineeStatus" class="form-label">Status</label>
                             <select id="nomineeStatus" name="status" class="form-control">
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="displayOrder" class="form-label">Display Order</label>
                             <input type="number" id="displayOrder" name="display_order" class="form-control" 

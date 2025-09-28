@@ -293,7 +293,17 @@ $schemes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 <td><?= htmlspecialchars($nominee['nominee_name']) ?></td>
                                                 <td><?= htmlspecialchars($nominee['event_title'] ?? 'No Event') ?></td>
                                                 <td><?= htmlspecialchars($nominee['category_name'] ?? 'No Category') ?></td>
-                                                <td><?= htmlspecialchars($nominee['id']) ?></td>
+                                                <td>
+                                                    <?php if (!empty($nominee['short_code'])): ?>
+                                                        <span style="color: #007bff; font-weight: bold; font-family: monospace;">
+                                                            <i class="fas fa-hashtag"></i><?= htmlspecialchars($nominee['short_code']) ?>
+                                                        </span>
+                                                    <?php else: ?>
+                                                        <span style="color: #6c757d; font-style: italic;">
+                                                            <i class="fas fa-minus"></i> Not Set
+                                                        </span>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td><?= number_format($nominee['total_votes']) ?></td>
                                                 <td>
                                                     <?php 
@@ -439,9 +449,15 @@ $schemes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <!-- Voting Details -->
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="shortCode">Short Code <span class="required">*</span></label>
-                            <input type="text" id="shortCode" class="form-control" placeholder="e.g., MHA012" required>
-                            <small class="form-text">Unique code for USSD voting</small>
+                            <label for="shortCode" style="color: #007bff; font-weight: bold;">
+                                <i class="fas fa-hashtag"></i> Short Code (USSD Voting)
+                            </label>
+                            <input type="text" id="shortCode" class="form-control" 
+                                   placeholder="e.g., MHA012 (auto-generated if empty)"
+                                   style="border: 2px solid #007bff;">
+                            <small class="form-text" style="color: #007bff; font-weight: bold;">
+                                <i class="fas fa-info-circle"></i> Unique code for USSD voting. Leave empty to auto-generate.
+                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="nomineeStatus">Status</label>
@@ -533,6 +549,23 @@ $schemes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Add Nominee Modal Functions
         function openAddNomineeModal() {
             document.getElementById('addNomineeModal').style.display = 'flex';
+            
+            // Debug: Check if shortcode field is visible
+            setTimeout(() => {
+                const shortCodeField = document.getElementById('shortCode');
+                if (shortCodeField) {
+                    console.log('✅ Shortcode field found:', shortCodeField);
+                    console.log('✅ Field visible:', shortCodeField.offsetHeight > 0);
+                    console.log('✅ Field styles:', window.getComputedStyle(shortCodeField));
+                    
+                    // Make it extra visible for debugging
+                    shortCodeField.style.backgroundColor = '#e3f2fd';
+                    shortCodeField.style.border = '3px solid #2196f3';
+                } else {
+                    console.error('❌ Shortcode field NOT found!');
+                    alert('DEBUG: Shortcode field not found in DOM!');
+                }
+            }, 100);
         }
         
         function closeAddNomineeModal() {
@@ -552,13 +585,13 @@ $schemes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             const bio = document.getElementById('nomineeBio').value;
             const image = document.getElementById('nomineeImage').files[0];
             
-            if (!name || !eventScheme || !category || !shortCode) {
+            if (!name || !eventScheme || !category) {
                 alert('Please fill in all required fields (marked with *)');
                 return;
             }
             
-            // Validate short code format
-            if (!/^[A-Z]{2,3}\d{3,4}$/.test(shortCode)) {
+            // Validate short code format if provided
+            if (shortCode && !/^[A-Z]{2,3}\d{3,4}$/.test(shortCode)) {
                 alert('Short code must be in format like MHA012 or ABC1234');
                 return;
             }

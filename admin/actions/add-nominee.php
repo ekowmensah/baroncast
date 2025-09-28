@@ -24,6 +24,9 @@ try {
     $status = $_POST['status'] ?? 'active';
     $displayOrder = intval($_POST['display_order'] ?? 0);
     
+    // Generate shortcode if provided, otherwise auto-generate
+    $shortCode = !empty($_POST['short_code']) ? strtoupper(trim($_POST['short_code'])) : null;
+    
     // Validate required fields
     if (empty($name)) {
         echo json_encode(['success' => false, 'message' => 'Nominee name is required']);
@@ -33,6 +36,22 @@ try {
     if ($categoryId <= 0) {
         echo json_encode(['success' => false, 'message' => 'Please select a valid category']);
         exit;
+    }
+    
+    // Validate shortcode format if provided
+    if ($shortCode && !preg_match('/^[A-Z]{2,3}\d{3,4}$/', $shortCode)) {
+        echo json_encode(['success' => false, 'message' => 'Short code must be in format like MHA012 or ABC1234']);
+        exit;
+    }
+    
+    // Check if shortcode already exists
+    if ($shortCode) {
+        $stmt = $pdo->prepare("SELECT id FROM nominees WHERE short_code = ?");
+        $stmt->execute([$shortCode]);
+        if ($stmt->fetch()) {
+            echo json_encode(['success' => false, 'message' => 'Short code already exists. Please choose a different one.']);
+            exit;
+        }
     }
     
     // Validate category exists
@@ -81,13 +100,14 @@ try {
     // Insert new nominee
     $stmt = $pdo->prepare("
         INSERT INTO nominees (
-            category_id, name, description, image, display_order, status
-        ) VALUES (?, ?, ?, ?, ?, ?)
+            category_id, name, short_code, description, image, display_order, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ");
     
     $stmt->execute([
         $categoryId,
         $name,
+        $shortCode, // Will be updated after insert if null
         $description,
         $imagePath,
         $displayOrder,
@@ -96,10 +116,40 @@ try {
     
     $nomineeId = $pdo->lastInsertId();
     
+    // Generate shortcode if not provided
+    if (!$shortCode) {
+        $generatedShortCode = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $name), 0, 3)) . 
+                            str_pad($nomineeId, 3, '0', STR_PAD_LEFT);
+        
+        // Ensure uniqueness
+        $attempt = 0;
+        $finalShortCode = $generatedShortCode;
+        
+        while ($attempt < 10) {
+            $checkStmt = $pdo->prepare("SELECT id FROM nominees WHERE short_code = ? AND id != ?");
+            $checkStmt->execute([$finalShortCode, $nomineeId]);
+            
+            if (!$checkStmt->fetch()) {
+                break; // Unique shortcode found
+            }
+            
+            $attempt++;
+            $finalShortCode = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $name), 0, 2)) . 
+                            str_pad($nomineeId, 4, '0', STR_PAD_LEFT);
+        }
+        
+        // Update nominee with generated shortcode
+        $updateStmt = $pdo->prepare("UPDATE nominees SET short_code = ? WHERE id = ?");
+        $updateStmt->execute([$finalShortCode, $nomineeId]);
+        
+        $shortCode = $finalShortCode;
+    }
+    
     echo json_encode([
         'success' => true,
         'message' => 'Nominee added successfully',
-        'nominee_id' => $nomineeId
+        'nominee_id' => $nomineeId,
+        'short_code' => $shortCode
     ]);
     
 } catch (Exception $e) {
