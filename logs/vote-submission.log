@@ -1587,3 +1587,13 @@
 </body>
 </html>
 
+[27-Sep-2025 12:33:37 Europe/Berlin] Hubtel API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/mobilemoney
+[27-Sep-2025 12:33:37 Europe/Berlin] Hubtel API Data: {"CustomerName":"John Doe","CustomerMsisdn":"233241234567","CustomerEmail":"john@example.com","Channel":"mtn-gh","Amount":2,"PrimaryCallbackUrl":"http:\/\/localhost\/webhooks\/hubtel-receive-money-callback.php","Description":"Vote for Kofi Boakye in Best Programmer of the year (2 votes)","ClientReference":"ECAST_1758969217_8864"}
+[27-Sep-2025 12:33:43 Europe/Berlin] Hubtel API Response Code: 403
+[27-Sep-2025 12:33:43 Europe/Berlin] Hubtel API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
