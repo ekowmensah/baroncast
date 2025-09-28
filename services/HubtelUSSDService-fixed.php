@@ -48,9 +48,9 @@ class HubtelUSSDService {
      */
     private function setEnvironment() {
         if ($this->environment === 'production') {
-            $this->baseUrl = 'https://payproxyapi.hubtel.com';
+            $this->baseUrl = 'https://rmp.hubtel.com';
         } else {
-            $this->baseUrl = 'https://payproxyapi.hubtel.com'; // Same for sandbox
+            $this->baseUrl = 'https://sandbox.hubtel.com';
         }
     }
     
@@ -73,12 +73,13 @@ class HubtelUSSDService {
                 'Metadata' => json_encode($metadata)
             ];
             
-            // Use the correct Hubtel PayProxy API endpoint
+            // Try different USSD endpoints based on actual Hubtel API structure
             $endpoints = [
-                "/items/initiate", // Primary endpoint from church management system
-                "/items/ussd/initiate", // Alternative USSD-specific endpoint
-                "/ussd/initiate", // Another possible USSD endpoint
-                "/receive/ussd", // Fallback endpoint
+                "/merchantaccount/merchants/{$this->posId}/receive/ussd",
+                "/merchantaccount/merchants/{$this->posId}/ussd/receive", 
+                "/ussd/receive",
+                "/receive/ussd",
+                "/merchantaccount/merchants/{$this->posId}/receive/mobilemoney" // Fallback to mobile money
             ];
             
             $response = null;

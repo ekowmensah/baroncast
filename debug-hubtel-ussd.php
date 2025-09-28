@@ -36,7 +36,7 @@ try {
     echo "Environment: $environment<br>";
     echo "Base URL: " . ($environment === 'production' ? 'https://rmp.hubtel.com' : 'https://sandbox.hubtel.com') . "<br><br>";
     
-    $baseUrl = $environment === 'production' ? 'https://rmp.hubtel.com' : 'https://sandbox.hubtel.com';
+    $baseUrl = 'https://payproxyapi.hubtel.com'; // Correct Hubtel PayProxy API
     
     echo "<h3>2. TESTING HUBTEL API ENDPOINTS:</h3>";
     
@@ -83,16 +83,16 @@ try {
     }
     echo "<br>";
     
-    // Test 4: USSD endpoint (the failing one)
-    echo "<strong>Test 4: USSD Payment API</strong><br>";
-    $testUrl = "$baseUrl/merchantaccount/merchants/$posId/receive/ussd";
+    // Test 4: Correct PayProxy API endpoint
+    echo "<strong>Test 4: PayProxy API (/items/initiate)</strong><br>";
+    $testUrl = "$baseUrl/items/initiate";
     $testData = [
         'CustomerName' => 'Test User',
         'CustomerMsisdn' => '233241234567',
         'CustomerEmail' => 'test@example.com',
         'Channel' => 'ussd-gh',
         'Amount' => 0.01,
-        'PrimaryCallbackUrl' => 'https://example.com/callback',
+        'PrimaryCallbackUrl' => 'https://gs-callback.hubtel.com/callback',
         'Description' => 'USSD API test',
         'ClientReference' => 'USSD_TEST_' . time()
     ];
@@ -104,13 +104,13 @@ try {
     }
     echo "<br>";
     
-    // Test 5: Alternative USSD endpoints
-    echo "<strong>Test 5: Alternative USSD Endpoints</strong><br>";
+    // Test 5: Alternative PayProxy endpoints
+    echo "<strong>Test 5: Alternative PayProxy Endpoints</strong><br>";
     $alternativeEndpoints = [
-        "$baseUrl/ussd/send",
-        "$baseUrl/messaging/ussd/send",
-        "$baseUrl/ussd/applications",
-        "$baseUrl/merchantaccount/merchants/$posId/ussd"
+        "$baseUrl/items/ussd/initiate",
+        "$baseUrl/ussd/initiate", 
+        "$baseUrl/items/receive",
+        "$baseUrl/receive/ussd"
     ];
     
     foreach ($alternativeEndpoints as $endpoint) {

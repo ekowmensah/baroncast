@@ -31,3 +31,101 @@
 </html>
 
 [28-Sep-2025 11:45:51 Europe/Berlin] USSD payment generation failed: Failed to generate USSD payment code
+[28-Sep-2025 12:21:16 Europe/Berlin] Trying USSD endpoint: https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/ussd
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/ussd
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759054876_5730","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"4\"}"}
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Response Code: 403
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:21:17 Europe/Berlin] Trying USSD endpoint: https://rmp.hubtel.com/merchantaccount/merchants/2031233/ussd/receive
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/ussd/receive
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759054876_5730","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"4\"}"}
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Response Code: 403
+[28-Sep-2025 12:21:17 Europe/Berlin] Hubtel USSD API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:21:17 Europe/Berlin] Trying USSD endpoint: https://rmp.hubtel.com/ussd/receive
+[28-Sep-2025 12:21:20 Europe/Berlin] Hubtel USSD API Request: POST https://rmp.hubtel.com/ussd/receive
+[28-Sep-2025 12:21:20 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759054876_5730","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"4\"}"}
+[28-Sep-2025 12:21:20 Europe/Berlin] Hubtel USSD API Response Code: 403
+[28-Sep-2025 12:21:20 Europe/Berlin] Hubtel USSD API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:21:20 Europe/Berlin] Trying USSD endpoint: https://rmp.hubtel.com/receive/ussd
+[28-Sep-2025 12:21:22 Europe/Berlin] Hubtel USSD API Request: POST https://rmp.hubtel.com/receive/ussd
+[28-Sep-2025 12:21:22 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759054876_5730","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"4\"}"}
+[28-Sep-2025 12:21:22 Europe/Berlin] Hubtel USSD API Response Code: 403
+[28-Sep-2025 12:21:22 Europe/Berlin] Hubtel USSD API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:21:22 Europe/Berlin] Trying USSD endpoint: https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/mobilemoney
+[28-Sep-2025 12:21:23 Europe/Berlin] Hubtel USSD API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/mobilemoney
+[28-Sep-2025 12:21:23 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759054876_5730","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"4\"}"}
+[28-Sep-2025 12:21:23 Europe/Berlin] Hubtel USSD API Response Code: 403
+[28-Sep-2025 12:21:23 Europe/Berlin] Hubtel USSD API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:21:23 Europe/Berlin] USSD payment generation failed: Failed to generate USSD payment code
+[28-Sep-2025 12:25:59 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/items/initiate
+[28-Sep-2025 12:26:00 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/items/initiate
+[28-Sep-2025 12:26:00 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055159_7313","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"5\"}"}
+[28-Sep-2025 12:26:00 Europe/Berlin] Hubtel USSD API Response Code: 401
+[28-Sep-2025 12:26:00 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:26:00 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/items/ussd/initiate
+[28-Sep-2025 12:26:01 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/items/ussd/initiate
+[28-Sep-2025 12:26:01 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055159_7313","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"5\"}"}
+[28-Sep-2025 12:26:01 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:26:01 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:26:01 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/ussd/initiate
+[28-Sep-2025 12:26:02 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/ussd/initiate
+[28-Sep-2025 12:26:02 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055159_7313","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"5\"}"}
+[28-Sep-2025 12:26:02 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:26:02 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:26:02 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/receive/ussd
+[28-Sep-2025 12:26:03 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/receive/ussd
+[28-Sep-2025 12:26:03 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055159_7313","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"5\"}"}
+[28-Sep-2025 12:26:03 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:26:03 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:26:03 Europe/Berlin] USSD payment generation failed: Failed to generate USSD payment code
+[28-Sep-2025 12:30:45 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/items/initiate
+[28-Sep-2025 12:30:46 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/items/initiate
+[28-Sep-2025 12:30:46 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055445_4455","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"6\"}"}
+[28-Sep-2025 12:30:46 Europe/Berlin] Hubtel USSD API Response Code: 401
+[28-Sep-2025 12:30:46 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:30:46 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/items/ussd/initiate
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/items/ussd/initiate
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055445_4455","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"6\"}"}
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:30:47 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/ussd/initiate
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/ussd/initiate
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055445_4455","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"6\"}"}
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:30:47 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:30:47 Europe/Berlin] Trying USSD endpoint: https://payproxyapi.hubtel.com/receive/ussd
+[28-Sep-2025 12:30:48 Europe/Berlin] Hubtel USSD API Request: POST https://payproxyapi.hubtel.com/receive/ussd
+[28-Sep-2025 12:30:48 Europe/Berlin] Hubtel USSD API Data: {"CustomerName":"Test Voter","CustomerMsisdn":"233241234567","CustomerEmail":"test@example.com","Amount":1,"PrimaryCallbackUrl":"https:\/\/gs-callback.hubtel.com\/callback","Description":"Vote for Kofi Boakye in Best Programmer of the year (1 vote)","ClientReference":"USSD_1759055445_4455","Metadata":"{\"voter_name\":\"Test Voter\",\"email\":\"test@example.com\",\"event_id\":1,\"nominee_id\":1,\"vote_count\":1,\"ussd_transaction_id\":\"6\"}"}
+[28-Sep-2025 12:30:48 Europe/Berlin] Hubtel USSD API Response Code: 404
+[28-Sep-2025 12:30:48 Europe/Berlin] Hubtel USSD API Response: 
+[28-Sep-2025 12:30:48 Europe/Berlin] USSD payment generation failed: Failed to generate USSD payment code

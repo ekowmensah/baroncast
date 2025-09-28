@@ -1597,3 +1597,23 @@
 </body>
 </html>
 
+[28-Sep-2025 12:45:13 Europe/Berlin] Hubtel API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/mobilemoney
+[28-Sep-2025 12:45:13 Europe/Berlin] Hubtel API Data: {"CustomerName":"Ekow Mensah","CustomerMsisdn":"233545644749","CustomerEmail":"ekowme@gmail.com","Channel":"mtn-gh","Amount":1,"PrimaryCallbackUrl":"http:\/\/localhost\/webhooks\/hubtel-receive-money-callback.php","Description":"Vote for Arthur in Best Programmer of the year (1 vote)","ClientReference":"ECAST_1759056313_6848"}
+[28-Sep-2025 12:45:14 Europe/Berlin] Hubtel API Response Code: 403
+[28-Sep-2025 12:45:14 Europe/Berlin] Hubtel API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[28-Sep-2025 12:48:31 Europe/Berlin] Hubtel API Request: POST https://rmp.hubtel.com/merchantaccount/merchants/2031233/receive/mobilemoney
+[28-Sep-2025 12:48:31 Europe/Berlin] Hubtel API Data: {"CustomerName":"Paa Kow Mensah","CustomerMsisdn":"233545644749","CustomerEmail":"","Channel":"mtn-gh","Amount":1,"PrimaryCallbackUrl":"http:\/\/localhost\/webhooks\/hubtel-receive-money-callback.php","Description":"Vote for Arthur in Best Programmer of the year (1 vote)","ClientReference":"ECAST_1759056511_6055"}
+[28-Sep-2025 12:48:33 Europe/Berlin] Hubtel API Response Code: 403
+[28-Sep-2025 12:48:33 Europe/Berlin] Hubtel API Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+

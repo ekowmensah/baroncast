@@ -372,6 +372,29 @@ $siteSettings = new SiteSettings();
         .error-message.show {
             display: block;
         }
+
+        .payment-option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .payment-option:hover {
+            border-color: #007bff;
+            background-color: #f8f9ff;
+        }
+
+        .payment-option input[type="radio"]:checked + i {
+            color: #007bff;
+        }
+
+        .payment-option:has(input[type="radio"]:checked) {
+            border-color: #007bff;
+            background-color: #f8f9ff;
+        }
         
         .pending-message {
             text-align: center;
@@ -488,6 +511,22 @@ $siteSettings = new SiteSettings();
                     </div>
 
                     <div class="form-group full-width">
+                        <label class="form-label">Payment Method</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0;">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="payproxy" checked style="margin-right: 10px;">
+                                <i class="fas fa-credit-card"></i> Secure Checkout (Recommended)
+                                <small style="display: block; color: #666; margin-top: 5px;">Mobile Money, Cards, Bank Transfers</small>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="direct" style="margin-right: 10px;">
+                                <i class="fas fa-mobile-alt"></i> Direct Mobile Money
+                                <small style="display: block; color: #666; margin-top: 5px;">Direct mobile money payment</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
                         <label class="form-label">
                             <input type="checkbox" id="testMode" style="margin-right: 10px;">
                             Test Mode (No real payment - for testing only)
@@ -570,11 +609,22 @@ $siteSettings = new SiteSettings();
                 submitHubtelVote(formData);
             });
             
-            // Submit vote using Hubtel Direct Receive Money API
+            // Submit vote using selected payment method
             function submitHubtelVote(formData) {
                 // Check if test mode is enabled
                 const testMode = document.getElementById('testMode').checked;
-                const endpoint = testMode ? 'actions/test-vote-submit.php' : 'actions/hubtel-vote-submit.php';
+                
+                // Get selected payment method
+                const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+                
+                let endpoint;
+                if (testMode) {
+                    endpoint = 'actions/test-vote-submit.php';
+                } else if (paymentMethod === 'payproxy') {
+                    endpoint = 'actions/hubtel-payproxy-vote-submit.php';
+                } else {
+                    endpoint = 'actions/hubtel-vote-submit.php';
+                }
                 
                 fetch(endpoint, {
                     method: 'POST',
@@ -586,25 +636,66 @@ $siteSettings = new SiteSettings();
                     
                     if (data.success) {
                         if (data.status === 'completed') {
-                            // Payment completed immediately
+                            // Payment completed immediately (test mode)
                             showSuccess(data);
+                        } else if (data.status === 'checkout_created' && data.checkout_url) {
+                            // PayProxy checkout created - redirect to payment page
+                            showPayProxyCheckout(data);
                         } else if (data.status === 'pending') {
-                            // Payment is pending, show pending status
+                            // Payment pending - show pending status
                             showPendingPayment(data);
                         } else {
-                            showError(data.message || 'Payment status unknown');
+                            showError(data.message || 'Vote submission failed. Please try again.');
                         }
                     } else {
                         showError(data.message || 'Vote submission failed. Please try again.');
                     }
                 })
                 .catch(error => {
-                    console.error('Vote Submission Error:', error);
                     loadingState.classList.remove('show');
                     showError('Network error. Please check your connection and try again.');
                 });
             }
             
+            // Show PayProxy checkout
+            function showPayProxyCheckout(data) {
+                voteForm.style.display = 'none';
+                
+                // Create PayProxy checkout message
+                const checkoutMessage = document.createElement('div');
+                checkoutMessage.className = 'pending-message';
+                checkoutMessage.innerHTML = `
+                    <i class="fas fa-credit-card" style="font-size: 3rem; margin-bottom: 1rem; color: #007bff;"></i>
+                    <h3>Secure Payment Checkout Created!</h3>
+                    <p>Your vote for <strong>${data.nominee_name}</strong> is ready for payment.</p>
+                    <p><strong>Amount:</strong> ₵${data.amount} for ${data.vote_count} vote(s)</p>
+                    <div style="margin: 20px 0;">
+                        <a href="${data.checkout_url}" target="_blank" style="
+                            display: inline-block;
+                            background: #007bff;
+                            color: white;
+                            padding: 15px 30px;
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: bold;
+                            font-size: 18px;
+                        ">
+                            <i class="fas fa-external-link-alt"></i> Complete Payment
+                        </a>
+                    </div>
+                    <p style="color: #666; font-size: 14px;">
+                        You'll be redirected to Hubtel's secure payment page.<br>
+                        Payment options: Mobile Money, Bank Cards, Bank Transfers
+                    </p>
+                    <p style="color: #666; font-size: 12px;">
+                        Transaction Reference: ${data.transaction_ref}
+                    </p>
+                `;
+                
+                // Replace the form with checkout message
+                document.querySelector('.vote-form-container').appendChild(checkoutMessage);
+            }
+
             // Show success message
             function showSuccess(data) {
                 voteForm.style.display = 'none';
