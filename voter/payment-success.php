@@ -7,32 +7,71 @@
 require_once __DIR__ . '/../config/database.php';
 
 $reference = $_GET['ref'] ?? '';
+$status = $_GET['status'] ?? '';
 $message = 'Payment completed successfully! Your vote has been confirmed.';
 $vote_details = null;
+$payment_cancelled = false;
+$payment_failed = false;
 
-if (!empty($reference)) {
+// Check for cancelled or failed payments first
+if ($status === 'cancelled' || $status === 'canceled') {
+    $payment_cancelled = true;
+    $message = 'Payment was cancelled. No charges were made to your account.';
+} elseif ($status === 'failed' || $status === 'error') {
+    $payment_failed = true;
+    $message = 'Payment failed. Please try again or contact support.';
+} elseif (!empty($reference)) {
     try {
         $database = new Database();
         $pdo = $database->getConnection();
         
-        // Get vote details and summary from payment reference
+        // First check transaction status
         $stmt = $pdo->prepare("
-            SELECT v.*, n.name as nominee_name, e.title as event_title, c.description as category_name,
-                   COUNT(*) as total_votes, SUM(v.amount) as total_amount
-            FROM votes v
-            LEFT JOIN nominees n ON v.nominee_id = n.id
-            LEFT JOIN events e ON v.event_id = e.id
-            LEFT JOIN categories c ON n.category_id = c.id
-            WHERE v.payment_reference = ? AND v.payment_status = 'completed'
-            GROUP BY v.payment_reference, v.nominee_id, v.event_id
-            ORDER BY v.created_at DESC
-            LIMIT 1
+            SELECT status, payment_method FROM transactions 
+            WHERE reference = ? OR transaction_id = ?
+            ORDER BY created_at DESC LIMIT 1
         ");
-        $stmt->execute([$reference]);
-        $vote_details = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute([$reference, $reference]);
+        $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($transaction && in_array($transaction['status'], ['cancelled', 'failed', 'expired'])) {
+            if ($transaction['status'] === 'cancelled') {
+                $payment_cancelled = true;
+                $message = 'Payment was cancelled. No charges were made to your account.';
+            } else {
+                $payment_failed = true;
+                $message = 'Payment ' . $transaction['status'] . '. Please try again.';
+            }
+        } else {
+            // Get vote details and summary from payment reference (only for successful payments)
+            $stmt = $pdo->prepare("
+                SELECT v.*, n.name as nominee_name, e.title as event_title, c.description as category_name,
+                       COUNT(*) as total_votes, SUM(v.amount) as total_amount
+                FROM votes v
+                LEFT JOIN nominees n ON v.nominee_id = n.id
+                LEFT JOIN events e ON v.event_id = e.id
+                LEFT JOIN categories c ON n.category_id = c.id
+                WHERE v.payment_reference = ? AND v.payment_status = 'completed'
+                GROUP BY v.payment_reference, v.nominee_id, v.event_id
+                ORDER BY v.created_at DESC
+                LIMIT 1
+            ");
+            $stmt->execute([$reference]);
+            $vote_details = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            // If no completed votes found, check if payment is still pending
+            if (!$vote_details && $transaction && $transaction['status'] === 'pending') {
+                $message = 'Payment is being processed. Please wait a moment and check back.';
+            } elseif (!$vote_details) {
+                $payment_failed = true;
+                $message = 'Payment verification failed. Please contact support with reference: ' . $reference;
+            }
+        }
         
     } catch (Exception $e) {
         error_log("Error fetching vote details: " . $e->getMessage());
+        $payment_failed = true;
+        $message = 'Unable to verify payment status. Please contact support.';
     }
 }
 ?>
@@ -94,11 +133,28 @@ if (!empty($reference)) {
 </head>
 <body>
     <div class="success-card">
+        <?php if ($payment_cancelled): ?>
+        <div class="success-icon" style="color: #ffc107;">
+            <i class="fas fa-times-circle"></i>
+        </div>
+        
+        <h2 class="text-warning mb-3">Payment Cancelled</h2>
+        
+        <?php elseif ($payment_failed): ?>
+        <div class="success-icon" style="color: #dc3545;">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        
+        <h2 class="text-danger mb-3">Payment Failed</h2>
+        
+        <?php else: ?>
         <div class="success-icon">
             <i class="fas fa-check-circle"></i>
         </div>
         
         <h2 class="text-success mb-3">Payment Successful!</h2>
+        
+        <?php endif; ?>
         
         <p class="text-muted mb-4"><?php echo htmlspecialchars($message); ?></p>
         
@@ -139,7 +195,16 @@ if (!empty($reference)) {
         <?php endif; ?>
         
         <div class="d-grid gap-2">
-            <?php if ($vote_details && isset($vote_details['event_id'])): ?>
+            <?php if ($payment_cancelled || $payment_failed): ?>
+                <!-- For cancelled/failed payments, show retry option -->
+                <button onclick="history.back()" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Try Again
+                </button>
+                <a href="events.php" class="btn btn-outline-secondary">
+                    <i class="fas fa-list me-2"></i>Browse Events
+                </a>
+            <?php elseif ($vote_details && isset($vote_details['event_id'])): ?>
+                <!-- For successful payments -->
                 <a href="event.php?id=<?php echo $vote_details['event_id']; ?>" class="btn btn-primary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Event
                 </a>
@@ -147,6 +212,7 @@ if (!empty($reference)) {
                     <i class="fas fa-list me-2"></i>All Events
                 </a>
             <?php else: ?>
+                <!-- Default fallback -->
                 <a href="events.php" class="btn btn-primary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Events
                 </a>
