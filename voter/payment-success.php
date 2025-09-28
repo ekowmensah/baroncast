@@ -15,14 +15,16 @@ if (!empty($reference)) {
         $database = new Database();
         $pdo = $database->getConnection();
         
-        // Get vote details from payment reference
+        // Get vote details and summary from payment reference
         $stmt = $pdo->prepare("
-            SELECT v.*, n.name as nominee_name, e.title as event_title, c.description as category_name
+            SELECT v.*, n.name as nominee_name, e.title as event_title, c.description as category_name,
+                   COUNT(*) as total_votes, SUM(v.amount) as total_amount
             FROM votes v
             LEFT JOIN nominees n ON v.nominee_id = n.id
             LEFT JOIN events e ON v.event_id = e.id
             LEFT JOIN categories c ON n.category_id = c.id
             WHERE v.payment_reference = ? AND v.payment_status = 'completed'
+            GROUP BY v.payment_reference, v.nominee_id, v.event_id
             ORDER BY v.created_at DESC
             LIMIT 1
         ");
@@ -75,6 +77,19 @@ if (!empty($reference)) {
             padding: 12px 30px;
             margin-top: 10px;
         }
+        .payment-summary {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        }
+        .payment-summary .h2 {
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .vote-details-card {
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -88,12 +103,36 @@ if (!empty($reference)) {
         <p class="text-muted mb-4"><?php echo htmlspecialchars($message); ?></p>
         
         <?php if ($vote_details): ?>
-        <div class="card bg-light mb-4">
+        <!-- Payment Summary -->
+        <div class="card payment-summary text-white mb-3">
+            <div class="card-body text-center">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-check-circle me-2"></i>Payment Summary
+                </h5>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="h2 mb-1"><?php echo $vote_details['total_votes']; ?></div>
+                        <small>Vote<?php echo $vote_details['total_votes'] > 1 ? 's' : ''; ?> Cast</small>
+                    </div>
+                    <div class="col-6">
+                        <div class="h2 mb-1">₵<?php echo number_format($vote_details['total_amount'], 2); ?></div>
+                        <small>Total Paid</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vote Details -->
+        <div class="card vote-details-card bg-light mb-4">
             <div class="card-body">
-                <h6 class="card-title">Vote Details</h6>
+                <h6 class="card-title">
+                    <i class="fas fa-vote-yea me-2"></i>Vote Details
+                </h6>
                 <p class="mb-1"><strong>Event:</strong> <?php echo htmlspecialchars($vote_details['event_title']); ?></p>
                 <p class="mb-1"><strong>Category:</strong> <?php echo htmlspecialchars($vote_details['category_name']); ?></p>
                 <p class="mb-1"><strong>Nominee:</strong> <?php echo htmlspecialchars($vote_details['nominee_name']); ?></p>
+                <p class="mb-1"><strong>Amount per Vote:</strong> ₵<?php echo number_format($vote_details['amount'], 2); ?></p>
+                <p class="mb-1"><strong>Payment Date:</strong> <?php echo date('M j, Y g:i A', strtotime($vote_details['voted_at'])); ?></p>
                 <p class="mb-0"><strong>Reference:</strong> <?php echo htmlspecialchars($reference); ?></p>
             </div>
         </div>

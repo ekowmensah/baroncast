@@ -153,10 +153,20 @@ try {
     $pdo->beginTransaction();
     
     try {
-        // Generate unique transaction reference using event + nominee abbreviation
-        $event_abbr = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $event['title']), 0, 4));
-        $nominee_abbr = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $nominee['name']), 0, 4));
-        $transaction_ref = $event_abbr . $nominee_abbr . '_' . date('mdHi') . '_' . rand(100, 999);
+        // Generate unique transaction reference using full event + nominee abbreviation
+        // Extract first letter of each word from event name
+        $event_words = explode(' ', $event['title']);
+        $event_abbr = '';
+        foreach ($event_words as $word) {
+            if (!empty($word)) {
+                $event_abbr .= strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $word), 0, 1));
+            }
+        }
+        
+        // Use full nominee name (cleaned)
+        $nominee_clean = strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $nominee['name']));
+        
+        $transaction_ref = $event_abbr . $nominee_clean . '-' . date('mdHi') . '-' . rand(100, 999);
         
         // Create transaction record
         $stmt = $pdo->prepare("
