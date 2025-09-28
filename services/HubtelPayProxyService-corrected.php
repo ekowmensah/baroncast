@@ -277,35 +277,18 @@ class HubtelPayProxyService {
      * Get callback URL for payment notifications
      */
     private function getCallbackUrl() {
-        // Use the actual hosted domain
-        $baseUrl = $this->getBaseUrl();
-        return $baseUrl . '/webhooks/hubtel-checkout-callback.php';
+        $baseUrl = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+        $baseUrl .= $_SERVER['HTTP_HOST'] ?? 'localhost';
+        return $baseUrl . '/baroncast/webhooks/hubtel-checkout-callback.php';
     }
 
     /**
      * Get return URL for payment completion
      */
     private function getReturnUrl($clientReference) {
-        // Use the actual hosted domain
-        $baseUrl = $this->getBaseUrl();
-        return $baseUrl . '/voter/payment-success.php?ref=' . $clientReference;
-    }
-
-    /**
-     * Get the base URL for the hosted system
-     */
-    private function getBaseUrl() {
-        // For hosted system, use the actual domain
-        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
-        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-        
-        // If it's localhost, assume it's development
-        if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
-            return $protocol . $host . '/baroncast';
-        }
-        
-        // For production/hosted environment, use the full domain
-        return $protocol . $host;
+        $baseUrl = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+        $baseUrl .= $_SERVER['HTTP_HOST'] ?? 'localhost';
+        return $baseUrl . '/baroncast/voter/payment-success.php?ref=' . $clientReference;
     }
 }
 ?>

@@ -525,13 +525,13 @@ $siteSettings = new SiteSettings();
                             </label>
                         </div>
                     </div>
-
+<!--
                     <div class="form-group full-width">
                         <label class="form-label">
                             <input type="checkbox" id="testMode" style="margin-right: 10px;">
                             Test Mode (No real payment - for testing only)
                         </label>
-                    </div>
+                    </div>  -->
 
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-vote-yea"></i>

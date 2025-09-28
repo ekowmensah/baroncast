@@ -184,19 +184,17 @@ try {
             $pdo->commit();
             
             // Log successful PayProxy checkout creation
-            error_log("PayProxy checkout created successfully: $transaction_ref - {$payment_result['checkout_url']}");
             
             // Return success response with checkout details
             echo json_encode([
                 'success' => true,
                 'payment_method' => 'payproxy_checkout',
-                'status' => 'checkout_created',
+                'callbackUrl' => $this->getCallbackUrl(),
                 'message' => 'Payment checkout created successfully',
                 'transaction_ref' => $transaction_ref,
                 'checkout_url' => $payment_result['checkout_url'],
                 'checkout_id' => $payment_result['checkout_id'],
                 'amount' => $total_amount,
-                'voter_name' => $voter_name,
                 'nominee_name' => $nominee['name'],
                 'vote_count' => $vote_count,
                 'instructions' => $payment_result['instructions'],

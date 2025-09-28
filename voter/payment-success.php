@@ -22,7 +22,7 @@ if (!empty($reference)) {
             LEFT JOIN nominees n ON v.nominee_id = n.id
             LEFT JOIN events e ON v.event_id = e.id
             LEFT JOIN categories c ON n.category_id = c.id
-            WHERE v.payment_reference = ? AND v.status = 'confirmed'
+            WHERE v.payment_reference = ? AND v.payment_status = 'completed'
             ORDER BY v.created_at DESC
             LIMIT 1
         ");
@@ -70,6 +70,11 @@ if (!empty($reference)) {
             border-radius: 25px;
             padding: 12px 30px;
         }
+        .btn-outline-secondary {
+            border-radius: 25px;
+            padding: 12px 30px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -95,9 +100,18 @@ if (!empty($reference)) {
         <?php endif; ?>
         
         <div class="d-grid gap-2">
-            <a href="../events.php" class="btn btn-primary">
-                <i class="fas fa-arrow-left me-2"></i>Back to Events
-            </a>
+            <?php if ($vote_details && isset($vote_details['event_id'])): ?>
+                <a href="../event.php?id=<?php echo $vote_details['event_id']; ?>" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Event
+                </a>
+                <a href="../events.php" class="btn btn-outline-secondary">
+                    <i class="fas fa-list me-2"></i>All Events
+                </a>
+            <?php else: ?>
+                <a href="../events.php" class="btn btn-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Events
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </body>
