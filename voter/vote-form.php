@@ -544,7 +544,12 @@ $siteSettings = new SiteSettings();
                 <!-- Loading State -->
                 <div class="loading" id="loadingState">
                     <div class="spinner"></div>
-                    <p>Processing your vote...</p>
+                    <p id="loadingMessage">Processing your vote...</p>
+                    <div id="loadingProgress" style="margin-top: 15px; font-size: 14px; color: #666;">
+                        <div id="progressStep1">⏳ Validating payment details...</div>
+                        <div id="progressStep2" style="display: none;">⏳ Creating secure checkout...</div>
+                        <div id="progressStep3" style="display: none;">⏳ Preparing payment page...</div>
+                    </div>
                 </div>
 
 
@@ -605,6 +610,11 @@ $siteSettings = new SiteSettings();
                 loadingState.classList.add('show');
                 errorMessage.classList.remove('show');
                 
+                // Show progress steps
+                showProgressStep(1);
+                setTimeout(() => showProgressStep(2), 1000);
+                setTimeout(() => showProgressStep(3), 2000);
+                
                 // Submit to Hubtel Direct Receive Money
                 submitHubtelVote(formData);
             });
@@ -612,7 +622,7 @@ $siteSettings = new SiteSettings();
             // Submit vote using selected payment method
             function submitHubtelVote(formData) {
                 // Check if test mode is enabled
-                const testMode = document.getElementById('testMode').checked;
+                const testMode = document.getElementById('testMode') && document.getElementById('testMode').checked;
                 
                 // Get selected payment method
                 const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
@@ -626,12 +636,22 @@ $siteSettings = new SiteSettings();
                     endpoint = 'actions/hubtel-vote-submit.php';
                 }
                 
+                // Set up timeout for the request
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => {
+                    controller.abort();
+                    loadingState.classList.remove('show');
+                    showError('Payment processing is taking too long. Please try again or contact support.');
+                }, 20000); // 20 second timeout
+                
                 fetch(endpoint, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: controller.signal
                 })
                 .then(response => response.json())
                 .then(data => {
+                    clearTimeout(timeoutId); // Clear the timeout
                     loadingState.classList.remove('show');
                     
                     if (data.success) {
@@ -652,8 +672,14 @@ $siteSettings = new SiteSettings();
                     }
                 })
                 .catch(error => {
+                    clearTimeout(timeoutId); // Clear the timeout
                     loadingState.classList.remove('show');
-                    showError('Network error. Please check your connection and try again.');
+                    
+                    if (error.name === 'AbortError') {
+                        showError('Payment processing timed out. Please try again.');
+                    } else {
+                        showError('Network error. Please check your connection and try again.');
+                    }
                 });
             }
             
@@ -757,15 +783,32 @@ $siteSettings = new SiteSettings();
                 showError('Payment failed. Please try again.');
             }
             
-            // Show Error Message
+            // Show progress steps
+            function showProgressStep(step) {
+                // Hide all steps first
+                document.getElementById('progressStep1').style.display = 'none';
+                document.getElementById('progressStep2').style.display = 'none';
+                document.getElementById('progressStep3').style.display = 'none';
+                
+                // Show current step
+                if (step <= 3) {
+                    document.getElementById('progressStep' + step).style.display = 'block';
+                }
+            }
+
+            // Show error message
             function showError(message) {
                 voteForm.style.display = 'block';
+                loadingState.classList.remove('show');
                 errorMessage.textContent = message;
                 errorMessage.classList.add('show');
             }
         });
         
-        // Global function for checking payment status
+        // Show progress steps
+        showProgressStep(1);
+        setTimeout(() => showProgressStep(2), 1000);
+        setTimeout(() => showProgressStep(3), 2000);
         function checkPaymentStatus(transactionRef, intervalId = null) {
             fetch('actions/check-payment-status.php', {
                 method: 'POST',

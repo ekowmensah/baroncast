@@ -155,14 +155,37 @@ try {
             'transaction_db_id' => $transaction_db_id
         ];
         
-        // Generate PayProxy checkout
-        $payment_result = $payProxy->generateVotingPayment(
-            $total_amount,
-            $phone_number,
-            $description,
-            $transaction_ref,
-            $metadata
-        );
+        // Generate PayProxy checkout with timeout handling
+        $start_time = microtime(true);
+        
+        try {
+            $payment_result = $payProxy->generateVotingPayment(
+                $total_amount,
+                $phone_number,
+                $description,
+                $transaction_ref,
+                $metadata
+            );
+            
+            $execution_time = (microtime(true) - $start_time) * 1000; // Convert to milliseconds
+            error_log("PayProxy checkout creation took: " . number_format($execution_time, 2) . " ms");
+            
+        } catch (Exception $e) {
+            $execution_time = (microtime(true) - $start_time) * 1000;
+            error_log("PayProxy checkout failed after: " . number_format($execution_time, 2) . " ms - Error: " . $e->getMessage());
+            
+            // Rollback transaction
+            $pdo->rollBack();
+            
+            echo json_encode([
+                'success' => false,
+                'message' => 'Payment service temporarily unavailable. Please try again.',
+                'error_code' => 'PAYPROXY_TIMEOUT',
+                'execution_time' => number_format($execution_time, 2) . ' ms',
+                'transaction_ref' => $transaction_ref
+            ]);
+            exit;
+        }
         
         if ($payment_result['success']) {
             // Update transaction with payment details
@@ -189,7 +212,7 @@ try {
             echo json_encode([
                 'success' => true,
                 'payment_method' => 'payproxy_checkout',
-                'callbackUrl' => $this->getCallbackUrl(),
+                'status' => 'checkout_created',
                 'message' => 'Payment checkout created successfully',
                 'transaction_ref' => $transaction_ref,
                 'checkout_url' => $payment_result['checkout_url'],
