@@ -101,14 +101,14 @@ if (!empty($reference)) {
         
         <div class="d-grid gap-2">
             <?php if ($vote_details && isset($vote_details['event_id'])): ?>
-                <a href="../event.php?id=<?php echo $vote_details['event_id']; ?>" class="btn btn-primary">
+                <a href="event.php?id=<?php echo $vote_details['event_id']; ?>" class="btn btn-primary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Event
                 </a>
-                <a href="../events.php" class="btn btn-outline-secondary">
+                <a href="events.php" class="btn btn-outline-secondary">
                     <i class="fas fa-list me-2"></i>All Events
                 </a>
             <?php else: ?>
-                <a href="../events.php" class="btn btn-primary">
+                <a href="events.php" class="btn btn-primary">
                     <i class="fas fa-arrow-left me-2"></i>Back to Events
                 </a>
             <?php endif; ?>

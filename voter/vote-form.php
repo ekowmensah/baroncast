@@ -518,11 +518,11 @@ $siteSettings = new SiteSettings();
                                 <i class="fas fa-credit-card"></i> Secure Checkout (Recommended)
                                 <small style="display: block; color: #666; margin-top: 5px;">Mobile Money, Cards, Bank Transfers</small>
                             </label>
-                            <label class="payment-option">
+                            <!-- <label class="payment-option">
                                 <input type="radio" name="paymentMethod" value="direct" style="margin-right: 10px;">
                                 <i class="fas fa-mobile-alt"></i> Direct Mobile Money
                                 <small style="display: block; color: #666; margin-top: 5px;">Direct mobile money payment</small>
-                            </label>
+                            </label> -->
                         </div>
                     </div>
 <!--
@@ -696,7 +696,7 @@ $siteSettings = new SiteSettings();
                     <p>Your vote for <strong>${data.nominee_name}</strong> is ready for payment.</p>
                     <p><strong>Amount:</strong> ₵${data.amount} for ${data.vote_count} vote(s)</p>
                     <div style="margin: 20px 0;">
-                        <a href="${data.checkout_url}" target="_blank" style="
+                        <a href="${data.checkout_url}" style="
                             display: inline-block;
                             background: #007bff;
                             color: white;
@@ -706,7 +706,7 @@ $siteSettings = new SiteSettings();
                             font-weight: bold;
                             font-size: 18px;
                         ">
-                            <i class="fas fa-external-link-alt"></i> Complete Payment
+                            <i class="fas fa-credit-card"></i> Complete Payment
                         </a>
                     </div>
                     <p style="color: #666; font-size: 14px;">

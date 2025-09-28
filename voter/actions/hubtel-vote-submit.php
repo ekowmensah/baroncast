@@ -153,8 +153,10 @@ try {
     $pdo->beginTransaction();
     
     try {
-        // Generate unique transaction reference
-        $transaction_ref = 'ECAST_' . time() . '_' . rand(1000, 9999);
+        // Generate unique transaction reference using event + nominee abbreviation
+        $event_abbr = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $event['title']), 0, 4));
+        $nominee_abbr = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $nominee['name']), 0, 4));
+        $transaction_ref = $event_abbr . $nominee_abbr . '_' . date('mdHi') . '_' . rand(100, 999);
         
         // Create transaction record
         $stmt = $pdo->prepare("
