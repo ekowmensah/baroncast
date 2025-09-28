@@ -518,11 +518,11 @@ $siteSettings = new SiteSettings();
                                 <i class="fas fa-credit-card"></i> Secure Checkout (Recommended)
                                 <small style="display: block; color: #666; margin-top: 5px;">Mobile Money, Cards, Bank Transfers</small>
                             </label>
-                            <!-- <label class="payment-option">
+                             <label class="payment-option">
                                 <input type="radio" name="paymentMethod" value="direct" style="margin-right: 10px;">
                                 <i class="fas fa-mobile-alt"></i> Direct Mobile Money
                                 <small style="display: block; color: #666; margin-top: 5px;">Direct mobile money payment</small>
-                            </label> -->
+                            </label>
                         </div>
                     </div>
 <!--
