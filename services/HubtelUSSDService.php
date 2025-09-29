@@ -211,11 +211,10 @@ class HubtelUSSDService {
             error_log("Phone: $phoneNumber, Text: '$text', Sequence: $sequence, Type: $type");
             error_log("SessionId: $sessionId, ServiceCode: $serviceCode");
             
-            // Handle different USSD menu levels
-            // For first interaction, text will be the USSD code, so we ignore it
+            // Simplified USSD flow - no menus, direct nominee code entry
             if ($sequence == 1 || $type == 'Initiation') {
-                error_log("First interaction - showing main menu");
-                return $this->showMainMenu();
+                error_log("First interaction - showing nominee code prompt");
+                return $this->showNomineeCodePrompt();
             }
             
             // Extract user input from Message field (remove USSD code prefix if present)
@@ -232,16 +231,19 @@ class HubtelUSSDService {
             
             switch ($sequence) {
                 case 2:
-                    // User selected an option from main menu
-                    return $this->handleMainMenuSelection($userInput, $phoneNumber);
+                    // User entered nominee shortcode
+                    return $this->handleNomineeCodeEntry($userInput, $phoneNumber, $sessionId);
                     
                 case 3:
-                    // Handle sub-menu selections
-                    return $this->handleSubMenuSelection($userInput, $phoneNumber, $sessionId);
+                    // User entered vote count
+                    return $this->handleVoteCountEntry($userInput, $phoneNumber, $sessionId);
                     
                 default:
-                    // Handle deeper menu levels or end session
-                    return $this->handleAdvancedMenus($userInput, $phoneNumber, $sessionId, $sequence);
+                    // End session
+                    return [
+                        'Type' => 'Release',
+                        'Message' => "Session completed. Thank you for using BaronCast!"
+                    ];
             }
             
         } catch (Exception $e) {
@@ -254,52 +256,137 @@ class HubtelUSSDService {
     }
     
     /**
-     * Show main USSD menu
+     * Show nominee code prompt
      */
-    private function showMainMenu() {
+    private function showNomineeCodePrompt() {
         return [
             'Type' => 'Response',
-            'Message' => "Welcome to BaronCast!\n\n1. Select Event\n2. Check Event Status\n3. Help\n\nEnter your choice:"
+            'Message' => "Welcome to BaronCast!\n\nEnter nominee code to vote:\n(e.g. NOM001)"
         ];
     }
     
     /**
-     * Handle main menu selection
+     * Handle nominee code entry
      */
-    private function handleMainMenuSelection($choice, $phoneNumber) {
-        $trimmedChoice = trim($choice);
-        error_log("Main menu selection - Raw choice: '$choice', Trimmed: '$trimmedChoice'");
-        
-        switch ($trimmedChoice) {
-            case '1':
-                error_log("User selected option 1 - Select Event");
-                return $this->showActiveEvents();
-                
-            case '2':
-                error_log("User selected option 2 - Check Event Status");
-                return [
-                    'Type' => 'Response',
-                    'Message' => "Enter event ID to check status:"
-                ];
-                
-            case '3':
-                error_log("User selected option 3 - Help");
-                return [
-                    'Type' => 'Release',
-                    'Message' => "E-Cast Voting Help:\n- Dial this code to vote\n- Follow menu prompts\n- Standard rates apply\n\nThank you!"
-                ];
-                
-            default:
-                error_log("Invalid main menu selection: '$trimmedChoice'");
+    private function handleNomineeCodeEntry($nomineeCode, $phoneNumber, $sessionId) {
+        try {
+            $trimmedCode = strtoupper(trim($nomineeCode));
+            error_log("Nominee code entry: '$trimmedCode'");
+            
+            // Validate and get nominee details
+            $stmt = $this->db->prepare("
+                SELECT n.id, n.name, n.short_code, e.id as event_id, e.title as event_title, 
+                       COALESCE(e.vote_cost, 1.00) as vote_cost, c.name as category_name
+                FROM nominees n
+                JOIN categories c ON n.category_id = c.id
+                JOIN events e ON c.event_id = e.id
+                WHERE n.short_code = ? AND e.status = 'active'
+            ");
+            $stmt->execute([$trimmedCode]);
+            $nominee = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$nominee) {
                 return [
                     'Type' => 'Release',
-                    'Message' => "Invalid selection '$trimmedChoice'. Please dial the shortcode again and enter 1, 2, or 3."
+                    'Message' => "Invalid nominee code '$trimmedCode'. Please check and try again."
                 ];
+            }
+            
+            // Store nominee details in session
+            $this->storeUSSDSession($sessionId, 'selected_nominee_id', $nominee['id']);
+            $this->storeUSSDSession($sessionId, 'selected_event_id', $nominee['event_id']);
+            $this->storeUSSDSession($sessionId, 'vote_cost', $nominee['vote_cost']);
+            
+            $voteCost = number_format($nominee['vote_cost'], 2);
+            
+            return [
+                'Type' => 'Response',
+                'Message' => "Selected: {$nominee['name']}\n" .
+                           "Event: {$nominee['event_title']}\n" .
+                           "Category: {$nominee['category_name']}\n\n" .
+                           "Vote cost: GHS $voteCost each\n\n" .
+                           "How many votes? (1-100):"
+            ];
+            
+        } catch (Exception $e) {
+            error_log("Error in handleNomineeCodeEntry: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => "Error processing nominee code. Please try again."
+            ];
         }
     }
     
     /**
-     * Show active events for voting
+     * Handle vote count entry
+     */
+    private function handleVoteCountEntry($voteCount, $phoneNumber, $sessionId) {
+        try {
+            $votes = (int)trim($voteCount);
+            error_log("Vote count entry: $votes");
+            
+            if ($votes < 1 || $votes > 100) {
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Invalid vote count. Please enter 1-100 votes."
+                ];
+            }
+            
+            // Get session data
+            $nomineeId = $this->getUSSDSession($sessionId, 'selected_nominee_id');
+            $eventId = $this->getUSSDSession($sessionId, 'selected_event_id');
+            $voteCost = $this->getUSSDSession($sessionId, 'vote_cost');
+            
+            if (!$nomineeId || !$eventId || !$voteCost) {
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Session expired. Please start again."
+                ];
+            }
+            
+            $totalAmount = $voteCost * $votes;
+            $transactionRef = 'USSD_' . time() . '_' . rand(1000, 9999);
+            
+            // Store USSD transaction
+            $stmt = $this->db->prepare("
+                INSERT INTO ussd_transactions (
+                    transaction_ref, session_id, phone_number, event_id, nominee_id,
+                    vote_count, amount, status, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', NOW())
+            ");
+            $stmt->execute([
+                $transactionRef, $sessionId, $phoneNumber, $eventId, 
+                $nomineeId, $votes, $totalAmount
+            ]);
+            
+            // Get nominee name for confirmation
+            $stmt = $this->db->prepare("SELECT name FROM nominees WHERE id = ?");
+            $stmt->execute([$nomineeId]);
+            $nomineeName = $stmt->fetchColumn();
+            
+            $formattedAmount = number_format($totalAmount, 2);
+            
+            return [
+                'Type' => 'Release',
+                'Message' => "Payment initiated!\n\n" .
+                           "Nominee: " . substr($nomineeName, 0, 25) . "\n" .
+                           "Votes: $votes\n" .
+                           "Amount: GHS $formattedAmount\n\n" .
+                           "Complete payment on your phone.\n" .
+                           "Ref: $transactionRef"
+            ];
+            
+        } catch (Exception $e) {
+            error_log("Error in handleVoteCountEntry: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => "Payment initiation failed. Please try again."
+            ];
+        }
+    }
+
+    /**
+     * Show active events for voting (DEPRECATED - keeping for compatibility)
      */
     private function showActiveEvents() {
         try {
@@ -624,7 +711,7 @@ class HubtelUSSDService {
                 'Type' => 'Response',
                 'Message' => "Selected: " . substr($selectedNominee['name'], 0, 30) . "\n\n" .
                            "Vote cost: GHS $voteCost each\n\n" .
-                           "How many votes? (1-10):"
+                           "How many votes? (1-100):"
             ];
             
         } catch (Exception $e) {
