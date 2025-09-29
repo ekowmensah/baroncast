@@ -20,8 +20,11 @@ function log_debug($msg) {
 
 // Log raw input for debugging
 $raw_input = file_get_contents('php://input');
-log_debug('USSD Payment webhook called');
+log_debug('=== HUBTEL SERVICE FULFILLMENT CALLBACK ===');
 log_debug('Raw input: ' . $raw_input);
+log_debug('Headers: ' . json_encode(getallheaders()));
+log_debug('Method: ' . $_SERVER['REQUEST_METHOD']);
+log_debug('=== END CALLBACK DATA ===');
 
 // Parse and validate input
 $data = json_decode($raw_input, true);
