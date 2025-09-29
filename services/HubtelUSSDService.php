@@ -364,17 +364,65 @@ class HubtelUSSDService {
             $stmt->execute([$nomineeId]);
             $nomineeName = $stmt->fetchColumn();
             
-            $formattedAmount = number_format($totalAmount, 2);
-            
-            return [
-                'Type' => 'Release',
-                'Message' => "Payment initiated!\n\n" .
-                           "Nominee: " . substr($nomineeName, 0, 25) . "\n" .
-                           "Votes: $votes\n" .
-                           "Amount: GHS $formattedAmount\n\n" .
-                           "Complete payment on your phone.\n" .
-                           "Ref: $transactionRef"
+            // Initiate actual Hubtel payment
+            $description = "Vote for " . substr($nomineeName, 0, 20) . " ($votes votes)";
+            $metadata = [
+                'voter_phone' => $phoneNumber,
+                'nominee_id' => $nomineeId,
+                'event_id' => $eventId,
+                'vote_count' => $votes,
+                'transaction_ref' => $transactionRef
             ];
+            
+            error_log("Initiating Hubtel payment: Amount=$totalAmount, Phone=$phoneNumber, Ref=$transactionRef");
+            
+            $paymentResult = $this->generateUSSDPayment(
+                $totalAmount,
+                $phoneNumber,
+                $description,
+                $transactionRef,
+                $metadata
+            );
+            
+            if ($paymentResult && isset($paymentResult['success']) && $paymentResult['success']) {
+                // Update transaction with Hubtel transaction ID
+                if (isset($paymentResult['transactionId'])) {
+                    $stmt = $this->db->prepare("
+                        UPDATE ussd_transactions 
+                        SET hubtel_transaction_id = ? 
+                        WHERE transaction_ref = ?
+                    ");
+                    $stmt->execute([$paymentResult['transactionId'], $transactionRef]);
+                }
+                
+                $formattedAmount = number_format($totalAmount, 2);
+                
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Payment initiated!\n\n" .
+                               "Nominee: " . substr($nomineeName, 0, 25) . "\n" .
+                               "Votes: $votes\n" .
+                               "Amount: GHS $formattedAmount\n\n" .
+                               "Check your phone for payment prompt.\n" .
+                               "Ref: $transactionRef"
+                ];
+            } else {
+                // Payment initiation failed
+                error_log("Payment initiation failed: " . json_encode($paymentResult));
+                
+                // Update transaction status
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET status = 'failed' 
+                    WHERE transaction_ref = ?
+                ");
+                $stmt->execute([$transactionRef]);
+                
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Payment initiation failed. Please try again later.\n\nRef: $transactionRef"
+                ];
+            }
             
         } catch (Exception $e) {
             error_log("Error in handleVoteCountEntry: " . $e->getMessage());
