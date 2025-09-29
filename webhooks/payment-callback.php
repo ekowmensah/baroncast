@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Dedicated Hubtel Payment Callback Handler
  * Handles payment success/failure notifications
  */
@@ -7,15 +7,18 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/database.php';
 
-// Log all incoming data
+// Log everything
 $input = file_get_contents('php://input');
 $headers = getallheaders();
+$timestamp = date('Y-m-d H:i:s');
 
-error_log("=== PAYMENT CALLBACK RECEIVED ===");
-error_log("Raw input: " . $input);
-error_log("Headers: " . json_encode($headers));
-error_log("GET: " . json_encode($_GET));
-error_log("POST: " . json_encode($_POST));
+$logEntry = "[$timestamp] PAYMENT CALLBACK RECEIVED\n";
+$logEntry .= "Input: $input\n";
+$logEntry .= "Headers: " . json_encode($headers) . "\n";
+$logEntry .= "---\n";
+
+$logFile = __DIR__ . '/../logs/payment-callback-test.log';
+file_put_contents($logFile, $logEntry, FILE_APPEND);
 
 try {
     // Parse callback data (try both JSON and form data)

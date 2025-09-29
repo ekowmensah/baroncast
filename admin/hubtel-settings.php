@@ -60,18 +60,19 @@ $defaults = [
     'hubtel_environment' => 'sandbox',
     'hubtel_callback_url' => '',
     'hubtel_ip_whitelist' => '',
-    'enable_hubtel_payments' => '1',
     'hubtel_timeout' => '30',
     'hubtel_max_retries' => '3',
     'hubtel_test_mode' => '1'
 ];
 
-// Auto-generate callback URL if not set
 if (empty($settings['hubtel_callback_url'])) {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $settings['hubtel_callback_url'] = "{$protocol}://{$host}/webhooks/hubtel-receive-money-callback.php";
+    // For USSD services, we need to update the Service fulfillment URL in Hubtel portal
+    $ussd_callback_url = "{$protocol}://{$host}/webhooks/hubtel-receive-money-callback.php";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
