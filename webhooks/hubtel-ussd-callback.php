@@ -56,15 +56,21 @@ try {
             
         case 'payment':
         case 'payment_callback':
+        case 'paymentcallback':
             // Handle USSD payment callback
+            error_log("PAYMENT CALLBACK DETECTED: " . json_encode($webhookData));
             $response = handleUSSDPaymentCallback($webhookData);
             break;
             
         default:
-            // Try to handle as USSD session if it has required fields
-            if (isset($webhookData['SessionId']) || isset($webhookData['Mobile'])) {
+            // Check if this might be a payment callback with different format
+            if (isset($webhookData['TransactionId']) || isset($webhookData['ClientReference'])) {
+                error_log("POSSIBLE PAYMENT CALLBACK (unknown type): " . json_encode($webhookData));
+                $response = handleUSSDPaymentCallback($webhookData);
+            } elseif (isset($webhookData['SessionId']) || isset($webhookData['Mobile'])) {
                 $response = handleUSSDSession($webhookData);
             } else {
+                error_log("UNKNOWN WEBHOOK TYPE: $webhookType - Data: " . json_encode($webhookData));
                 throw new Exception('Unknown webhook type: ' . $webhookType);
             }
     }
