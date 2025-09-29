@@ -305,7 +305,7 @@ class HubtelUSSDService {
         try {
             error_log("Fetching active events...");
             $stmt = $this->db->prepare("
-                SELECT id, title, vote_cost 
+                SELECT id, title, COALESCE(vote_cost, 1.00) as vote_cost 
                 FROM events 
                 WHERE status = 'active' 
                 ORDER BY created_at DESC 
@@ -483,7 +483,7 @@ class HubtelUSSDService {
             
             // Get nominees again
             $stmt = $this->db->prepare("
-                SELECT n.id, n.name, c.name as category_name, e.vote_cost
+                SELECT n.id, n.name, c.name as category_name, COALESCE(e.vote_cost, 1.00) as vote_cost
                 FROM nominees n
                 JOIN categories c ON n.category_id = c.id
                 JOIN events e ON c.event_id = e.id
@@ -596,12 +596,14 @@ class HubtelUSSDService {
      */
     private function storeUSSDSession($sessionId, $key, $value) {
         try {
+            error_log("Storing USSD session: SessionId=$sessionId, Key=$key, Value=$value");
             $stmt = $this->db->prepare("
                 INSERT INTO ussd_sessions (session_id, session_key, session_value, created_at)
                 VALUES (?, ?, ?, NOW())
                 ON DUPLICATE KEY UPDATE session_value = ?, created_at = NOW()
             ");
-            $stmt->execute([$sessionId, $key, $value, $value]);
+            $result = $stmt->execute([$sessionId, $key, $value, $value]);
+            error_log("Session storage result: " . ($result ? "SUCCESS" : "FAILED"));
         } catch (Exception $e) {
             error_log("Error storing USSD session: " . $e->getMessage());
         }
@@ -612,13 +614,16 @@ class HubtelUSSDService {
      */
     private function getUSSDSession($sessionId, $key) {
         try {
+            error_log("Getting USSD session: SessionId=$sessionId, Key=$key");
             $stmt = $this->db->prepare("
                 SELECT session_value FROM ussd_sessions 
                 WHERE session_id = ? AND session_key = ?
                 AND created_at > NOW() - INTERVAL 30 MINUTE
             ");
             $stmt->execute([$sessionId, $key]);
-            return $stmt->fetchColumn();
+            $value = $stmt->fetchColumn();
+            error_log("Retrieved session value: " . ($value ? $value : "NULL"));
+            return $value;
         } catch (Exception $e) {
             error_log("Error getting USSD session: " . $e->getMessage());
             return null;
