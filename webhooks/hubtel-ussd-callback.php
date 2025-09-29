@@ -33,19 +33,19 @@ try {
     
     logWebhook('Hubtel USSD webhook received', $webhookData);
     
-    // Extra logging to debug payment callbacks
-    error_log("=== WEBHOOK DEBUG ===");
-    error_log("Raw input: " . $rawInput);
-    error_log("Webhook type detected: " . $webhookType);
-    error_log("Has SessionId: " . (isset($webhookData['SessionId']) ? 'YES' : 'NO'));
-    error_log("Has TransactionId: " . (isset($webhookData['TransactionId']) ? 'YES' : 'NO'));
-    
     if (!$webhookData) {
         throw new Exception('Invalid JSON input');
     }
     
     // Determine webhook type
     $webhookType = $webhookData['Type'] ?? $webhookData['type'] ?? 'unknown';
+    
+    // Extra logging to debug payment callbacks
+    error_log("=== WEBHOOK DEBUG ===");
+    error_log("Raw input: " . $rawInput);
+    error_log("Webhook type detected: " . $webhookType);
+    error_log("Has SessionId: " . (isset($webhookData['SessionId']) ? 'YES' : 'NO'));
+    error_log("Has TransactionId: " . (isset($webhookData['TransactionId']) ? 'YES' : 'NO'));
     
     switch (strtolower($webhookType)) {
         case 'ussd':
