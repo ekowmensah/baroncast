@@ -259,7 +259,7 @@ class HubtelUSSDService {
     private function showMainMenu() {
         return [
             'Type' => 'Response',
-            'Message' => "Welcome to E-Cast Voting!\n\n1. Vote for Nominee\n2. Check Event Status\n3. Help\n\nEnter your choice:"
+            'Message' => "Welcome to BaronCast!\n\n1. Select Event\n2. Check Event Status\n3. Help\n\nEnter your choice:"
         ];
     }
     
@@ -272,7 +272,7 @@ class HubtelUSSDService {
         
         switch ($trimmedChoice) {
             case '1':
-                error_log("User selected option 1 - Vote for Nominee");
+                error_log("User selected option 1 - Select Event");
                 return $this->showActiveEvents();
                 
             case '2':
@@ -375,11 +375,12 @@ class HubtelUSSDService {
             
             $selectedEvent = $events[$eventIndex];
             
-            // Store selected event in session (we'll use a simple approach)
+            // Store selected event in session
             $this->storeUSSDSession($sessionId, 'selected_event_id', $selectedEvent['id']);
+            $this->storeUSSDSession($sessionId, 'current_page', '1');
             
-            // Show nominees for this event
-            return $this->showEventNominees($selectedEvent['id'], $selectedEvent['title']);
+            // Show nominees for this event (page 1)
+            return $this->showEventNominees($selectedEvent['id'], $selectedEvent['title'], 1);
             
         } catch (Exception $e) {
             error_log("Error in handleSubMenuSelection: " . $e->getMessage());
@@ -397,6 +398,7 @@ class HubtelUSSDService {
         try {
             // Get stored session data
             $eventId = $this->getUSSDSession($sessionId, 'selected_event_id');
+            $currentPage = (int)($this->getUSSDSession($sessionId, 'current_page') ?: 1);
             
             if (!$eventId) {
                 return [
@@ -407,8 +409,8 @@ class HubtelUSSDService {
             
             switch ($sequence) {
                 case 4:
-                    // User selected a nominee, ask for vote count
-                    return $this->handleNomineeSelection($text, $phoneNumber, $sessionId, $eventId);
+                    // Handle nominee selection or pagination
+                    return $this->handleNomineePageSelection($text, $phoneNumber, $sessionId, $eventId, $currentPage);
                     
                 case 5:
                     // User entered vote count, initiate payment
@@ -433,32 +435,66 @@ class HubtelUSSDService {
     /**
      * Show nominees for selected event
      */
-    private function showEventNominees($eventId, $eventTitle) {
+    private function showEventNominees($eventId, $eventTitle, $page = 1) {
         try {
+            // Get total count of nominees
             $stmt = $this->db->prepare("
-                SELECT n.id, n.name, c.name as category_name
+                SELECT COUNT(*) as total
                 FROM nominees n
                 JOIN categories c ON n.category_id = c.id
                 WHERE c.event_id = ?
-                ORDER BY c.name, n.name
-                LIMIT 9
             ");
             $stmt->execute([$eventId]);
-            $nominees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $totalNominees = $stmt->fetchColumn();
             
-            if (empty($nominees)) {
+            if ($totalNominees == 0) {
                 return [
                     'Type' => 'Release',
                     'Message' => "No nominees found for this event."
                 ];
             }
             
-            $message = "Event: " . substr($eventTitle, 0, 25) . "\n\nNominees:\n\n";
+            $nomineesPerPage = 5;
+            $totalPages = ceil($totalNominees / $nomineesPerPage);
+            $offset = ($page - 1) * $nomineesPerPage;
+            
+            // Get nominees for current page
+            $stmt = $this->db->prepare("
+                SELECT n.id, n.name
+                FROM nominees n
+                JOIN categories c ON n.category_id = c.id
+                WHERE c.event_id = ?
+                ORDER BY c.name, n.name
+                LIMIT ? OFFSET ?
+            ");
+            $stmt->execute([$eventId, $nomineesPerPage, $offset]);
+            $nominees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Build message
+            $message = "Event: " . substr($eventTitle, 0, 25) . "\n";
+            $message .= "Page $page of $totalPages\n\nNominees:\n\n";
+            
             foreach ($nominees as $index => $nominee) {
-                $message .= ($index + 1) . ". " . substr($nominee['name'], 0, 25) . "\n";
-                $message .= "   (" . substr($nominee['category_name'], 0, 20) . ")\n\n";
+                $nomineeNumber = $offset + $index + 1;
+                $message .= $nomineeNumber . ". " . substr($nominee['name'], 0, 30) . "\n";
             }
-            $message .= "Select nominee (1-" . count($nominees) . "):";
+            
+            $message .= "\nSelect nominee (";
+            $startNum = $offset + 1;
+            $endNum = min($offset + $nomineesPerPage, $totalNominees);
+            $message .= "$startNum-$endNum)";
+            
+            // Add navigation options
+            if ($totalPages > 1) {
+                $message .= "\n\nNavigation:";
+                if ($page > 1) {
+                    $message .= "\n8. Back";
+                }
+                if ($page < $totalPages) {
+                    $message .= "\n9. Next";
+                }
+            }
+            $message .= "\n0. Main Menu";
             
             return [
                 'Type' => 'Response',
@@ -475,33 +511,108 @@ class HubtelUSSDService {
     }
     
     /**
+     * Handle nominee page selection (pagination + nominee selection)
+     */
+    private function handleNomineePageSelection($choice, $phoneNumber, $sessionId, $eventId, $currentPage) {
+        try {
+            $trimmedChoice = trim($choice);
+            error_log("Nominee page selection: choice='$trimmedChoice', page=$currentPage");
+            
+            // Handle navigation options
+            switch ($trimmedChoice) {
+                case '0':
+                    // Return to main menu
+                    return $this->showMainMenu();
+                    
+                case '8':
+                    // Go to previous page
+                    if ($currentPage > 1) {
+                        $newPage = $currentPage - 1;
+                        $this->storeUSSDSession($sessionId, 'current_page', (string)$newPage);
+                        
+                        // Get event title
+                        $stmt = $this->db->prepare("SELECT title FROM events WHERE id = ?");
+                        $stmt->execute([$eventId]);
+                        $eventTitle = $stmt->fetchColumn();
+                        
+                        return $this->showEventNominees($eventId, $eventTitle, $newPage);
+                    }
+                    break;
+                    
+                case '9':
+                    // Go to next page
+                    // Get total pages
+                    $stmt = $this->db->prepare("
+                        SELECT COUNT(*) as total
+                        FROM nominees n
+                        JOIN categories c ON n.category_id = c.id
+                        WHERE c.event_id = ?
+                    ");
+                    $stmt->execute([$eventId]);
+                    $totalNominees = $stmt->fetchColumn();
+                    $totalPages = ceil($totalNominees / 5);
+                    
+                    if ($currentPage < $totalPages) {
+                        $newPage = $currentPage + 1;
+                        $this->storeUSSDSession($sessionId, 'current_page', (string)$newPage);
+                        
+                        // Get event title
+                        $stmt = $this->db->prepare("SELECT title FROM events WHERE id = ?");
+                        $stmt->execute([$eventId]);
+                        $eventTitle = $stmt->fetchColumn();
+                        
+                        return $this->showEventNominees($eventId, $eventTitle, $newPage);
+                    }
+                    break;
+                    
+                default:
+                    // Handle nominee selection
+                    return $this->handleNomineeSelection($trimmedChoice, $phoneNumber, $sessionId, $eventId, $currentPage);
+            }
+            
+            return [
+                'Type' => 'Release',
+                'Message' => "Invalid selection. Please try again."
+            ];
+            
+        } catch (Exception $e) {
+            error_log("Error in handleNomineePageSelection: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => "Error processing selection. Please try again."
+            ];
+        }
+    }
+
+    /**
      * Handle nominee selection
      */
-    private function handleNomineeSelection($choice, $phoneNumber, $sessionId, $eventId) {
+    private function handleNomineeSelection($choice, $phoneNumber, $sessionId, $eventId, $currentPage = 1) {
         try {
-            $nomineeIndex = (int)trim($choice) - 1;
+            $selectedNumber = (int)trim($choice);
+            error_log("Nominee selection: selectedNumber=$selectedNumber, currentPage=$currentPage");
             
-            // Get nominees again
+            // Get all nominees to find the correct one by absolute number
             $stmt = $this->db->prepare("
-                SELECT n.id, n.name, c.name as category_name, COALESCE(e.vote_cost, 1.00) as vote_cost
+                SELECT n.id, n.name, COALESCE(e.vote_cost, 1.00) as vote_cost
                 FROM nominees n
                 JOIN categories c ON n.category_id = c.id
                 JOIN events e ON c.event_id = e.id
                 WHERE c.event_id = ?
                 ORDER BY c.name, n.name
-                LIMIT 9
             ");
             $stmt->execute([$eventId]);
-            $nominees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $allNominees = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            if (!isset($nominees[$nomineeIndex])) {
+            // Check if the selected number is valid
+            if ($selectedNumber < 1 || $selectedNumber > count($allNominees)) {
                 return [
                     'Type' => 'Release',
                     'Message' => "Invalid nominee selection. Please try again."
                 ];
             }
             
-            $selectedNominee = $nominees[$nomineeIndex];
+            $selectedNominee = $allNominees[$selectedNumber - 1];
             
             // Store selected nominee
             $this->storeUSSDSession($sessionId, 'selected_nominee_id', $selectedNominee['id']);
@@ -597,15 +708,57 @@ class HubtelUSSDService {
     private function storeUSSDSession($sessionId, $key, $value) {
         try {
             error_log("Storing USSD session: SessionId=$sessionId, Key=$key, Value=$value");
-            $stmt = $this->db->prepare("
-                INSERT INTO ussd_sessions (session_id, session_key, session_value, created_at)
-                VALUES (?, ?, ?, NOW())
-                ON DUPLICATE KEY UPDATE session_value = ?, created_at = NOW()
-            ");
-            $result = $stmt->execute([$sessionId, $key, $value, $value]);
+            
+            // First check if table exists and what columns it has
+            $stmt = $this->db->query("SHOW COLUMNS FROM ussd_sessions");
+            $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            error_log("Available columns in ussd_sessions: " . implode(', ', $columns));
+            
+            // Use the correct column names based on what exists
+            if (in_array('session_key', $columns)) {
+                $stmt = $this->db->prepare("
+                    INSERT INTO ussd_sessions (session_id, session_key, session_value, created_at)
+                    VALUES (?, ?, ?, NOW())
+                    ON DUPLICATE KEY UPDATE session_value = ?, created_at = NOW()
+                ");
+                $result = $stmt->execute([$sessionId, $key, $value, $value]);
+            } else {
+                // Fallback: create a simple key-value storage in JSON format
+                $stmt = $this->db->prepare("
+                    INSERT INTO ussd_sessions (session_id, session_data, created_at)
+                    VALUES (?, ?, NOW())
+                    ON DUPLICATE KEY UPDATE session_data = JSON_SET(COALESCE(session_data, '{}'), ?, ?), created_at = NOW()
+                ");
+                $result = $stmt->execute([$sessionId, '{}', '$.' . $key, $value]);
+            }
+            
             error_log("Session storage result: " . ($result ? "SUCCESS" : "FAILED"));
         } catch (Exception $e) {
             error_log("Error storing USSD session: " . $e->getMessage());
+            
+            // Simple fallback - store in a temporary way
+            try {
+                $stmt = $this->db->prepare("
+                    CREATE TEMPORARY TABLE IF NOT EXISTS temp_ussd_sessions (
+                        session_id VARCHAR(100),
+                        session_key VARCHAR(50),
+                        session_value TEXT,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        PRIMARY KEY (session_id, session_key)
+                    )
+                ");
+                $stmt->execute();
+                
+                $stmt = $this->db->prepare("
+                    INSERT INTO temp_ussd_sessions (session_id, session_key, session_value)
+                    VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE session_value = ?, created_at = CURRENT_TIMESTAMP
+                ");
+                $stmt->execute([$sessionId, $key, $value, $value]);
+                error_log("Stored in temporary table as fallback");
+            } catch (Exception $e2) {
+                error_log("Fallback storage also failed: " . $e2->getMessage());
+            }
         }
     }
     
@@ -615,13 +768,46 @@ class HubtelUSSDService {
     private function getUSSDSession($sessionId, $key) {
         try {
             error_log("Getting USSD session: SessionId=$sessionId, Key=$key");
-            $stmt = $this->db->prepare("
-                SELECT session_value FROM ussd_sessions 
-                WHERE session_id = ? AND session_key = ?
-                AND created_at > NOW() - INTERVAL 30 MINUTE
-            ");
-            $stmt->execute([$sessionId, $key]);
-            $value = $stmt->fetchColumn();
+            
+            // Check table structure first
+            $stmt = $this->db->query("SHOW COLUMNS FROM ussd_sessions");
+            $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
+            
+            if (in_array('session_key', $columns)) {
+                $stmt = $this->db->prepare("
+                    SELECT session_value FROM ussd_sessions 
+                    WHERE session_id = ? AND session_key = ?
+                    AND created_at > NOW() - INTERVAL 30 MINUTE
+                ");
+                $stmt->execute([$sessionId, $key]);
+                $value = $stmt->fetchColumn();
+            } else {
+                // Try JSON format
+                $stmt = $this->db->prepare("
+                    SELECT JSON_EXTRACT(session_data, ?) FROM ussd_sessions 
+                    WHERE session_id = ?
+                    AND created_at > NOW() - INTERVAL 30 MINUTE
+                ");
+                $stmt->execute(['$.' . $key, $sessionId]);
+                $value = $stmt->fetchColumn();
+                $value = trim($value, '"'); // Remove JSON quotes
+            }
+            
+            // Fallback to temporary table
+            if (!$value) {
+                try {
+                    $stmt = $this->db->prepare("
+                        SELECT session_value FROM temp_ussd_sessions 
+                        WHERE session_id = ? AND session_key = ?
+                    ");
+                    $stmt->execute([$sessionId, $key]);
+                    $value = $stmt->fetchColumn();
+                    error_log("Retrieved from temporary table: " . ($value ? $value : "NULL"));
+                } catch (Exception $e) {
+                    // Temporary table doesn't exist, that's okay
+                }
+            }
+            
             error_log("Retrieved session value: " . ($value ? $value : "NULL"));
             return $value;
         } catch (Exception $e) {
