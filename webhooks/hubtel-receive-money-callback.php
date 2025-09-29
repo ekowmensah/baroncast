@@ -5,10 +5,10 @@
  */
 
 header('Content-Type: application/json');
-require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/../config/database.php';
 
 // Set up logging
-$debug_log = __DIR__ . '/logs/ussd-payment-webhook.log';
+$debug_log = __DIR__ . '/../logs/hubtel-callback.log';
 
 function log_debug($msg) {
     global $debug_log;
