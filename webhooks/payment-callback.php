@@ -39,12 +39,24 @@ try {
     $pdo = $database->getConnection();
     file_put_contents($logFile, "DATABASE CONNECTION: SUCCESS\n", FILE_APPEND);
     
-    // Extract payment information (try different field names)
-    $transactionId = $callbackData['TransactionId'] ?? $callbackData['transaction_id'] ?? $callbackData['Data']['TransactionId'] ?? '';
+    // Extract payment information - handle both old format and Service Fulfillment format
+    $transactionId = $callbackData['TransactionId'] ?? $callbackData['transaction_id'] ?? $callbackData['Data']['TransactionId'] ?? $callbackData['OrderId'] ?? '';
+    
+    // For Service Fulfillment format, extract USSD reference from OrderInfo.Items
     $clientReference = $callbackData['ClientReference'] ?? $callbackData['client_reference'] ?? $callbackData['Data']['ClientReference'] ?? '';
+    if (empty($clientReference) && isset($callbackData['OrderInfo']['Items'])) {
+        foreach ($callbackData['OrderInfo']['Items'] as $item) {
+            $itemName = $item['Name'] ?? '';
+            if (preg_match('/Ref: (USSD_\d+_\d+)/', $itemName, $matches)) {
+                $clientReference = $matches[1];
+                break;
+            }
+        }
+    }
+    
     $responseCode = $callbackData['ResponseCode'] ?? $callbackData['response_code'] ?? '';
-    $status = $callbackData['Status'] ?? $callbackData['status'] ?? '';
-    $amount = $callbackData['Amount'] ?? $callbackData['amount'] ?? 0;
+    $status = $callbackData['Status'] ?? $callbackData['status'] ?? $callbackData['OrderInfo']['Status'] ?? '';
+    $amount = $callbackData['Amount'] ?? $callbackData['amount'] ?? $callbackData['OrderInfo']['Payment']['AmountAfterCharges'] ?? 0;
     
     file_put_contents($logFile, "EXTRACTED: TransactionId=$transactionId, ClientRef=$clientReference, ResponseCode=$responseCode, Status=$status, Amount=$amount\n", FILE_APPEND);
     
@@ -75,9 +87,11 @@ try {
         
         file_put_contents($logFile, "TRANSACTION FOUND: " . json_encode($transaction) . "\n", FILE_APPEND);
         
-        // Determine if payment was successful
+        // Determine if payment was successful - handle both old and new formats
         $isSuccess = false;
-        if ($responseCode === '0000' || $responseCode === '00' || strtolower($status) === 'success' || strtolower($status) === 'paid') {
+        if ($responseCode === '0000' || $responseCode === '00' || 
+            strtolower($status) === 'success' || strtolower($status) === 'paid' ||
+            (isset($callbackData['OrderInfo']['Payment']['IsSuccessful']) && $callbackData['OrderInfo']['Payment']['IsSuccessful'])) {
             $isSuccess = true;
         }
         
