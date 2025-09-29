@@ -28,6 +28,7 @@ try {
     }
     
     error_log("Parsed callback data: " . json_encode($callbackData));
+    file_put_contents($logFile, "PARSED DATA: " . json_encode($callbackData) . "\n", FILE_APPEND);
     
     // Set HTTP_HOST for database connection
     if (!isset($_SERVER['HTTP_HOST'])) {
@@ -36,6 +37,7 @@ try {
     
     $database = new Database();
     $pdo = $database->getConnection();
+    file_put_contents($logFile, "DATABASE CONNECTION: SUCCESS\n", FILE_APPEND);
     
     // Extract payment information (try different field names)
     $transactionId = $callbackData['TransactionId'] ?? $callbackData['transaction_id'] ?? $callbackData['Data']['TransactionId'] ?? '';
@@ -44,11 +46,13 @@ try {
     $status = $callbackData['Status'] ?? $callbackData['status'] ?? '';
     $amount = $callbackData['Amount'] ?? $callbackData['amount'] ?? 0;
     
+    file_put_contents($logFile, "EXTRACTED: TransactionId=$transactionId, ClientRef=$clientReference, ResponseCode=$responseCode, Status=$status, Amount=$amount\n", FILE_APPEND);
+    
     error_log("Extracted - TransactionId: $transactionId, ClientRef: $clientReference, ResponseCode: $responseCode, Status: $status, Amount: $amount");
     
     // Check if this is a USSD voting transaction
     if (strpos($clientReference, 'USSD_') === 0) {
-        error_log("Processing USSD voting payment callback");
+        file_put_contents($logFile, "PROCESSING USSD TRANSACTION: $clientReference\n", FILE_APPEND);
         
         // Get transaction from database
         $stmt = $pdo->prepare("
@@ -60,14 +64,16 @@ try {
         ");
         $stmt->execute([$clientReference]);
         $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+        file_put_contents($logFile, "DATABASE QUERY EXECUTED\n", FILE_APPEND);
         
         if (!$transaction) {
+            file_put_contents($logFile, "TRANSACTION NOT FOUND: $clientReference\n", FILE_APPEND);
             error_log("Transaction not found for ref: $clientReference");
             echo json_encode(['status' => 'error', 'message' => 'Transaction not found']);
             exit;
         }
         
-        error_log("Found transaction: " . json_encode($transaction));
+        file_put_contents($logFile, "TRANSACTION FOUND: " . json_encode($transaction) . "\n", FILE_APPEND);
         
         // Determine if payment was successful
         $isSuccess = false;
@@ -78,10 +84,12 @@ try {
         error_log("Payment success status: " . ($isSuccess ? 'YES' : 'NO'));
         
         if ($isSuccess) {
+            file_put_contents($logFile, "PAYMENT SUCCESSFUL - RECORDING VOTES\n", FILE_APPEND);
             error_log("Recording votes for successful payment");
             
             // Start database transaction
             $pdo->beginTransaction();
+            file_put_contents($logFile, "DATABASE TRANSACTION STARTED\n", FILE_APPEND);
             
             try {
                 // Update USSD transaction status
