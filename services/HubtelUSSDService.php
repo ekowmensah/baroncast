@@ -435,18 +435,56 @@ class HubtelUSSDService {
                     ];
                 }
                 
-                // Simulate payment initiation (in real implementation, call Hubtel API here)
-                $formattedAmount = number_format($transaction['amount'], 2);
+                // Initiate actual Hubtel PayProxy payment
+                $description = "Vote for " . substr($transaction['nominee_name'], 0, 20) . " ({$transaction['vote_count']} votes)";
                 
-                return [
-                    'Type' => 'Release',
-                    'Message' => "Payment initiated!\n\n" .
-                               "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
-                               "Votes: {$transaction['vote_count']}\n" .
-                               "Amount: GHS $formattedAmount\n\n" .
-                               "You will receive a mobile money prompt shortly.\n" .
-                               "Ref: {$transaction['transaction_ref']}"
-                ];
+                error_log("Initiating PayProxy payment: Amount={$transaction['amount']}, Phone=$phoneNumber, Ref={$transaction['transaction_ref']}");
+                
+                $paymentResult = $this->initiatePayProxyPayment(
+                    $transaction['amount'],
+                    $phoneNumber,
+                    $description,
+                    $transaction['transaction_ref']
+                );
+                
+                if ($paymentResult && isset($paymentResult['success']) && $paymentResult['success']) {
+                    // Update transaction with Hubtel transaction ID
+                    if (isset($paymentResult['transactionId'])) {
+                        $stmt = $this->db->prepare("
+                            UPDATE ussd_transactions 
+                            SET hubtel_transaction_id = ?, status = 'processing'
+                            WHERE transaction_ref = ?
+                        ");
+                        $stmt->execute([$paymentResult['transactionId'], $transaction['transaction_ref']]);
+                    }
+                    
+                    $formattedAmount = number_format($transaction['amount'], 2);
+                    
+                    return [
+                        'Type' => 'Release',
+                        'Message' => "Payment initiated!\n\n" .
+                                   "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
+                                   "Votes: {$transaction['vote_count']}\n" .
+                                   "Amount: GHS $formattedAmount\n\n" .
+                                   "Check your phone for payment prompt.\n" .
+                                   "Ref: {$transaction['transaction_ref']}"
+                    ];
+                } else {
+                    // Payment initiation failed
+                    error_log("PayProxy payment failed: " . json_encode($paymentResult));
+                    
+                    $stmt = $this->db->prepare("
+                        UPDATE ussd_transactions 
+                        SET status = 'failed' 
+                        WHERE transaction_ref = ?
+                    ");
+                    $stmt->execute([$transaction['transaction_ref']]);
+                    
+                    return [
+                        'Type' => 'Release',
+                        'Message' => "Payment initiation failed. Please try again later.\n\nRef: {$transaction['transaction_ref']}"
+                    ];
+                }
                 
             } elseif ($trimmedChoice === '2') {
                 // User cancelled
@@ -476,6 +514,66 @@ class HubtelUSSDService {
             return [
                 'Type' => 'Release',
                 'Message' => "Error processing payment. Please try again."
+            ];
+        }
+    }
+
+    /**
+     * Initiate PayProxy payment (correct implementation based on church system)
+     */
+    private function initiatePayProxyPayment($amount, $phoneNumber, $description, $clientReference) {
+        try {
+            $formattedPhone = $this->formatPhoneNumber($phoneNumber);
+            
+            // Use correct PayProxy API parameters based on church management system
+            $payload = [
+                'totalAmount' => (float)$amount,
+                'payeeName' => 'BaronCast Voter',
+                'payeeMobileNumber' => $formattedPhone,
+                'description' => $description,
+                'clientReference' => $clientReference,
+                'callbackUrl' => 'https://gs-callback.hubtel.com/callback',
+                'merchantAccountNumber' => $this->posId // Use POS ID as merchant account
+            ];
+            
+            error_log("PayProxy API Request Data: " . json_encode($payload));
+            
+            // Use the correct endpoint from church system
+            $response = $this->makeRequest('POST', '/items/initiate', $payload);
+            
+            if ($response) {
+                error_log("PayProxy API Response: " . json_encode($response));
+                
+                // Check for success in PayProxy response format
+                if (isset($response['ResponseCode']) && $response['ResponseCode'] === '0000') {
+                    return [
+                        'success' => true,
+                        'transactionId' => $response['Data']['TransactionId'] ?? null,
+                        'checkoutId' => $response['Data']['CheckoutId'] ?? null,
+                        'response' => $response
+                    ];
+                } else {
+                    return [
+                        'success' => false,
+                        'message' => $response['Message'] ?? 'Payment initiation failed',
+                        'error_code' => $response['ResponseCode'] ?? 'UNKNOWN_ERROR',
+                        'response' => $response
+                    ];
+                }
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'No response from PayProxy API',
+                    'error_code' => 'NO_RESPONSE'
+                ];
+            }
+            
+        } catch (Exception $e) {
+            error_log("PayProxy Payment Error: " . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'error_code' => 'EXCEPTION'
             ];
         }
     }
