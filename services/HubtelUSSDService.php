@@ -192,6 +192,153 @@ class HubtelUSSDService {
     }
     
     /**
+     * Handle USSD session interactions
+     * This method processes USSD menu interactions when users dial your shortcode
+     */
+    public function handleUSSDSession($webhookData) {
+        try {
+            // Extract USSD session data
+            $sessionId = $webhookData['SessionId'] ?? '';
+            $serviceCode = $webhookData['ServiceCode'] ?? '';
+            $phoneNumber = $webhookData['Mobile'] ?? '';
+            $text = $webhookData['Text'] ?? '';
+            $sequence = $webhookData['Sequence'] ?? 1;
+            $type = $webhookData['Type'] ?? 'initiation';
+            
+            error_log("USSD Session - Phone: $phoneNumber, Text: '$text', Sequence: $sequence, Type: $type");
+            
+            // Handle different USSD menu levels
+            switch ($sequence) {
+                case 1:
+                    // First interaction - show main menu
+                    return $this->showMainMenu();
+                    
+                case 2:
+                    // User selected an option from main menu
+                    return $this->handleMainMenuSelection($text, $phoneNumber);
+                    
+                case 3:
+                    // Handle sub-menu selections
+                    return $this->handleSubMenuSelection($text, $phoneNumber, $sessionId);
+                    
+                default:
+                    // Handle deeper menu levels or end session
+                    return $this->handleAdvancedMenus($text, $phoneNumber, $sessionId, $sequence);
+            }
+            
+        } catch (Exception $e) {
+            error_log("USSD Session Error: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => 'Service temporarily unavailable. Please try again later.'
+            ];
+        }
+    }
+    
+    /**
+     * Show main USSD menu
+     */
+    private function showMainMenu() {
+        return [
+            'Type' => 'Response',
+            'Message' => "Welcome to E-Cast Voting!\n\n1. Vote for Nominee\n2. Check Event Status\n3. Help\n\nEnter your choice:"
+        ];
+    }
+    
+    /**
+     * Handle main menu selection
+     */
+    private function handleMainMenuSelection($choice, $phoneNumber) {
+        switch (trim($choice)) {
+            case '1':
+                return $this->showActiveEvents();
+                
+            case '2':
+                return [
+                    'Type' => 'Response',
+                    'Message' => "Enter event ID to check status:"
+                ];
+                
+            case '3':
+                return [
+                    'Type' => 'Release',
+                    'Message' => "E-Cast Voting Help:\n- Dial this code to vote\n- Follow menu prompts\n- Standard rates apply\n\nThank you!"
+                ];
+                
+            default:
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Invalid selection. Please try again."
+                ];
+        }
+    }
+    
+    /**
+     * Show active events for voting
+     */
+    private function showActiveEvents() {
+        try {
+            $stmt = $this->db->prepare("
+                SELECT id, title, vote_cost 
+                FROM events 
+                WHERE status = 'active' 
+                ORDER BY created_at DESC 
+                LIMIT 5
+            ");
+            $stmt->execute();
+            $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (empty($events)) {
+                return [
+                    'Type' => 'Release',
+                    'Message' => "No active voting events at the moment. Please check back later."
+                ];
+            }
+            
+            $message = "Active Events:\n\n";
+            foreach ($events as $index => $event) {
+                $cost = number_format($event['vote_cost'], 2);
+                $message .= ($index + 1) . ". " . substr($event['title'], 0, 30) . "\n   (GHS $cost per vote)\n\n";
+            }
+            $message .= "Enter event number:";
+            
+            return [
+                'Type' => 'Response',
+                'Message' => $message
+            ];
+            
+        } catch (Exception $e) {
+            error_log("Error fetching events: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => "Unable to load events. Please try again later."
+            ];
+        }
+    }
+    
+    /**
+     * Handle sub-menu selections
+     */
+    private function handleSubMenuSelection($choice, $phoneNumber, $sessionId) {
+        // This would handle event selection and show nominees
+        // For now, provide a simple response
+        return [
+            'Type' => 'Release',
+            'Message' => "Feature coming soon! Please use our web platform at your event organizer's website to vote."
+        ];
+    }
+    
+    /**
+     * Handle advanced menu levels
+     */
+    private function handleAdvancedMenus($text, $phoneNumber, $sessionId, $sequence) {
+        return [
+            'Type' => 'Release',
+            'Message' => "Session completed. Thank you for using E-Cast!"
+        ];
+    }
+
+    /**
      * Make HTTP request to Hubtel API
      */
     private function makeRequest($method, $endpoint, $data = null) {
