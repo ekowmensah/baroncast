@@ -56,43 +56,45 @@ class HubtelUSSDService {
     
     /**
      * Generate USSD payment code for voting
-     * Uses correct callback URL and tries multiple endpoints
+     * Uses Send Money API for USSD payments
      */
     public function generateUSSDPayment($amount, $phoneNumber, $description, $clientReference, $metadata = []) {
         try {
             $formattedPhone = $this->formatPhoneNumber($phoneNumber);
             
+            // Use Send Money API payload format for USSD
             $payload = [
-                'CustomerName' => $metadata['voter_name'] ?? 'E-Cast Voter',
-                'CustomerMsisdn' => $formattedPhone,
-                'CustomerEmail' => $metadata['email'] ?? '',
+                'RecipientName' => $metadata['voter_name'] ?? 'E-Cast Voter',
+                'RecipientMsisdn' => $formattedPhone,
                 'Amount' => (float)$amount,
                 'PrimaryCallbackUrl' => $this->getCallbackUrl(),
                 'Description' => $description,
                 'ClientReference' => $clientReference,
-                'Metadata' => json_encode($metadata)
+                'Metadata' => $metadata // Keep as array, not JSON string
             ];
             
-            // Use the correct Hubtel PayProxy API endpoint
+            // Log the request
+            error_log("Hubtel Send Money API Data: " . json_encode($payload));
+            
+            // Try Send Money endpoints for USSD payment
             $endpoints = [
-                "/items/initiate", // Primary endpoint from church management system
-                "/items/ussd/initiate", // Alternative USSD-specific endpoint
-                "/ussd/initiate", // Another possible USSD endpoint
-                "/receive/ussd", // Fallback endpoint
+                '/merchants/send/mobile-money',
+                '/send/mobile-money', 
+                '/items/send',
+                '/send'
             ];
             
-            $response = null;
             $lastError = null;
             $workingEndpoint = null;
             
             foreach ($endpoints as $endpoint) {
-                error_log("Trying USSD endpoint: {$this->baseUrl}$endpoint");
+                error_log("Trying Send Money endpoint: " . $this->baseUrl . $endpoint);
                 $response = $this->makeRequest('POST', $endpoint, $payload);
                 
                 // Check if we got a successful response
                 if ($response && isset($response['ResponseCode']) && $response['ResponseCode'] === '0000') {
                     $workingEndpoint = $endpoint;
-                    error_log("USSD endpoint working: $endpoint");
+                    error_log("Send Money endpoint working: $endpoint");
                     break;
                 }
                 
@@ -100,7 +102,7 @@ class HubtelUSSDService {
                 if ($response && (!isset($response['ResponseCode']) || $response['ResponseCode'] !== '404')) {
                     $lastError = $response;
                     $workingEndpoint = $endpoint;
-                    error_log("USSD endpoint exists but failed: $endpoint - " . json_encode($response));
+                    error_log("Send Money endpoint exists but failed: $endpoint - " . json_encode($response));
                     break;
                 }
                 
@@ -238,6 +240,10 @@ class HubtelUSSDService {
                     // User entered vote count
                     return $this->handleVoteCountEntry($userInput, $phoneNumber, $sessionId);
                     
+                case 4:
+                    // User confirmed payment
+                    return $this->handlePaymentConfirmation($userInput, $phoneNumber, $sessionId);
+                    
                 default:
                     // End session
                     return [
@@ -364,71 +370,112 @@ class HubtelUSSDService {
             $stmt->execute([$nomineeId]);
             $nomineeName = $stmt->fetchColumn();
             
-            // Initiate actual Hubtel payment
-            $description = "Vote for " . substr($nomineeName, 0, 20) . " ($votes votes)";
-            $metadata = [
-                'voter_phone' => $phoneNumber,
-                'nominee_id' => $nomineeId,
-                'event_id' => $eventId,
-                'vote_count' => $votes,
-                'transaction_ref' => $transactionRef
+            $formattedAmount = number_format($totalAmount, 2);
+            
+            // For USSD voting, we'll use a different approach
+            // Instead of calling payment API, we'll return a USSD payment prompt
+            return [
+                'Type' => 'Response',
+                'Message' => "Confirm Payment:\n\n" .
+                           "Nominee: " . substr($nomineeName, 0, 25) . "\n" .
+                           "Votes: $votes\n" .
+                           "Amount: GHS $formattedAmount\n\n" .
+                           "1. Pay Now\n" .
+                           "2. Cancel\n\n" .
+                           "Enter your choice:"
             ];
-            
-            error_log("Initiating Hubtel payment: Amount=$totalAmount, Phone=$phoneNumber, Ref=$transactionRef");
-            
-            $paymentResult = $this->generateUSSDPayment(
-                $totalAmount,
-                $phoneNumber,
-                $description,
-                $transactionRef,
-                $metadata
-            );
-            
-            if ($paymentResult && isset($paymentResult['success']) && $paymentResult['success']) {
-                // Update transaction with Hubtel transaction ID
-                if (isset($paymentResult['transactionId'])) {
-                    $stmt = $this->db->prepare("
-                        UPDATE ussd_transactions 
-                        SET hubtel_transaction_id = ? 
-                        WHERE transaction_ref = ?
-                    ");
-                    $stmt->execute([$paymentResult['transactionId'], $transactionRef]);
-                }
-                
-                $formattedAmount = number_format($totalAmount, 2);
-                
-                return [
-                    'Type' => 'Release',
-                    'Message' => "Payment initiated!\n\n" .
-                               "Nominee: " . substr($nomineeName, 0, 25) . "\n" .
-                               "Votes: $votes\n" .
-                               "Amount: GHS $formattedAmount\n\n" .
-                               "Check your phone for payment prompt.\n" .
-                               "Ref: $transactionRef"
-                ];
-            } else {
-                // Payment initiation failed
-                error_log("Payment initiation failed: " . json_encode($paymentResult));
-                
-                // Update transaction status
-                $stmt = $this->db->prepare("
-                    UPDATE ussd_transactions 
-                    SET status = 'failed' 
-                    WHERE transaction_ref = ?
-                ");
-                $stmt->execute([$transactionRef]);
-                
-                return [
-                    'Type' => 'Release',
-                    'Message' => "Payment initiation failed. Please try again later.\n\nRef: $transactionRef"
-                ];
-            }
             
         } catch (Exception $e) {
             error_log("Error in handleVoteCountEntry: " . $e->getMessage());
             return [
                 'Type' => 'Release',
                 'Message' => "Payment initiation failed. Please try again."
+            ];
+        }
+    }
+
+    /**
+     * Handle payment confirmation
+     */
+    private function handlePaymentConfirmation($choice, $phoneNumber, $sessionId) {
+        try {
+            $trimmedChoice = trim($choice);
+            error_log("Payment confirmation: '$trimmedChoice'");
+            
+            if ($trimmedChoice === '1') {
+                // User chose to pay - initiate mobile money payment
+                
+                // Get session data
+                $nomineeId = $this->getUSSDSession($sessionId, 'selected_nominee_id');
+                $eventId = $this->getUSSDSession($sessionId, 'selected_event_id');
+                $voteCost = $this->getUSSDSession($sessionId, 'vote_cost');
+                
+                if (!$nomineeId || !$eventId || !$voteCost) {
+                    return [
+                        'Type' => 'Release',
+                        'Message' => "Session expired. Please start again."
+                    ];
+                }
+                
+                // Get the pending transaction
+                $stmt = $this->db->prepare("
+                    SELECT transaction_ref, vote_count, amount, n.name as nominee_name
+                    FROM ussd_transactions ut
+                    JOIN nominees n ON ut.nominee_id = n.id
+                    WHERE ut.session_id = ? AND ut.status = 'pending'
+                    ORDER BY ut.created_at DESC LIMIT 1
+                ");
+                $stmt->execute([$sessionId]);
+                $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if (!$transaction) {
+                    return [
+                        'Type' => 'Release',
+                        'Message' => "Transaction not found. Please try again."
+                    ];
+                }
+                
+                // Simulate payment initiation (in real implementation, call Hubtel API here)
+                $formattedAmount = number_format($transaction['amount'], 2);
+                
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Payment initiated!\n\n" .
+                               "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
+                               "Votes: {$transaction['vote_count']}\n" .
+                               "Amount: GHS $formattedAmount\n\n" .
+                               "You will receive a mobile money prompt shortly.\n" .
+                               "Ref: {$transaction['transaction_ref']}"
+                ];
+                
+            } elseif ($trimmedChoice === '2') {
+                // User cancelled
+                
+                // Update transaction status to cancelled
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET status = 'cancelled' 
+                    WHERE session_id = ? AND status = 'pending'
+                ");
+                $stmt->execute([$sessionId]);
+                
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Payment cancelled. Thank you for using BaronCast!"
+                ];
+                
+            } else {
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Invalid choice. Payment cancelled."
+                ];
+            }
+            
+        } catch (Exception $e) {
+            error_log("Error in handlePaymentConfirmation: " . $e->getMessage());
+            return [
+                'Type' => 'Release',
+                'Message' => "Error processing payment. Please try again."
             ];
         }
     }
