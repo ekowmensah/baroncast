@@ -723,13 +723,13 @@ class HubtelUSSDService {
                 ");
                 $result = $stmt->execute([$sessionId, $key, $value, $value]);
             } else {
-                // Fallback: create a simple key-value storage in JSON format
+                // Use JSON format with the actual table structure
                 $stmt = $this->db->prepare("
                     INSERT INTO ussd_sessions (session_id, session_data, created_at)
-                    VALUES (?, ?, NOW())
+                    VALUES (?, JSON_OBJECT(?, ?), NOW())
                     ON DUPLICATE KEY UPDATE session_data = JSON_SET(COALESCE(session_data, '{}'), ?, ?), created_at = NOW()
                 ");
-                $result = $stmt->execute([$sessionId, '{}', '$.' . $key, $value]);
+                $result = $stmt->execute([$sessionId, $key, $value, '$.' . $key, $value]);
             }
             
             error_log("Session storage result: " . ($result ? "SUCCESS" : "FAILED"));
@@ -782,15 +782,25 @@ class HubtelUSSDService {
                 $stmt->execute([$sessionId, $key]);
                 $value = $stmt->fetchColumn();
             } else {
-                // Try JSON format
+                // Try JSON format - get the session_data and extract the key
                 $stmt = $this->db->prepare("
-                    SELECT JSON_EXTRACT(session_data, ?) FROM ussd_sessions 
+                    SELECT session_data FROM ussd_sessions 
                     WHERE session_id = ?
                     AND created_at > NOW() - INTERVAL 30 MINUTE
                 ");
-                $stmt->execute(['$.' . $key, $sessionId]);
-                $value = $stmt->fetchColumn();
-                $value = trim($value, '"'); // Remove JSON quotes
+                $stmt->execute([$sessionId]);
+                $sessionData = $stmt->fetchColumn();
+                
+                error_log("Raw session data: " . ($sessionData ? $sessionData : "NULL"));
+                
+                if ($sessionData) {
+                    $data = json_decode($sessionData, true);
+                    $value = $data[$key] ?? null;
+                    error_log("Decoded session data: " . json_encode($data));
+                    error_log("Looking for key '$key', found: " . ($value ? $value : "NULL"));
+                } else {
+                    $value = null;
+                }
             }
             
             // Fallback to temporary table
