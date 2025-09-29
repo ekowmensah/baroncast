@@ -435,31 +435,34 @@ class HubtelUSSDService {
                     ];
                 }
                 
-                // Mark transaction as ready for fulfillment
+                // Mark transaction as processing and trigger payment using AddToCart
                 $stmt = $this->db->prepare("
                     UPDATE ussd_transactions 
-                    SET status = 'awaiting_fulfillment' 
+                    SET status = 'processing' 
                     WHERE transaction_ref = ?
                 ");
                 $stmt->execute([$transaction['transaction_ref']]);
                 
                 $formattedAmount = number_format($transaction['amount'], 2);
                 
-                // End USSD session and trigger fulfillment
+                // Use AddToCart to trigger payment (same as church system)
+                $itemDescription = "Vote for " . substr($transaction['nominee_name'], 0, 30) . " - {$transaction['vote_count']} votes - Ref: {$transaction['transaction_ref']}";
+                
                 return [
-                    'Type' => 'Release',
-                    'Message' => "Payment request submitted!\n\n" .
+                    'SessionId' => $sessionId,
+                    'Type' => 'AddToCart',
+                    'Message' => "Payment initiated!\n\n" .
                                "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
                                "Votes: {$transaction['vote_count']}\n" .
                                "Amount: GHS $formattedAmount\n\n" .
-                               "You will receive payment prompt shortly.\n" .
-                               "Ref: {$transaction['transaction_ref']}",
-                    'ClientState' => json_encode([
-                        'action' => 'initiate_payment',
-                        'transaction_ref' => $transaction['transaction_ref'],
-                        'amount' => $transaction['amount'],
-                        'phone' => $phoneNumber
-                    ])
+                               "You will receive payment prompt shortly.",
+                    'Item' => [
+                        'ItemName' => $itemDescription,
+                        'Qty' => 1,
+                        'Price' => (float)$transaction['amount']
+                    ],
+                    'DataType' => 'display',
+                    'FieldType' => 'text'
                 ];
                 
             } elseif ($trimmedChoice === '2') {
