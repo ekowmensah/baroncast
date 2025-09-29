@@ -551,6 +551,36 @@ class HubtelReceiveMoneyService {
                     // Commit transaction
                     $this->db->commit();
                     
+                    // Send callback confirmation to Hubtel (as per church system)
+                    $sessionId = $callbackData['SessionId'] ?? '';
+                    $orderId = $callbackData['OrderId'] ?? '';
+                    
+                    $callback_payload = [
+                        'SessionId' => $sessionId,
+                        'OrderId' => $orderId,
+                        'ServiceStatus' => 'success',
+                        'MetaData' => null
+                    ];
+                    
+                    $callback_url = 'https://gs-callback.hubtel.com/callback';
+                    $callback_options = [
+                        'http' => [
+                            'header' => "Content-Type: application/json\r\n",
+                            'method' => 'POST',
+                            'content' => json_encode($callback_payload),
+                            'timeout' => 10
+                        ]
+                    ];
+                    
+                    $callback_context = stream_context_create($callback_options);
+                    $callback_result = @file_get_contents($callback_url, false, $callback_context);
+                    
+                    if ($callback_result !== false) {
+                        error_log('Hubtel gs-callback sent successfully: ' . json_encode($callback_payload));
+                    } else {
+                        error_log('Failed to send Hubtel gs-callback: ' . json_encode($callback_payload));
+                    }
+                    
                     return [
                         'success' => true,
                         'status' => 'completed',
