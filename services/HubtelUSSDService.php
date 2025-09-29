@@ -201,7 +201,7 @@ class HubtelUSSDService {
             $sessionId = $webhookData['SessionId'] ?? $webhookData['sessionId'] ?? '';
             $serviceCode = $webhookData['ServiceCode'] ?? $webhookData['serviceCode'] ?? '';
             $phoneNumber = $webhookData['Mobile'] ?? $webhookData['mobile'] ?? $webhookData['phoneNumber'] ?? '';
-            $text = $webhookData['Text'] ?? $webhookData['text'] ?? $webhookData['message'] ?? '';
+            $text = $webhookData['Message'] ?? $webhookData['Text'] ?? $webhookData['text'] ?? $webhookData['message'] ?? '';
             $sequence = $webhookData['Sequence'] ?? $webhookData['sequence'] ?? 1;
             $type = $webhookData['Type'] ?? $webhookData['type'] ?? 'initiation';
             
@@ -212,22 +212,36 @@ class HubtelUSSDService {
             error_log("SessionId: $sessionId, ServiceCode: $serviceCode");
             
             // Handle different USSD menu levels
+            // For first interaction, text will be the USSD code, so we ignore it
+            if ($sequence == 1 || $type == 'Initiation') {
+                error_log("First interaction - showing main menu");
+                return $this->showMainMenu();
+            }
+            
+            // Extract user input from Message field (remove USSD code prefix if present)
+            $userInput = $text;
+            if (strpos($text, '*') !== false) {
+                // Extract the last part after the last *
+                $parts = explode('*', $text);
+                $userInput = end($parts);
+                // Remove # if present
+                $userInput = str_replace('#', '', $userInput);
+            }
+            
+            error_log("Extracted user input: '$userInput' from text: '$text'");
+            
             switch ($sequence) {
-                case 1:
-                    // First interaction - show main menu
-                    return $this->showMainMenu();
-                    
                 case 2:
                     // User selected an option from main menu
-                    return $this->handleMainMenuSelection($text, $phoneNumber);
+                    return $this->handleMainMenuSelection($userInput, $phoneNumber);
                     
                 case 3:
                     // Handle sub-menu selections
-                    return $this->handleSubMenuSelection($text, $phoneNumber, $sessionId);
+                    return $this->handleSubMenuSelection($userInput, $phoneNumber, $sessionId);
                     
                 default:
                     // Handle deeper menu levels or end session
-                    return $this->handleAdvancedMenus($text, $phoneNumber, $sessionId, $sequence);
+                    return $this->handleAdvancedMenus($userInput, $phoneNumber, $sessionId, $sequence);
             }
             
         } catch (Exception $e) {
