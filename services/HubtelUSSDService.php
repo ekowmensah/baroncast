@@ -197,15 +197,19 @@ class HubtelUSSDService {
      */
     public function handleUSSDSession($webhookData) {
         try {
-            // Extract USSD session data
-            $sessionId = $webhookData['SessionId'] ?? '';
-            $serviceCode = $webhookData['ServiceCode'] ?? '';
-            $phoneNumber = $webhookData['Mobile'] ?? '';
-            $text = $webhookData['Text'] ?? '';
-            $sequence = $webhookData['Sequence'] ?? 1;
-            $type = $webhookData['Type'] ?? 'initiation';
+            // Extract USSD session data - try multiple field name variations
+            $sessionId = $webhookData['SessionId'] ?? $webhookData['sessionId'] ?? '';
+            $serviceCode = $webhookData['ServiceCode'] ?? $webhookData['serviceCode'] ?? '';
+            $phoneNumber = $webhookData['Mobile'] ?? $webhookData['mobile'] ?? $webhookData['phoneNumber'] ?? '';
+            $text = $webhookData['Text'] ?? $webhookData['text'] ?? $webhookData['message'] ?? '';
+            $sequence = $webhookData['Sequence'] ?? $webhookData['sequence'] ?? 1;
+            $type = $webhookData['Type'] ?? $webhookData['type'] ?? 'initiation';
             
-            error_log("USSD Session - Phone: $phoneNumber, Text: '$text', Sequence: $sequence, Type: $type");
+            // Enhanced logging for debugging
+            error_log("=== USSD Session Debug ===");
+            error_log("Full webhook data: " . json_encode($webhookData));
+            error_log("Phone: $phoneNumber, Text: '$text', Sequence: $sequence, Type: $type");
+            error_log("SessionId: $sessionId, ServiceCode: $serviceCode");
             
             // Handle different USSD menu levels
             switch ($sequence) {
@@ -249,26 +253,33 @@ class HubtelUSSDService {
      * Handle main menu selection
      */
     private function handleMainMenuSelection($choice, $phoneNumber) {
-        switch (trim($choice)) {
+        $trimmedChoice = trim($choice);
+        error_log("Main menu selection - Raw choice: '$choice', Trimmed: '$trimmedChoice'");
+        
+        switch ($trimmedChoice) {
             case '1':
+                error_log("User selected option 1 - Vote for Nominee");
                 return $this->showActiveEvents();
                 
             case '2':
+                error_log("User selected option 2 - Check Event Status");
                 return [
                     'Type' => 'Response',
                     'Message' => "Enter event ID to check status:"
                 ];
                 
             case '3':
+                error_log("User selected option 3 - Help");
                 return [
                     'Type' => 'Release',
                     'Message' => "E-Cast Voting Help:\n- Dial this code to vote\n- Follow menu prompts\n- Standard rates apply\n\nThank you!"
                 ];
                 
             default:
+                error_log("Invalid main menu selection: '$trimmedChoice'");
                 return [
                     'Type' => 'Release',
-                    'Message' => "Invalid selection. Please try again."
+                    'Message' => "Invalid selection '$trimmedChoice'. Please dial the shortcode again and enter 1, 2, or 3."
                 ];
         }
     }
@@ -278,6 +289,7 @@ class HubtelUSSDService {
      */
     private function showActiveEvents() {
         try {
+            error_log("Fetching active events...");
             $stmt = $this->db->prepare("
                 SELECT id, title, vote_cost 
                 FROM events 
@@ -288,7 +300,10 @@ class HubtelUSSDService {
             $stmt->execute();
             $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
+            error_log("Found " . count($events) . " active events");
+            
             if (empty($events)) {
+                error_log("No active events found");
                 return [
                     'Type' => 'Release',
                     'Message' => "No active voting events at the moment. Please check back later."
@@ -299,9 +314,11 @@ class HubtelUSSDService {
             foreach ($events as $index => $event) {
                 $cost = number_format($event['vote_cost'], 2);
                 $message .= ($index + 1) . ". " . substr($event['title'], 0, 30) . "\n   (GHS $cost per vote)\n\n";
+                error_log("Event " . ($index + 1) . ": " . $event['title'] . " (ID: " . $event['id'] . ")");
             }
             $message .= "Enter event number:";
             
+            error_log("Returning events list message");
             return [
                 'Type' => 'Response',
                 'Message' => $message
