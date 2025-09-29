@@ -1,173 +1,219 @@
 <?php
 /**
- * Hubtel Direct Receive Money Callback Handler
- * Processes payment confirmations from Hubtel API
- * 
- * This endpoint receives HTTP POST callbacks from Hubtel when:
- * - Payment is successfully completed
- * - Payment fails or is declined
- * - Payment times out
+ * Hubtel USSD Payment Webhook Handler
+ * Handles payment callbacks for USSD voting transactions
  */
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
+require_once __DIR__ . '/config/database.php';
 
-// Enable error logging
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/../logs/hubtel-callback.log');
+// Set up logging
+$debug_log = __DIR__ . '/logs/ussd-payment-webhook.log';
 
-function logCallback($level, $message, $data = null) {
-    $timestamp = date('Y-m-d H:i:s');
-    $logEntry = "[$timestamp] [$level] $message";
-    if ($data !== null) {
-        $logEntry .= " | Data: " . json_encode($data, JSON_UNESCAPED_SLASHES);
+function log_debug($msg) {
+    global $debug_log;
+    if (!is_dir(dirname($debug_log))) {
+        mkdir(dirname($debug_log), 0755, true);
     }
-    error_log($logEntry);
+    file_put_contents($debug_log, date('c') . " $msg\n", FILE_APPEND);
+}
+
+// Log raw input for debugging
+$raw_input = file_get_contents('php://input');
+log_debug('USSD Payment webhook called');
+log_debug('Raw input: ' . $raw_input);
+
+// Parse and validate input
+$data = json_decode($raw_input, true);
+log_debug('Webhook data: ' . json_encode($data));
+
+if (!$data) {
+    log_debug('Invalid JSON data received');
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON']);
+    exit;
+}
+
+// Extract payment information from Hubtel Service Fulfillment webhook
+$order_info = $data['OrderInfo'] ?? null;
+if (!$order_info) {
+    log_debug('Missing OrderInfo in webhook data');
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid webhook format - missing OrderInfo']);
+    exit;
+}
+
+$session_id = $data['SessionId'] ?? null;
+$order_id = $data['OrderId'] ?? null;
+$phone = $order_info['CustomerMobileNumber'] ?? null;
+$status = $order_info['Status'] ?? 'pending';
+$order_date = $order_info['OrderDate'] ?? date('c');
+$subtotal = $order_info['Subtotal'] ?? null;
+
+// Extract payment details
+$payment_info = $order_info['Payment'] ?? null;
+$amount = $payment_info['AmountAfterCharges'] ?? $payment_info['AmountPaid'] ?? $subtotal;
+$is_successful = $payment_info['IsSuccessful'] ?? false;
+
+// Extract item details for USSD reference
+$items = $order_info['Items'] ?? [];
+$ussd_reference = null;
+
+if (!empty($items)) {
+    foreach ($items as $item) {
+        $item_name = $item['Name'] ?? '';
+        // Extract USSD reference from item name
+        if (preg_match('/Ref: (USSD_\d+_\d+)/', $item_name, $matches)) {
+            $ussd_reference = $matches[1];
+            break;
+        }
+    }
+}
+
+log_debug("Processed payment data - Amount: $amount, Phone: $phone, USSD Ref: $ussd_reference, Status: $status");
+
+// Only process successful payments
+if (strtolower($status) !== 'paid' || !$is_successful || !$ussd_reference) {
+    log_debug("Payment not successful or no USSD reference. Status: $status, IsSuccessful: " . ($is_successful ? 'true' : 'false') . ", USSD Ref: $ussd_reference");
+    echo json_encode(['status' => 'pending', 'message' => 'Payment not successful or invalid']);
+    exit;
 }
 
 try {
-    // Only accept POST requests
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        echo json_encode(['error' => 'Method not allowed']);
-        logCallback('ERROR', 'Invalid request method: ' . $_SERVER['REQUEST_METHOD']);
+    $database = new Database();
+    $pdo = $database->getConnection();
+    
+    // Find the USSD transaction
+    $stmt = $pdo->prepare("
+        SELECT ut.*, n.name as nominee_name, e.title as event_title
+        FROM ussd_transactions ut
+        JOIN nominees n ON ut.nominee_id = n.id
+        JOIN events e ON ut.event_id = e.id
+        WHERE ut.transaction_ref = ?
+    ");
+    $stmt->execute([$ussd_reference]);
+    $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$transaction) {
+        log_debug("USSD transaction not found for ref: $ussd_reference");
+        http_response_code(404);
+        echo json_encode(['status' => 'error', 'message' => 'Transaction not found']);
         exit;
     }
     
-    // Get raw callback data
-    $rawInput = file_get_contents('php://input');
-    logCallback('INFO', 'Callback received', ['raw_input' => $rawInput]);
+    log_debug("Found USSD transaction: " . json_encode($transaction));
     
-    if (empty($rawInput)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Empty callback data']);
-        logCallback('ERROR', 'Empty callback payload received');
-        exit;
-    }
+    // Start database transaction
+    $pdo->beginTransaction();
     
-    // Parse JSON data
-    $callbackData = json_decode($rawInput, true);
-    if (!$callbackData) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid JSON data']);
-        logCallback('ERROR', 'Invalid JSON in callback', ['raw_input' => $rawInput]);
-        exit;
-    }
-    
-    logCallback('INFO', 'Callback data parsed successfully', $callbackData);
-    
-    // Load Hubtel service
-    require_once __DIR__ . '/../services/HubtelReceiveMoneyService.php';
-    $hubtelService = new HubtelReceiveMoneyService();
-    
-    // Process the callback
-    $result = $hubtelService->processCallback($callbackData);
-    
-    if ($result['success']) {
-        http_response_code(200);
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Callback processed successfully',
-            'processed' => $result['processed'],
-            'payment_status' => $result['status']
+    try {
+        // Update USSD transaction status
+        $stmt = $pdo->prepare("
+            UPDATE ussd_transactions 
+            SET status = 'completed', completed_at = NOW()
+            WHERE transaction_ref = ?
+        ");
+        $stmt->execute([$ussd_reference]);
+        
+        // Get organizer_id from event
+        $stmt = $pdo->prepare("SELECT organizer_id FROM events WHERE id = ?");
+        $stmt->execute([$transaction['event_id']]);
+        $organizerId = $stmt->fetchColumn();
+        
+        // Create main transaction record
+        $stmt = $pdo->prepare("
+            INSERT INTO transactions (
+                transaction_id, reference, event_id, organizer_id, nominee_id,
+                voter_phone, vote_count, amount, payment_method,
+                status, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'hubtel_ussd', 'completed', NOW())
+        ");
+        $stmt->execute([
+            $ussd_reference,
+            $ussd_reference,
+            $transaction['event_id'],
+            $organizerId,
+            $transaction['nominee_id'],
+            $transaction['phone_number'],
+            $transaction['vote_count'],
+            $transaction['amount']
         ]);
         
-        logCallback('SUCCESS', 'Callback processed successfully', [
-            'client_reference' => $result['client_reference'] ?? 'unknown',
-            'status' => $result['status']
-        ]);
+        $mainTransactionId = $pdo->lastInsertId();
         
-        // Optional: Send confirmation SMS or email here
-        if ($result['status'] === 'completed') {
-            sendPaymentConfirmation($callbackData);
+        // Create individual votes
+        $voteCount = (int)$transaction['vote_count'];
+        $voteAmount = $transaction['amount'] / $voteCount;
+        
+        // Get category_id from nominee
+        $stmt = $pdo->prepare("SELECT category_id FROM nominees WHERE id = ?");
+        $stmt->execute([$transaction['nominee_id']]);
+        $categoryId = $stmt->fetchColumn();
+        
+        for ($i = 0; $i < $voteCount; $i++) {
+            $stmt = $pdo->prepare("
+                INSERT INTO votes (
+                    event_id, category_id, nominee_id, voter_phone, 
+                    transaction_id, payment_method, payment_reference, 
+                    payment_status, amount, voted_at, created_at
+                ) VALUES (?, ?, ?, ?, ?, 'hubtel_ussd', ?, 'completed', ?, NOW(), NOW())
+            ");
+            $stmt->execute([
+                $transaction['event_id'],
+                $categoryId,
+                $transaction['nominee_id'],
+                $transaction['phone_number'],
+                $mainTransactionId,
+                $ussd_reference,
+                $voteAmount
+            ]);
         }
         
-    } else {
-        http_response_code(400);
-        echo json_encode([
-            'status' => 'error',
-            'message' => $result['message'] ?? 'Callback processing failed'
-        ]);
+        // Commit transaction
+        $pdo->commit();
         
-        logCallback('ERROR', 'Callback processing failed', $result);
+        log_debug("SUCCESS: Recorded $voteCount votes for {$transaction['nominee_name']}");
+        
+        // Send callback confirmation to Hubtel (as per church system)
+        $callback_payload = [
+            'SessionId' => $session_id,
+            'OrderId' => $order_id,
+            'ServiceStatus' => 'success',
+            'MetaData' => null
+        ];
+        
+        $callback_url = 'https://gs-callback.hubtel.com:9055/callback';
+        $callback_options = [
+            'http' => [
+                'header' => "Content-Type: application/json\r\n",
+                'method' => 'POST',
+                'content' => json_encode($callback_payload),
+                'timeout' => 10
+            ]
+        ];
+        
+        $callback_context = stream_context_create($callback_options);
+        $callback_result = @file_get_contents($callback_url, false, $callback_context);
+        
+        if ($callback_result !== false) {
+            log_debug('Hubtel gs-callback sent successfully: ' . json_encode($callback_payload));
+        } else {
+            log_debug('Failed to send Hubtel gs-callback: ' . json_encode($callback_payload));
+        }
+        
+        // Respond success to Hubtel
+        http_response_code(200);
+        echo json_encode(['status' => 'success', 'message' => 'Payment processed and votes recorded']);
+        log_debug('USSD payment webhook processed successfully');
+        
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        throw $e;
     }
     
 } catch (Exception $e) {
+    log_debug('Error processing USSD payment webhook: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Internal server error'
-    ]);
-    
-    logCallback('CRITICAL', 'Exception in callback processing', [
-        'error' => $e->getMessage(),
-        'file' => $e->getFile(),
-        'line' => $e->getLine(),
-        'trace' => $e->getTraceAsString()
-    ]);
-}
-
-/**
- * Send payment confirmation (optional)
- */
-function sendPaymentConfirmation($callbackData) {
-    try {
-        $data = $callbackData['Data'] ?? [];
-        $clientReference = $data['ClientReference'] ?? '';
-        $amount = $data['Amount'] ?? 0;
-        
-        // Log confirmation sent
-        logCallback('INFO', 'Payment confirmation triggered', [
-            'reference' => $clientReference,
-            'amount' => $amount
-        ]);
-        
-        // Here you could:
-        // 1. Send SMS confirmation (if SMS service available)
-        // 2. Send email notification
-        // 3. Update user notifications
-        // 4. Trigger real-time updates via WebSocket
-        
-    } catch (Exception $e) {
-        logCallback('WARNING', 'Confirmation sending failed', [
-            'error' => $e->getMessage()
-        ]);
-    }
-}
-
-/**
- * Store callback for debugging and audit trail
- */
-function storeCallbackForAudit($callbackData) {
-    try {
-        require_once __DIR__ . '/../config/database.php';
-        $database = new Database();
-        $pdo = $database->getConnection();
-        
-        $data = $callbackData['Data'] ?? [];
-        $clientReference = $data['ClientReference'] ?? 'unknown';
-        
-        $stmt = $pdo->prepare("
-            INSERT INTO hubtel_transaction_logs 
-            (transaction_reference, log_type, log_data, created_at) 
-            VALUES (?, 'callback', ?, NOW())
-        ");
-        
-        $stmt->execute([$clientReference, json_encode($callbackData)]);
-        
-        logCallback('INFO', 'Callback stored for audit', ['reference' => $clientReference]);
-        
-    } catch (Exception $e) {
-        logCallback('WARNING', 'Failed to store callback for audit', [
-            'error' => $e->getMessage()
-        ]);
-    }
-}
-
-// Store callback for audit trail (optional)
-if (isset($callbackData)) {
-    storeCallbackForAudit($callbackData);
+    echo json_encode(['status' => 'error', 'message' => 'Internal server error']);
 }
 ?>

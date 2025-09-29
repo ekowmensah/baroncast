@@ -562,7 +562,7 @@ class HubtelReceiveMoneyService {
                         'MetaData' => null
                     ];
                     
-                    $callback_url = 'https://gs-callback.hubtel.com/callback';
+                    $callback_url = 'https://gs-callback.hubtel.com:9055/callback';
                     $callback_options = [
                         'http' => [
                             'header' => "Content-Type: application/json\r\n",
