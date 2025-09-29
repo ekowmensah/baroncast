@@ -435,56 +435,32 @@ class HubtelUSSDService {
                     ];
                 }
                 
-                // Initiate actual Hubtel PayProxy payment
-                $description = "Vote for " . substr($transaction['nominee_name'], 0, 20) . " ({$transaction['vote_count']} votes)";
+                // Mark transaction as ready for fulfillment
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET status = 'awaiting_fulfillment' 
+                    WHERE transaction_ref = ?
+                ");
+                $stmt->execute([$transaction['transaction_ref']]);
                 
-                error_log("Initiating PayProxy payment: Amount={$transaction['amount']}, Phone=$phoneNumber, Ref={$transaction['transaction_ref']}");
+                $formattedAmount = number_format($transaction['amount'], 2);
                 
-                $paymentResult = $this->initiatePayProxyPayment(
-                    $transaction['amount'],
-                    $phoneNumber,
-                    $description,
-                    $transaction['transaction_ref']
-                );
-                
-                if ($paymentResult && isset($paymentResult['success']) && $paymentResult['success']) {
-                    // Update transaction with Hubtel transaction ID
-                    if (isset($paymentResult['transactionId'])) {
-                        $stmt = $this->db->prepare("
-                            UPDATE ussd_transactions 
-                            SET hubtel_transaction_id = ?, status = 'processing'
-                            WHERE transaction_ref = ?
-                        ");
-                        $stmt->execute([$paymentResult['transactionId'], $transaction['transaction_ref']]);
-                    }
-                    
-                    $formattedAmount = number_format($transaction['amount'], 2);
-                    
-                    return [
-                        'Type' => 'Release',
-                        'Message' => "Payment initiated!\n\n" .
-                                   "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
-                                   "Votes: {$transaction['vote_count']}\n" .
-                                   "Amount: GHS $formattedAmount\n\n" .
-                                   "Check your phone for payment prompt.\n" .
-                                   "Ref: {$transaction['transaction_ref']}"
-                    ];
-                } else {
-                    // Payment initiation failed
-                    error_log("PayProxy payment failed: " . json_encode($paymentResult));
-                    
-                    $stmt = $this->db->prepare("
-                        UPDATE ussd_transactions 
-                        SET status = 'failed' 
-                        WHERE transaction_ref = ?
-                    ");
-                    $stmt->execute([$transaction['transaction_ref']]);
-                    
-                    return [
-                        'Type' => 'Release',
-                        'Message' => "Payment initiation failed. Please try again later.\n\nRef: {$transaction['transaction_ref']}"
-                    ];
-                }
+                // End USSD session and trigger fulfillment
+                return [
+                    'Type' => 'Release',
+                    'Message' => "Payment request submitted!\n\n" .
+                               "Nominee: " . substr($transaction['nominee_name'], 0, 25) . "\n" .
+                               "Votes: {$transaction['vote_count']}\n" .
+                               "Amount: GHS $formattedAmount\n\n" .
+                               "You will receive payment prompt shortly.\n" .
+                               "Ref: {$transaction['transaction_ref']}",
+                    'ClientState' => json_encode([
+                        'action' => 'initiate_payment',
+                        'transaction_ref' => $transaction['transaction_ref'],
+                        'amount' => $transaction['amount'],
+                        'phone' => $phoneNumber
+                    ])
+                ];
                 
             } elseif ($trimmedChoice === '2') {
                 // User cancelled
@@ -514,6 +490,103 @@ class HubtelUSSDService {
             return [
                 'Type' => 'Release',
                 'Message' => "Error processing payment. Please try again."
+            ];
+        }
+    }
+
+    /**
+     * Handle USSD Fulfillment Request from Hubtel
+     * This is called by Hubtel when payment needs to be processed
+     */
+    public function handleUSSDFulfillment($fulfillmentData) {
+        try {
+            error_log("Processing USSD fulfillment request");
+            
+            // Extract fulfillment data
+            $clientState = $fulfillmentData['ClientState'] ?? '';
+            $sessionId = $fulfillmentData['SessionId'] ?? '';
+            $phoneNumber = $fulfillmentData['Mobile'] ?? '';
+            
+            // Parse client state
+            $stateData = json_decode($clientState, true);
+            
+            if (!$stateData || $stateData['action'] !== 'initiate_payment') {
+                return [
+                    'ResponseCode' => '1001',
+                    'Message' => 'Invalid fulfillment request'
+                ];
+            }
+            
+            $transactionRef = $stateData['transaction_ref'];
+            $amount = $stateData['amount'];
+            $phone = $stateData['phone'];
+            
+            error_log("Fulfillment for transaction: $transactionRef, Amount: $amount, Phone: $phone");
+            
+            // Get transaction details
+            $stmt = $this->db->prepare("
+                SELECT ut.*, n.name as nominee_name 
+                FROM ussd_transactions ut
+                JOIN nominees n ON ut.nominee_id = n.id
+                WHERE ut.transaction_ref = ? AND ut.status = 'awaiting_fulfillment'
+            ");
+            $stmt->execute([$transactionRef]);
+            $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$transaction) {
+                return [
+                    'ResponseCode' => '1002',
+                    'Message' => 'Transaction not found or already processed'
+                ];
+            }
+            
+            // Initiate PayProxy payment
+            $description = "Vote for " . substr($transaction['nominee_name'], 0, 20) . " ({$transaction['vote_count']} votes)";
+            
+            $paymentResult = $this->initiatePayProxyPayment(
+                $amount,
+                $phone,
+                $description,
+                $transactionRef
+            );
+            
+            if ($paymentResult && isset($paymentResult['success']) && $paymentResult['success']) {
+                // Update transaction status
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET hubtel_transaction_id = ?, status = 'processing' 
+                    WHERE transaction_ref = ?
+                ");
+                $stmt->execute([$paymentResult['transactionId'] ?? null, $transactionRef]);
+                
+                return [
+                    'ResponseCode' => '0000',
+                    'Message' => 'Payment initiated successfully',
+                    'Data' => [
+                        'TransactionId' => $paymentResult['transactionId'] ?? null,
+                        'ClientReference' => $transactionRef
+                    ]
+                ];
+            } else {
+                // Payment failed
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET status = 'failed' 
+                    WHERE transaction_ref = ?
+                ");
+                $stmt->execute([$transactionRef]);
+                
+                return [
+                    'ResponseCode' => '1003',
+                    'Message' => 'Payment initiation failed: ' . ($paymentResult['message'] ?? 'Unknown error')
+                ];
+            }
+            
+        } catch (Exception $e) {
+            error_log("USSD Fulfillment error: " . $e->getMessage());
+            return [
+                'ResponseCode' => '1000',
+                'Message' => 'Internal server error'
             ];
         }
     }
