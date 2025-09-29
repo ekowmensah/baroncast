@@ -428,6 +428,17 @@ class HubtelReceiveMoneyService {
      * Process payment callback from Hubtel
      */
     public function processCallback($callbackData) {
+        // Log raw callback data before any validation (as requested by Hubtel)
+        error_log("=== HUBTEL CALLBACK RAW REQUEST ===");
+        error_log("Timestamp: " . date('Y-m-d H:i:s'));
+        error_log("Raw callback data: " . json_encode($callbackData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        error_log("Request headers: " . json_encode(getallheaders(), JSON_PRETTY_PRINT));
+        error_log("Request method: " . ($_SERVER['REQUEST_METHOD'] ?? 'unknown'));
+        error_log("Request URI: " . ($_SERVER['REQUEST_URI'] ?? 'unknown'));
+        error_log("User agent: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'unknown'));
+        error_log("Remote IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+        error_log("=== END RAW REQUEST ===");
+        
         try {
             // Extract callback information
             $orderInfo = $callbackData['OrderInfo'] ?? [];
