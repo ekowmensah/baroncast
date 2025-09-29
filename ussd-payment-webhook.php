@@ -1,14 +1,14 @@
 <?php
 /**
- * Hubtel USSD Payment Webhook Handler
+ * Hubtel USSD Payment Webhook Handler (Based on Working Church System)
  * Handles payment callbacks for USSD voting transactions
  */
 
 header('Content-Type: application/json');
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/config/database.php';
 
 // Set up logging
-$debug_log = __DIR__ . '/../logs/hubtel-callback.log';
+$debug_log = __DIR__ . '/logs/ussd-payment-webhook.log';
 
 function log_debug($msg) {
     global $debug_log;
@@ -20,15 +20,8 @@ function log_debug($msg) {
 
 // Log raw input for debugging
 $raw_input = file_get_contents('php://input');
-
-// Force create log file immediately
-file_put_contents(__DIR__ . '/../logs/hubtel-callback.log', date('c') . " CALLBACK HANDLER STARTED\n", FILE_APPEND | LOCK_EX);
-
-log_debug('=== HUBTEL SERVICE FULFILLMENT CALLBACK ===');
+log_debug('USSD Payment webhook called');
 log_debug('Raw input: ' . $raw_input);
-log_debug('Headers: ' . json_encode(getallheaders()));
-log_debug('Method: ' . $_SERVER['REQUEST_METHOD']);
-log_debug('=== END CALLBACK DATA ===');
 
 // Parse and validate input
 $data = json_decode($raw_input, true);
