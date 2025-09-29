@@ -425,6 +425,162 @@ class HubtelReceiveMoneyService {
     }
     
     /**
+     * Process payment callback from Hubtel
+     */
+    public function processCallback($callbackData) {
+        try {
+            // Extract callback information
+            $orderInfo = $callbackData['OrderInfo'] ?? [];
+            $status = $orderInfo['Status'] ?? '';
+            $items = $orderInfo['Items'] ?? [];
+            $payment = $orderInfo['Payment'] ?? [];
+            
+            // Get the first item (should be the USSD vote)
+            $item = $items[0] ?? [];
+            $itemName = $item['Name'] ?? '';
+            
+            // Extract USSD reference from item name
+            if (preg_match('/Ref: (USSD_\d+_\d+)/', $itemName, $matches)) {
+                $clientReference = $matches[1];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Could not extract USSD reference from callback'
+                ];
+            }
+            
+            // Check if payment was successful
+            $isSuccess = (strtolower($status) === 'paid' && ($payment['IsSuccessful'] ?? false));
+            
+            if ($isSuccess) {
+                // Find the USSD transaction
+                $stmt = $this->db->prepare("
+                    SELECT ut.*, n.name as nominee_name, e.title as event_title
+                    FROM ussd_transactions ut
+                    JOIN nominees n ON ut.nominee_id = n.id
+                    JOIN events e ON ut.event_id = e.id
+                    WHERE ut.transaction_ref = ?
+                ");
+                $stmt->execute([$clientReference]);
+                $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if (!$transaction) {
+                    return [
+                        'success' => false,
+                        'message' => 'USSD transaction not found: ' . $clientReference
+                    ];
+                }
+                
+                // Start database transaction
+                $this->db->beginTransaction();
+                
+                try {
+                    // Update USSD transaction status
+                    $stmt = $this->db->prepare("
+                        UPDATE ussd_transactions 
+                        SET status = 'completed', completed_at = NOW()
+                        WHERE transaction_ref = ?
+                    ");
+                    $stmt->execute([$clientReference]);
+                    
+                    // Get organizer_id from event
+                    $stmt = $this->db->prepare("SELECT organizer_id FROM events WHERE id = ?");
+                    $stmt->execute([$transaction['event_id']]);
+                    $organizerId = $stmt->fetchColumn();
+                    
+                    // Create main transaction record
+                    $stmt = $this->db->prepare("
+                        INSERT INTO transactions (
+                            transaction_id, reference, event_id, organizer_id, nominee_id,
+                            voter_phone, vote_count, amount, payment_method,
+                            status, created_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'hubtel_ussd', 'completed', NOW())
+                    ");
+                    $stmt->execute([
+                        $clientReference,
+                        $clientReference,
+                        $transaction['event_id'],
+                        $organizerId,
+                        $transaction['nominee_id'],
+                        $transaction['phone_number'],
+                        $transaction['vote_count'],
+                        $transaction['amount']
+                    ]);
+                    
+                    $mainTransactionId = $this->db->lastInsertId();
+                    
+                    // Create individual votes
+                    $voteCount = (int)$transaction['vote_count'];
+                    $voteAmount = $transaction['amount'] / $voteCount;
+                    
+                    // Get category_id from nominee
+                    $stmt = $this->db->prepare("SELECT category_id FROM nominees WHERE id = ?");
+                    $stmt->execute([$transaction['nominee_id']]);
+                    $categoryId = $stmt->fetchColumn();
+                    
+                    for ($i = 0; $i < $voteCount; $i++) {
+                        $stmt = $this->db->prepare("
+                            INSERT INTO votes (
+                                event_id, category_id, nominee_id, voter_phone, 
+                                transaction_id, payment_method, payment_reference, 
+                                payment_status, amount, voted_at, created_at
+                            ) VALUES (?, ?, ?, ?, ?, 'hubtel_ussd', ?, 'completed', ?, NOW(), NOW())
+                        ");
+                        $stmt->execute([
+                            $transaction['event_id'],
+                            $categoryId,
+                            $transaction['nominee_id'],
+                            $transaction['phone_number'],
+                            $mainTransactionId,
+                            $clientReference,
+                            $voteAmount
+                        ]);
+                    }
+                    
+                    // Commit transaction
+                    $this->db->commit();
+                    
+                    return [
+                        'success' => true,
+                        'status' => 'completed',
+                        'processed' => true,
+                        'client_reference' => $clientReference,
+                        'votes_recorded' => $voteCount,
+                        'nominee' => $transaction['nominee_name']
+                    ];
+                    
+                } catch (Exception $e) {
+                    $this->db->rollBack();
+                    throw $e;
+                }
+                
+            } else {
+                // Payment failed - update status
+                $stmt = $this->db->prepare("
+                    UPDATE ussd_transactions 
+                    SET status = 'failed'
+                    WHERE transaction_ref = ?
+                ");
+                $stmt->execute([$clientReference]);
+                
+                return [
+                    'success' => true,
+                    'status' => 'failed',
+                    'processed' => true,
+                    'client_reference' => $clientReference
+                ];
+            }
+            
+        } catch (Exception $e) {
+            error_log("Callback processing error: " . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Callback processing failed: ' . $e->getMessage()
+            ];
+        }
+    }
+    
+    /**
      * Get transactions pending status check
      */
     public function getPendingStatusChecks() {
