@@ -6,18 +6,25 @@
 
 header('Content-Type: application/json');
 
-// Enable error logging
+// Enable error logging - DEBUG MODE
 error_reporting(E_ALL);
-ini_set('display_errors', 0);
+ini_set('display_errors', 1); // Enable for debugging
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../../logs/status-check.log');
 
+// Debug: Create logs directory if it doesn't exist
+$logsDir = __DIR__ . '/../../logs';
+if (!is_dir($logsDir)) {
+    mkdir($logsDir, 0755, true);
+}
+
 function logDebug($message, $data = null) {
+    global $logsDir;
     $logEntry = date('Y-m-d H:i:s') . " - " . $message;
     if ($data) {
         $logEntry .= " - " . json_encode($data, JSON_PRETTY_PRINT);
     }
-    file_put_contents(__DIR__ . '/../../logs/status-check.log', $logEntry . "\n", FILE_APPEND);
+    file_put_contents($logsDir . '/status-check.log', $logEntry . "\n", FILE_APPEND);
 }
 
 try {

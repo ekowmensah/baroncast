@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Status Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug { background: #f0f0f0; padding: 10px; border: 1px solid #ccc; margin: 10px 0; }
+        pre { white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>Debug Status Checker</h1>
+
+    <div class="debug">
+        <strong>Current URL:</strong> <span id="currentUrl"></span><br>
+        <strong>Expected API URL:</strong> <span id="apiUrl"></span>
+    </div>
+
+    <button onclick="testBasicEndpoint()">Test Basic Endpoint</button>
+    <button onclick="testServiceEndpoint()">Test Service Endpoint</button>
+    <button onclick="testStatusEndpoint()">Test Status Endpoint</button>
+
+    <div id="result" class="debug">
+        <strong>Result:</strong><br>
+        <pre id="resultContent">Click a button to test...</pre>
+    </div>
+
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('apiUrl').textContent = '../voter/actions/check-transaction-status.php';
+
+        async function makeRequest(url, data = null) {
+            const resultDiv = document.getElementById('resultContent');
+            resultDiv.textContent = 'Loading...';
+
+            try {
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+
+                const response = await fetch(url, options);
+                const text = await response.text();
+
+                resultDiv.textContent = `Status: ${response.status}\nHeaders: ${JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2)}\n\nResponse:\n${text}`;
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                console.log('Response text:', text);
+
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}\nStack: ${error.stack}`;
+                console.error('Fetch error:', error);
+            }
+        }
+
+        function testBasicEndpoint() {
+            makeRequest('../voter/actions/test-status-check.php');
+        }
+
+        function testServiceEndpoint() {
+            makeRequest('../voter/actions/test-service.php');
+        }
+
+        function testStatusEndpoint() {
+            makeRequest('../voter/actions/check-transaction-status.php', {
+                transaction_ref: 'TEST_REF_123',
+                check_type: 'client_reference'
+            });
+        }
+    </script>
+</body>
+</html>

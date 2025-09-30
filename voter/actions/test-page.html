@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Status Check</title>
+</head>
+<body>
+    <h1>Testing Status Check Endpoint</h1>
+    <button onclick="testEndpoint()">Test Endpoint</button>
+    <div id="result"></div>
+
+    <script>
+        async function testEndpoint() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+
+            try {
+                const response = await fetch('check-transaction-status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        transaction_ref: 'TEST_REF_123',
+                        check_type: 'client_reference'
+                    })
+                });
+
+                const text = await response.text();
+                resultDiv.innerHTML = '<h2>Response:</h2><pre>' + text + '</pre>';
+                console.log('Raw response:', text);
+
+            } catch (error) {
+                resultDiv.innerHTML = '<h2>Error:</h2><pre>' + error.message + '</pre>';
+                console.error('Fetch error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
