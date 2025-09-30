@@ -1,0 +1,1011 @@
+2025-09-30 10:21:45 - Starting batch status check - {
+    "batch_size": 20
+}
+[30-Sep-2025 10:21:45 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384448_7432
+[30-Sep-2025 10:21:45 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:09 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:09 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:09 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384488_8030
+[30-Sep-2025 10:22:09 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:10 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:10 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:10 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385700_8815
+[30-Sep-2025 10:22:10 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:12 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:12 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:12 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385727_9482
+[30-Sep-2025 10:22:12 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:21 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:21 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:22 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385991_5181
+[30-Sep-2025 10:22:22 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:23 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:23 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:23 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755627097_5
+[30-Sep-2025 10:22:23 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:24 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:24 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:24 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629370_68a4c73ad4969_3
+[30-Sep-2025 10:22:24 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:25 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:25 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:26 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629380_68a4c744ccf46_3
+[30-Sep-2025 10:22:26 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:27 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:27 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:27 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629523_68a4c7d3e19d0_3
+[30-Sep-2025 10:22:27 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:28 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:28 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:28 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629533_68a4c7dd0968e_3
+[30-Sep-2025 10:22:28 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:34 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:34 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:35 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755632304_68a4d2b0ea8be_3
+[30-Sep-2025 10:22:35 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:36 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:36 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:37 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636324_68a4e2641604f_3
+[30-Sep-2025 10:22:37 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:38 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:38 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:38 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636339_68a4e27345f1d_3
+[30-Sep-2025 10:22:38 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:42 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:42 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:43 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636347_68a4e27b7daa3_3
+[30-Sep-2025 10:22:43 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:22:46 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:22:46 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:22:46 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755637858_68a4e86248ffd_3
+[30-Sep-2025 10:22:46 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:23:16 Europe/Berlin] Hubtel Status Check Response Code: 0
+[30-Sep-2025 10:23:16 Europe/Berlin] Hubtel Status Check Response: 
+[30-Sep-2025 10:23:17 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639094_68a4ed36c5da5_5
+[30-Sep-2025 10:23:17 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:23:24 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:23:24 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:23:24 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639412_68a4ee7406a0f_5
+[30-Sep-2025 10:23:24 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:23:34 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:23:34 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:23:35 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639433_68a4ee892b108_2
+[30-Sep-2025 10:23:35 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:23:37 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:23:37 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:23:38 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639439_68a4ee8f78658_2
+[30-Sep-2025 10:23:38 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:23:39 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:23:39 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:23:39 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639445_68a4ee95a7892_2
+[30-Sep-2025 10:23:39 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+2025-09-30 10:23:55 - Starting batch status check - {
+    "batch_size": 20
+}
+[30-Sep-2025 10:23:55 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384448_7432
+[30-Sep-2025 10:23:55 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:06 Europe/Berlin] Hubtel Status Check Response Code: 0
+[30-Sep-2025 10:24:06 Europe/Berlin] Hubtel Status Check Response: 
+[30-Sep-2025 10:24:06 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384488_8030
+[30-Sep-2025 10:24:06 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:09 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:09 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:09 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385700_8815
+[30-Sep-2025 10:24:09 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:10 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:10 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:11 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385727_9482
+[30-Sep-2025 10:24:11 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:12 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:12 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:13 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385991_5181
+[30-Sep-2025 10:24:13 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:14 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:14 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:15 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755627097_5
+[30-Sep-2025 10:24:15 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:20 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:20 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:20 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629370_68a4c73ad4969_3
+[30-Sep-2025 10:24:20 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:29 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:29 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:29 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629380_68a4c744ccf46_3
+[30-Sep-2025 10:24:29 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:24:41 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:24:41 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:24:42 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629523_68a4c7d3e19d0_3
+[30-Sep-2025 10:24:42 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+2025-09-30 10:24:57 - Starting batch status check - {
+    "batch_size": 20
+}
+[30-Sep-2025 10:24:57 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384448_7432
+[30-Sep-2025 10:24:57 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:01 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:01 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:01 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384488_8030
+[30-Sep-2025 10:25:01 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:11 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:11 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:12 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385700_8815
+[30-Sep-2025 10:25:12 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:18 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:18 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:19 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385727_9482
+[30-Sep-2025 10:25:19 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:27 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:27 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:27 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385991_5181
+[30-Sep-2025 10:25:27 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:31 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:31 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:32 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755627097_5
+[30-Sep-2025 10:25:32 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:34 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:34 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:34 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629370_68a4c73ad4969_3
+[30-Sep-2025 10:25:34 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:35 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:35 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:36 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629380_68a4c744ccf46_3
+[30-Sep-2025 10:25:36 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:39 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:39 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:39 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629523_68a4c7d3e19d0_3
+[30-Sep-2025 10:25:39 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:42 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:42 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:42 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629533_68a4c7dd0968e_3
+[30-Sep-2025 10:25:42 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:49 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:49 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:50 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755632304_68a4d2b0ea8be_3
+[30-Sep-2025 10:25:50 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:54 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:54 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:55 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636324_68a4e2641604f_3
+[30-Sep-2025 10:25:55 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:57 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:57 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:25:58 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636339_68a4e27345f1d_3
+[30-Sep-2025 10:25:58 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:25:59 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:25:59 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:00 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636347_68a4e27b7daa3_3
+[30-Sep-2025 10:26:00 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:09 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:09 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:09 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755637858_68a4e86248ffd_3
+[30-Sep-2025 10:26:09 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:12 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:12 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:12 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639094_68a4ed36c5da5_5
+[30-Sep-2025 10:26:12 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:15 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:15 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:16 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639412_68a4ee7406a0f_5
+[30-Sep-2025 10:26:16 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:18 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:18 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:18 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639433_68a4ee892b108_2
+[30-Sep-2025 10:26:18 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:19 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:19 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:19 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639439_68a4ee8f78658_2
+[30-Sep-2025 10:26:19 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:20 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:20 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:21 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639445_68a4ee95a7892_2
+[30-Sep-2025 10:26:21 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:25 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:25 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+2025-09-30 10:26:26 - Batch status check completed - {
+    "success": true,
+    "message": "Processed 20 transactions",
+    "processed_count": 20,
+    "status_changed_count": 0,
+    "votes_created_count": 0,
+    "results": [
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 1
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 2
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 3
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 4
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 5
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 10
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 14
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 15
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 16
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 17
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 18
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 19
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 20
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 21
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 22
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 23
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 26
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 27
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 28
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 29
+        }
+    ]
+}
+2025-09-30 10:26:26 - Starting batch status check - {
+    "batch_size": 20
+}
+[30-Sep-2025 10:26:26 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384448_7432
+[30-Sep-2025 10:26:26 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:28 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:28 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:28 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384488_8030
+[30-Sep-2025 10:26:28 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:31 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:31 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:31 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385700_8815
+[30-Sep-2025 10:26:31 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:34 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:34 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:34 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385727_9482
+[30-Sep-2025 10:26:34 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:40 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:40 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:40 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385991_5181
+[30-Sep-2025 10:26:40 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:52 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:52 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:53 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755627097_5
+[30-Sep-2025 10:26:53 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:55 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:55 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:55 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629370_68a4c73ad4969_3
+[30-Sep-2025 10:26:55 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:26:58 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:26:58 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:26:59 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629380_68a4c744ccf46_3
+[30-Sep-2025 10:26:59 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:27:03 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:27:03 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:27:04 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629523_68a4c7d3e19d0_3
+[30-Sep-2025 10:27:04 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:27:05 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:27:05 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:27:06 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629533_68a4c7dd0968e_3
+[30-Sep-2025 10:27:06 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:27:11 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:27:11 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:27:12 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755632304_68a4d2b0ea8be_3
+[30-Sep-2025 10:27:12 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:27:15 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:27:15 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:27:16 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636324_68a4e2641604f_3
+[30-Sep-2025 10:27:16 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:27:19 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:27:19 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:27:19 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636339_68a4e27345f1d_3
+[30-Sep-2025 10:27:19 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+2025-09-30 10:29:59 - Starting batch status check - {
+    "batch_size": 20
+}
+[30-Sep-2025 10:29:59 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384448_7432
+[30-Sep-2025 10:29:59 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:29 Europe/Berlin] Hubtel Status Check Response Code: 0
+[30-Sep-2025 10:30:29 Europe/Berlin] Hubtel Status Check Response: 
+[30-Sep-2025 10:30:29 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755384488_8030
+[30-Sep-2025 10:30:29 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:45 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:45 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:46 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385700_8815
+[30-Sep-2025 10:30:46 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:48 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:48 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:48 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385727_9482
+[30-Sep-2025 10:30:48 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:49 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:49 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:50 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=TXN_1755385991_5181
+[30-Sep-2025 10:30:50 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:51 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:51 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:52 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755627097_5
+[30-Sep-2025 10:30:52 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:54 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:54 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:54 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629370_68a4c73ad4969_3
+[30-Sep-2025 10:30:54 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:55 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:55 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:56 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629380_68a4c744ccf46_3
+[30-Sep-2025 10:30:56 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:30:58 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:30:58 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:30:59 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629523_68a4c7d3e19d0_3
+[30-Sep-2025 10:30:59 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:01 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:01 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:01 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755629533_68a4c7dd0968e_3
+[30-Sep-2025 10:31:01 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:02 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:02 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:03 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755632304_68a4d2b0ea8be_3
+[30-Sep-2025 10:31:03 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:05 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:05 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:06 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636324_68a4e2641604f_3
+[30-Sep-2025 10:31:06 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:07 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:07 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:07 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636339_68a4e27345f1d_3
+[30-Sep-2025 10:31:07 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:08 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:08 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:09 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755636347_68a4e27b7daa3_3
+[30-Sep-2025 10:31:09 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:11 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:11 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:11 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755637858_68a4e86248ffd_3
+[30-Sep-2025 10:31:11 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:20 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:20 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:21 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639094_68a4ed36c5da5_5
+[30-Sep-2025 10:31:21 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:22 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:22 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:22 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639412_68a4ee7406a0f_5
+[30-Sep-2025 10:31:22 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:28 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:28 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:28 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639433_68a4ee892b108_2
+[30-Sep-2025 10:31:28 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:33 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:33 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:33 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639439_68a4ee8f78658_2
+[30-Sep-2025 10:31:33 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:35 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:35 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+[30-Sep-2025 10:31:36 Europe/Berlin] Hubtel Status Check Request: GET https://api-txnstatus.hubtel.com/transactions/2031233/status?clientReference=ECAST_1755639445_68a4ee95a7892_2
+[30-Sep-2025 10:31:36 Europe/Berlin] Hubtel Status Check Headers: ["Authorization: Basic eXA3R2x6Vzo3ZDk1MjBjMzgzMzk0MTA3YjczOWNhOWZkOTg2NmUxMw==","Accept: application\/json","Cache-Control: no-cache"]
+[30-Sep-2025 10:31:42 Europe/Berlin] Hubtel Status Check Response Code: 403
+[30-Sep-2025 10:31:42 Europe/Berlin] Hubtel Status Check Response: <html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+</body>
+</html>
+
+2025-09-30 10:31:42 - Batch status check completed - {
+    "success": true,
+    "message": "Processed 20 transactions",
+    "processed_count": 20,
+    "status_changed_count": 0,
+    "votes_created_count": 0,
+    "results": [
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 1
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 2
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 3
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 4
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 5
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 10
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 14
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 15
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 16
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 17
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 18
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 19
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 20
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 21
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 22
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 23
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 26
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 27
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 28
+        },
+        {
+            "success": false,
+            "message": "Status check failed: Status check API request failed",
+            "transaction_id": 29
+        }
+    ]
+}

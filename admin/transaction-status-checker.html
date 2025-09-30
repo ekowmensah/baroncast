@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Status Checker - Hubtel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .result-card {
+            margin-top: 2rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-paid {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-unpaid {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-refunded {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .json-display {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-search"></i> Hubtel Transaction Status Checker</h1>
+            <p>Check the status of Hubtel transactions using the Transaction Status Check API</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2><i class="fas fa-clipboard-check"></i> Single Transaction Check</h2>
+                <form id="statusCheckForm">
+                    <div class="form-group">
+                        <label for="transactionRef">Transaction Reference</label>
+                        <input type="text" id="transactionRef" placeholder="Enter client reference, Hubtel ID, or network ID" required>
+                        <small>Enter the transaction reference you want to check</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="checkType">Check Type</label>
+                        <select id="checkType">
+                            <option value="client_reference">Client Reference (Recommended)</option>
+                            <option value="hubtel_id">Hubtel Transaction ID</option>
+                            <option value="network_id">Network Transaction ID</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="autoUpdate"> Auto-update local database if status changed
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        <i class="fas fa-search"></i> Check Status
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-tasks"></i> Batch Operations</h2>
+                
+                <div class="form-group">
+                    <label for="batchSize">Batch Size</label>
+                    <input type="number" id="batchSize" value="20" min="1" max="100">
+                    <small>Number of transactions to process (1-100)</small>
+                </div>
+
+                <button type="button" class="btn btn-success" onclick="runBatchCheck()">
+                    <i class="fas fa-play"></i> Run Batch Status Check
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="getPendingCount()">
+                    <i class="fas fa-clock"></i> Get Pending Count
+                </button>
+            </div>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // Single transaction status check
+        document.getElementById('statusCheckForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const transactionRef = document.getElementById('transactionRef').value.trim();
+            const checkType = document.getElementById('checkType').value;
+            const autoUpdate = document.getElementById('autoUpdate').checked;
+            
+            if (!transactionRef) {
+                showAlert('Please enter a transaction reference', 'error');
+                return;
+            }
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading"></span> Checking...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('actions/check-transaction-status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        transaction_ref: transactionRef,
+                        check_type: checkType,
+                        auto_update: autoUpdate
+                    })
+                });
+                
+                const result = await response.json();
+                displayStatusResult(result);
+                
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        // Batch status check
+        async function runBatchCheck() {
+            const batchSize = document.getElementById('batchSize').value;
+            
+            showAlert('Starting batch status check...', 'info');
+            
+            try {
+                const response = await fetch('batch-status-check.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        batch_size: parseInt(batchSize)
+                    })
+                });
+                
+                const result = await response.json();
+                displayBatchResult(result);
+                
+            } catch (error) {
+                showAlert('Network error: ' + error.message, 'error');
+            }
+        }
+        
+        // Get pending transactions count
+        async function getPendingCount() {
+            try {
+                const response = await fetch('../services/HubtelTransactionStatusService.php?action=getPendingCount');
+                // This would need a proper endpoint, just showing the concept
+                showAlert('Feature not implemented yet - would show pending transaction count', 'info');
+            } catch (error) {
+                showAlert('Error getting pending count', 'error');
+            }
+        }
+        
+        // Display single status result
+        function displayStatusResult(result) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = '<div class="card result-card">';
+            html += '<h3><i class="fas fa-info-circle"></i> Status Check Result</h3>';
+            
+            if (result.success) {
+                const status = result.hubtel_status || 'Unknown';
+                const statusClass = getStatusClass(status);
+                
+                html += '<div class="alert alert-success">Status check completed successfully</div>';
+                
+                html += '<div class="grid">';
+                html += '<div>';
+                html += '<h4>Hubtel Status</h4>';
+                html += `<p><span class="status-badge ${statusClass}">${status}</span></p>`;
+                
+                if (result.transaction_data) {
+                    html += '<h4>Transaction Details</h4>';
+                    html += '<ul>';
+                    html += `<li><strong>Transaction ID:</strong> ${result.transaction_data.transaction_id || 'N/A'}</li>`;
+                    html += `<li><strong>Amount:</strong> ${result.transaction_data.currency_code || 'GHS'} ${result.transaction_data.amount || 0}</li>`;
+                    html += `<li><strong>Charges:</strong> ${result.transaction_data.currency_code || 'GHS'} ${result.transaction_data.charges || 0}</li>`;
+                    html += `<li><strong>Net Amount:</strong> ${result.transaction_data.currency_code || 'GHS'} ${result.transaction_data.amount_after_charges || 0}</li>`;
+                    html += `<li><strong>Payment Method:</strong> ${result.transaction_data.payment_method || 'N/A'}</li>`;
+                    html += `<li><strong>Date:</strong> ${result.transaction_data.transaction_date || 'N/A'}</li>`;
+                    html += '</ul>';
+                }
+                html += '</div>';
+                
+                html += '<div>';
+                if (result.local_transaction) {
+                    html += '<h4>Local Database</h4>';
+                    html += '<ul>';
+                    html += `<li><strong>Reference:</strong> ${result.local_transaction.reference}</li>`;
+                    html += `<li><strong>Status:</strong> ${result.local_transaction.status}</li>`;
+                    html += `<li><strong>Event:</strong> ${result.local_transaction.event_title || 'N/A'}</li>`;
+                    html += `<li><strong>Nominee:</strong> ${result.local_transaction.nominee_name || 'N/A'}</li>`;
+                    html += `<li><strong>Votes:</strong> ${result.local_transaction.vote_count || 0}</li>`;
+                    html += '</ul>';
+                    
+                    if (result.status_update_needed) {
+                        html += `<div class="alert alert-info">Status update needed: ${result.current_status} → ${result.new_status}</div>`;
+                    }
+                } else {
+                    html += '<div class="alert alert-error">Transaction not found in local database</div>';
+                }
+                html += '</div>';
+                html += '</div>';
+                
+            } else {
+                html += `<div class="alert alert-error">Status check failed: ${result.message}</div>`;
+                
+                if (result.local_transaction) {
+                    html += '<h4>Local Transaction Data</h4>';
+                    html += `<p>Reference: ${result.local_transaction.reference}</p>`;
+                    html += `<p>Current Status: ${result.local_transaction.status}</p>`;
+                }
+            }
+            
+            // Show raw JSON response
+            html += '<h4>Raw Response</h4>';
+            html += `<div class="json-display">${JSON.stringify(result, null, 2)}</div>`;
+            
+            html += '</div>';
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Display batch result
+        function displayBatchResult(result) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = '<div class="card result-card">';
+            html += '<h3><i class="fas fa-tasks"></i> Batch Status Check Result</h3>';
+            
+            if (result.success) {
+                html += '<div class="alert alert-success">Batch processing completed successfully</div>';
+                
+                html += '<div class="grid">';
+                html += '<div>';
+                html += '<h4>Summary</h4>';
+                html += '<ul>';
+                html += `<li><strong>Processed:</strong> ${result.processed_count || 0} transactions</li>`;
+                html += `<li><strong>Status Changed:</strong> ${result.status_changed_count || 0}</li>`;
+                html += `<li><strong>Votes Created:</strong> ${result.votes_created_count || 0}</li>`;
+                html += `<li><strong>Execution Time:</strong> ${result.execution_time || 'N/A'}</li>`;
+                html += '</ul>';
+                html += '</div>';
+                
+                html += '<div>';
+                html += '<h4>Details</h4>';
+                if (result.results && result.results.length > 0) {
+                    html += '<ul>';
+                    result.results.forEach((res, index) => {
+                        if (res.success && res.status_changed) {
+                            html += `<li>Transaction ${res.transaction_id}: ${res.old_status} → ${res.new_status}`;
+                            if (res.votes_created) {
+                                html += ` (${res.votes_created} votes created)`;
+                            }
+                            html += '</li>';
+                        }
+                    });
+                    html += '</ul>';
+                } else {
+                    html += '<p>No status changes detected</p>';
+                }
+                html += '</div>';
+                html += '</div>';
+                
+            } else {
+                html += `<div class="alert alert-error">Batch processing failed: ${result.message}</div>`;
+            }
+            
+            // Show raw JSON response
+            html += '<h4>Raw Response</h4>';
+            html += `<div class="json-display">${JSON.stringify(result, null, 2)}</div>`;
+            
+            html += '</div>';
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Helper functions
+        function showAlert(message, type) {
+            const resultsDiv = document.getElementById('results');
+            const alertClass = type === 'error' ? 'alert-error' : (type === 'success' ? 'alert-success' : 'alert-info');
+            
+            resultsDiv.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+        }
+        
+        function getStatusClass(status) {
+            const statusLower = status.toLowerCase();
+            if (statusLower === 'paid') return 'status-paid';
+            if (statusLower === 'unpaid') return 'status-unpaid';
+            if (statusLower === 'failed') return 'status-failed';
+            if (statusLower === 'refunded') return 'status-refunded';
+            return 'status-unpaid';
+        }
+    </script>
+</body>
+</html>
