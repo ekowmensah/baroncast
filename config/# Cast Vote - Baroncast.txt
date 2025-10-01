@@ -1,0 +1,9 @@
+# Cast Vote - Baroncast
+
+
+# Cast Your Vote
+Please fill in all the input fields Note: Nominee Name and Event Name are filled automatically and depending on your previous selections
+Processing your vote...
+
+### Vote Cast Successfully!
+Your vote has been recorded and payment processed.
