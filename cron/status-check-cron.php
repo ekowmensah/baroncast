@@ -6,7 +6,7 @@
  * check the status of pending transactions and update them accordingly.
  * 
  * Example cron job entry (runs every 5 minutes):
- * */5 * * * * /usr/bin/php /path/to/baroncast/cron/status-check-cron.php
+ * * /5 * * * * /usr/bin/php /path/to/baroncast/cron/status-check-cron.php
  * 
  * Or for Windows Task Scheduler:
  * php.exe "C:\xampp\htdocs\baroncast\cron\status-check-cron.php"
