@@ -26,7 +26,31 @@ file_put_contents(__DIR__ . '/../logs/hubtel-callback.log', date('c') . " CALLBA
 
 log_debug('=== HUBTEL SERVICE FULFILLMENT CALLBACK ===');
 log_debug('Raw input: ' . $raw_input);
-log_debug('Headers: ' . json_encode(getallheaders()));
+
+// Safe header handling
+$headers = [];
+if (function_exists('getallheaders')) {
+    try {
+        $headers = getallheaders();
+    } catch (Exception $e) {
+        log_debug('getallheaders() failed: ' . $e->getMessage());
+        // Fallback to $_SERVER
+        foreach ($_SERVER as $key => $value) {
+            if (strpos($key, 'HTTP_') === 0) {
+                $headers[str_replace('HTTP_', '', $key)] = $value;
+            }
+        }
+    }
+} else {
+    // Fallback for servers without getallheaders()
+    foreach ($_SERVER as $key => $value) {
+        if (strpos($key, 'HTTP_') === 0) {
+            $headers[str_replace('HTTP_', '', $key)] = $value;
+        }
+    }
+}
+
+log_debug('Headers: ' . json_encode($headers));
 log_debug('Method: ' . $_SERVER['REQUEST_METHOD']);
 log_debug('=== END CALLBACK DATA ===');
 
@@ -34,17 +58,34 @@ log_debug('=== END CALLBACK DATA ===');
 $data = json_decode($raw_input, true);
 log_debug('Webhook data: ' . json_encode($data));
 
+// Handle empty requests (like GET requests for testing)
+if (empty($raw_input)) {
+    log_debug('Empty request received - likely a test/health check');
+    http_response_code(200);
+    echo json_encode(['status' => 'success', 'message' => 'Payment callback endpoint is working']);
+    exit;
+}
+
 if (!$data) {
-    log_debug('Invalid JSON data received');
+    log_debug('Invalid JSON data received. JSON error: ' . json_last_error_msg());
+    log_debug('Raw input was: ' . $raw_input);
     http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON']);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON: ' . json_last_error_msg()]);
     exit;
 }
 
 // Extract payment information from Hubtel Service Fulfillment webhook
 $order_info = $data['OrderInfo'] ?? null;
 if (!$order_info) {
-    log_debug('Missing OrderInfo in webhook data');
+    log_debug('Missing OrderInfo in webhook data. Available keys: ' . implode(', ', array_keys($data)));
+    log_debug('Full webhook data structure: ' . json_encode($data, JSON_PRETTY_PRINT));
+    
+    // Maybe it's a different webhook format - let's be more flexible
+    if (isset($data['Type']) && $data['Type'] === 'payment') {
+        log_debug('Detected alternative payment webhook format');
+        // Handle alternative format here if needed
+    }
+    
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => 'Invalid webhook format - missing OrderInfo']);
     exit;
@@ -87,8 +128,19 @@ if (strtolower($status) !== 'paid' || !$is_successful || !$ussd_reference) {
 }
 
 try {
+    // Test database connection
+    if (!class_exists('Database')) {
+        throw new Exception('Database class not found - check config/database.php');
+    }
+    
     $database = new Database();
     $pdo = $database->getConnection();
+    
+    if (!$pdo) {
+        throw new Exception('Failed to get database connection');
+    }
+    
+    log_debug('Database connection established successfully');
     
     // Find the USSD transaction
     $stmt = $pdo->prepare("
@@ -133,7 +185,7 @@ try {
                 transaction_id, reference, event_id, organizer_id, nominee_id,
                 voter_phone, vote_count, amount, payment_method,
                 status, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'hubtel_ussd', 'completed', NOW())
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'momo', 'completed', NOW())
         ");
         $stmt->execute([
             $ussd_reference,
@@ -163,7 +215,7 @@ try {
                     event_id, category_id, nominee_id, voter_phone, 
                     transaction_id, payment_method, payment_reference, 
                     payment_status, amount, voted_at, created_at
-                ) VALUES (?, ?, ?, ?, ?, 'hubtel_ussd', ?, 'completed', ?, NOW(), NOW())
+                ) VALUES (?, ?, ?, ?, ?, 'momo', ?, 'completed', ?, NOW(), NOW())
             ");
             $stmt->execute([
                 $transaction['event_id'],

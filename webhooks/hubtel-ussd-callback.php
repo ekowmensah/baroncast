@@ -20,20 +20,53 @@ function logWebhook($message, $data = null) {
 }
 
 try {
+    // Log ALL incoming requests first
+    $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'UNKNOWN';
+    $requestHeaders = getallheaders();
+    $rawInput = file_get_contents('php://input');
+    $getParams = $_GET;
+    $postParams = $_POST;
+    
+    // COMPREHENSIVE REQUEST LOGGING
+    error_log("=== HUBTEL WEBHOOK REQUEST START ===");
+    error_log("Method: " . $requestMethod);
+    error_log("URL: " . ($_SERVER['REQUEST_URI'] ?? 'unknown'));
+    error_log("Headers: " . json_encode($requestHeaders));
+    error_log("GET params: " . json_encode($getParams));
+    error_log("POST params: " . json_encode($postParams));
+    error_log("Raw input: " . $rawInput);
+    error_log("Raw input length: " . strlen($rawInput));
+    error_log("Content-Type: " . ($_SERVER['CONTENT_TYPE'] ?? 'not set'));
+    error_log("User-Agent: " . ($_SERVER['HTTP_USER_AGENT'] ?? 'not set'));
+    error_log("=== HUBTEL WEBHOOK REQUEST END ===");
+    
     // Only allow POST requests
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        error_log("REJECTED: Non-POST request method: " . $requestMethod);
         http_response_code(405);
         echo json_encode(['error' => 'Method not allowed']);
         exit;
     }
     
-    // Get raw POST data
-    $rawInput = file_get_contents('php://input');
+    // Try to decode JSON
     $webhookData = json_decode($rawInput, true);
+    
+    if (!$webhookData && !empty($rawInput)) {
+        error_log("JSON DECODE FAILED: " . json_last_error_msg());
+        error_log("Attempting to parse as form data...");
+        
+        // Maybe it's form-encoded data?
+        parse_str($rawInput, $formData);
+        if (!empty($formData)) {
+            error_log("Found form data: " . json_encode($formData));
+            $webhookData = $formData;
+        }
+    }
     
     logWebhook('Hubtel USSD webhook received', $webhookData);
     
     if (!$webhookData) {
+        error_log("NO WEBHOOK DATA FOUND - Raw input was: " . $rawInput);
         throw new Exception('Invalid JSON input');
     }
     
@@ -41,11 +74,15 @@ try {
     $webhookType = $webhookData['Type'] ?? $webhookData['type'] ?? 'unknown';
     
     // Extra logging to debug payment callbacks
-    error_log("=== WEBHOOK DEBUG ===");
-    error_log("Raw input: " . $rawInput);
+    error_log("=== WEBHOOK ANALYSIS ===");
     error_log("Webhook type detected: " . $webhookType);
-    error_log("Has SessionId: " . (isset($webhookData['SessionId']) ? 'YES' : 'NO'));
-    error_log("Has TransactionId: " . (isset($webhookData['TransactionId']) ? 'YES' : 'NO'));
+    error_log("Has SessionId: " . (isset($webhookData['SessionId']) ? 'YES (' . $webhookData['SessionId'] . ')' : 'NO'));
+    error_log("Has TransactionId: " . (isset($webhookData['TransactionId']) ? 'YES (' . $webhookData['TransactionId'] . ')' : 'NO'));
+    error_log("Has ClientReference: " . (isset($webhookData['ClientReference']) ? 'YES (' . $webhookData['ClientReference'] . ')' : 'NO'));
+    error_log("Has ResponseCode: " . (isset($webhookData['ResponseCode']) ? 'YES (' . $webhookData['ResponseCode'] . ')' : 'NO'));
+    error_log("Has Status: " . (isset($webhookData['Status']) ? 'YES (' . $webhookData['Status'] . ')' : 'NO'));
+    error_log("All keys: " . implode(', ', array_keys($webhookData)));
+    error_log("=== WEBHOOK ANALYSIS END ===");
     
     switch (strtolower($webhookType)) {
         case 'ussd':
