@@ -233,31 +233,81 @@ try {
         
         log_debug("SUCCESS: Recorded $voteCount votes for {$transaction['nominee_name']}");
         
-        // Send callback confirmation to Hubtel (as per church system)
+        // Send Service Fulfillment callback to Hubtel
         $callback_payload = [
             'SessionId' => $session_id,
             'OrderId' => $order_id,
             'ServiceStatus' => 'success',
-            'MetaData' => null
-        ];
-        
-        $callback_url = 'https://gs-callback.hubtel.com:9055/callback';
-        $callback_options = [
-            'http' => [
-                'header' => "Content-Type: application/json\r\n",
-                'method' => 'POST',
-                'content' => json_encode($callback_payload),
-                'timeout' => 10
+            'MetaData' => [
+                'votes_recorded' => $voteCount,
+                'nominee' => $transaction['nominee_name'],
+                'amount' => $transaction['amount']
             ]
         ];
         
-        $callback_context = stream_context_create($callback_options);
-        $callback_result = @file_get_contents($callback_url, false, $callback_context);
+        log_debug('Preparing Service Fulfillment callback: ' . json_encode($callback_payload));
         
-        if ($callback_result !== false) {
-            log_debug('Hubtel gs-callback sent successfully: ' . json_encode($callback_payload));
+        // Use cURL for more reliable HTTP requests
+        $callback_url = 'https://gs-callback.hubtel.com/callback';
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $callback_url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($callback_payload));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        
+        $callback_result = curl_exec($ch);
+        $callback_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $callback_error = curl_error($ch);
+        curl_close($ch);
+        
+        if ($callback_error) {
+            log_debug('Service Fulfillment callback CURL error: ' . $callback_error);
         } else {
-            log_debug('Failed to send Hubtel gs-callback: ' . json_encode($callback_payload));
+            log_debug('Service Fulfillment callback response - HTTP ' . $callback_http_code . ': ' . $callback_result);
+            
+            if ($callback_http_code >= 200 && $callback_http_code < 300) {
+                log_debug('✅ Service Fulfillment callback sent successfully');
+            } else {
+                log_debug('❌ Service Fulfillment callback failed with HTTP ' . $callback_http_code);
+            }
+        }
+        
+        // Try alternative callback URL if first one fails
+        if ($callback_http_code !== 200) {
+            log_debug('Trying alternative callback URL...');
+            
+            $alt_callback_url = 'https://gs-callback.hubtel.com:9055/callback';
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $alt_callback_url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($callback_payload));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Accept: application/json'
+            ]);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            
+            $alt_result = curl_exec($ch);
+            $alt_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $alt_error = curl_error($ch);
+            curl_close($ch);
+            
+            if ($alt_error) {
+                log_debug('Alternative callback CURL error: ' . $alt_error);
+            } else {
+                log_debug('Alternative callback response - HTTP ' . $alt_http_code . ': ' . $alt_result);
+            }
         }
         
         // Respond success to Hubtel
