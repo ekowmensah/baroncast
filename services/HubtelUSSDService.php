@@ -311,7 +311,7 @@ class HubtelUSSDService {
                            "Event: {$nominee['event_title']}\n" .
                            "Category: {$nominee['category_name']}\n\n" .
                            "Vote cost: GHS $voteCost each\n\n" .
-                           "How many votes? (1-100):"
+                           "How many votes? (1-10,000):"
             ];
             
         } catch (Exception $e) {
@@ -980,7 +980,7 @@ class HubtelUSSDService {
                 'Type' => 'Response',
                 'Message' => "Selected: " . substr($selectedNominee['name'], 0, 30) . "\n\n" .
                            "Vote cost: GHS $voteCost each\n\n" .
-                           "How many votes? (1-100):"
+                           "How many votes? (1-10,000):"
             ];
             
         } catch (Exception $e) {
