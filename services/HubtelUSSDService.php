@@ -331,10 +331,10 @@ class HubtelUSSDService {
             $votes = (int)trim($voteCount);
             error_log("Vote count entry: $votes");
             
-            if ($votes < 1 || $votes > 100) {
+            if ($votes < 1 || $votes > 10000) {
                 return [
                     'Type' => 'Release',
-                    'Message' => "Invalid vote count. Please enter 1-100 votes."
+                    'Message' => "Invalid vote count. Please enter 1-10,000 votes."
                 ];
             }
             
